@@ -39,7 +39,7 @@ def call(method: str, path: str, body: dict[str, Any] | None = None) -> str:
     with backend() as client:
         response = client.request(method, path, json=body)
     if response.is_error:
-        return f"Refused: {response.text}"
+        return f"Refused: {response.json()['detail']}"
     return response.text
 
 

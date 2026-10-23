@@ -9,7 +9,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
-from backend import claims
+from backend import claims, worker
 from backend.db import DATA, init_db
 
 INSTRUCTIONS = Path(__file__).parent / "instructions.md"
@@ -137,3 +137,9 @@ def pay_claim(claim_id: str, payment: Payment) -> dict[str, Any]:
 def sign_off_claim(claim_id: str, sign_off: SignOff) -> dict[str, Any]:
     """Sign off a payout over the limit as a handler, which releases the payment."""
     return claims.sign_off_claim(claim_id, sign_off.handler_id)
+
+
+@app.post("/api/queue/work", operation_id="work_queue")
+def work_queue() -> dict[str, int]:
+    """Start the agent on every waiting claim, one claim at a time."""
+    return {"claims": worker.work_queue()}

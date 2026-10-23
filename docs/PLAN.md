@@ -153,16 +153,16 @@ Success criteria:
 
 Connects the agent to the backend so the dashboard can start it. One background thread works the waiting claims in order, so two runs never pick up the same claim.
 
-- `backend/queue.py`: `work_queue` starts a background thread that calls `run` on each waiting claim in turn, and returns how many claims it will work. A second call while it's running gets a 409
+- `backend/worker.py`: `work_queue` starts a background thread that calls `run` on each waiting claim in turn, and returns how many claims it will work. A second call while it's running gets a 409
 - If a run fails, or ends without a decision, the claim goes back to `waiting` with a step that says so, and the queue carries on with the next claim
 - The thread id for each run is the claim id plus a short random suffix
 
 Success criteria:
 
-- [ ] Tests, with `run` replaced by a stub, check that every waiting claim is worked once, in order; that a second `work_queue` while running gets 409; and that a failing run puts its claim back to `waiting` with a step and the queue carries on
-- [ ] After `npm run seed`, `curl -X POST http://localhost:8000/api/queue/work` on the real model works through all 25 claims (about 25 runs, a few cents with GPT-6 Luna, or free with `MODEL_NAME=openrouter/free`)
-- [ ] Afterwards every claim is `decided` or `awaiting_signoff`, none is stuck in progress, every decision has a reason and a policy section, and no claim over $1,000 is paid without a sign-off
-- [ ] `npm run check:python` passes with coverage of at least 80%
+- [x] Tests, with `run` replaced by a stub, check that every waiting claim is worked once, in order; that a second `work_queue` while running gets 409; and that a failing run puts its claim back to `waiting` with a step and the queue carries on
+- [x] After `npm run seed`, `curl -X POST http://localhost:8000/api/queue/work` on the real model works through all 25 claims (about 25 runs, a few cents with GPT-6 Luna, or free with `MODEL_NAME=openrouter/free`)
+- [x] Afterwards every claim is `decided` or `awaiting_signoff`, none is stuck in progress, every decision has a reason and a policy section, and no claim over $1,000 is paid without a sign-off
+- [x] `npm run check:python` passes with coverage of at least 80%
 
 ### Phase 5: The dashboard's queue and instructions
 

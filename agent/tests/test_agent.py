@@ -94,7 +94,9 @@ def test_payment_over_the_limit_is_refused(api):
     claim = api.get("/api/claims/CLM-1002").json()
     assert claim["status"] == "awaiting_signoff"
     assert claim["paid_amount"] is None
-    assert "waits for a handler's sign-off" in steps(api, "CLM-1002")[3]
+    assert steps(api, "CLM-1002")[3] == (
+        "Refused: A payout over $1,000.00 waits for a handler's sign-off."
+    )
 
 
 def test_decline(api):
