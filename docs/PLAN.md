@@ -141,13 +141,13 @@ Builds the agent on LangChain's `create_agent`, replacing the hello-world tool. 
 
 Success criteria:
 
-- [ ] `uv run pytest -q agent` passes with a stub model and the backend's `TestClient`, and no test calls a model. The tests cover:
-  - [ ] A scripted run that reads the claim, approves $420, pays, and leaves the claim `decided` and paid, with its steps recorded
-  - [ ] A scripted run that approves $1,500 and tries to pay: the payment is refused, the claim is `awaiting_signoff` and nothing is paid
-  - [ ] A scripted decline with a payout of 0
-  - [ ] The model choice from `MODEL_NAME`
-- [ ] With the backend running, `uv run -m agent CLM-1001` on the real model ends with a decision on CLM-1001, a reason of two or three sentences, a policy section, and its steps in `GET /api/claims/CLM-1001/steps` (one claim, a fraction of a cent)
-- [ ] `npm run check:python` passes with coverage of at least 80%
+- [x] `uv run pytest -q agent` passes with a stub model and the backend's `TestClient`, and no test calls a model. The tests cover:
+  - [x] A scripted run that reads the claim, approves $420, pays, and leaves the claim `decided` and paid, with its steps recorded
+  - [x] A scripted run that approves $1,500 and tries to pay: the payment is refused, the claim is `awaiting_signoff` and nothing is paid
+  - [x] A scripted decline with a payout of 0
+  - [x] The model choice from `MODEL_NAME`
+- [x] With the backend running, `uv run -m agent CLM-1001` on the real model ends with a decision on CLM-1001, a reason of two or three sentences, a policy section, and its steps in `GET /api/claims/CLM-1001/steps` (one claim, a fraction of a cent)
+- [x] `npm run check:python` passes with coverage of at least 80%
 
 ### Phase 4: Working the queue
 
