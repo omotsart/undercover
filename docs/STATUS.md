@@ -1,10 +1,16 @@
 # Status
 
-A hello-world skeleton with every check in place:
+The pilot is being built from `docs/PLAN.md`. Phase 1 of 6 is done.
 
-- `backend/`: one route, `GET /api/health`
-- `agent/`: the entry point `run(claim_id, thread_id)`, with one tool that calls the health route
+## What's built
+
+- `backend/`: FastAPI and SQLite. The database is `backend/undercover.db` (or `DATABASE_PATH`), created and seeded from `data/` on first start. Read operations for claims, policies, claim history, the policy wording, the agent's instructions and the handlers
+- `agent/`: still the hello-world agent, with one tool that calls the health route
 - `dashboard/`: one page that shows whether the backend is up
 - `e2e/`: one test of that page
 
-Nothing of UnderCover is built yet. Update this file as you build.
+## How to run it
+
+- `npm run dev` starts the backend on port 8000 and the dashboard on port 5173
+- `npm run seed` resets the database to the claims queue in `data/`
+- `npm run check` runs every check
