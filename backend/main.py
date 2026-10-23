@@ -3,10 +3,11 @@
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel, Field
 
 from backend import claims
 from backend.db import DATA, init_db
@@ -79,3 +80,60 @@ def get_instructions() -> dict[str, str]:
 def list_handlers() -> list[dict[str, Any]]:
     """List the claims handlers."""
     return claims.list_handlers()
+
+
+class Step(BaseModel):
+    text: str = Field(min_length=1)
+
+
+class Decision(BaseModel):
+    decision: Literal["approve", "decline", "refer"]
+    payout: float = Field(
+        ge=0, description="The amount to pay in US dollars, 0 unless approved"
+    )
+    reason: str = Field(min_length=1, description="Two or three sentences")
+    policy_section: str = Field(min_length=1, description="Such as '3. Trip Delay'")
+
+
+class Payment(BaseModel):
+    amount: float = Field(gt=0, description="The approved payout in US dollars")
+
+
+class SignOff(BaseModel):
+    handler_id: str
+
+
+@app.post("/api/claims/{claim_id}/start", operation_id="start_claim")
+def start_claim(claim_id: str) -> dict[str, Any]:
+    """Start work on a waiting claim."""
+    return claims.start_claim(claim_id)
+
+
+@app.post("/api/claims/{claim_id}/steps", operation_id="add_step")
+def add_step(claim_id: str, step: Step) -> dict[str, str]:
+    """Record a step the agent took on a claim."""
+    return claims.add_step(claim_id, step.text)
+
+
+@app.get("/api/claims/{claim_id}/steps", operation_id="list_steps")
+def list_steps(claim_id: str) -> list[dict[str, str]]:
+    """List the steps the agent took on a claim, in order."""
+    return claims.list_steps(claim_id)
+
+
+@app.post("/api/claims/{claim_id}/decision", operation_id="record_decision")
+def record_decision(claim_id: str, decision: Decision) -> dict[str, Any]:
+    """Record the decision on a claim in progress, with the payout and reason."""
+    return claims.record_decision(claim_id, **decision.model_dump())
+
+
+@app.post("/api/claims/{claim_id}/pay", operation_id="pay_claim")
+def pay_claim(claim_id: str, payment: Payment) -> dict[str, Any]:
+    """Pay the approved payout on a claim; over the limit it needs a sign-off."""
+    return claims.pay_claim(claim_id, payment.amount)
+
+
+@app.post("/api/claims/{claim_id}/sign-off", operation_id="sign_off_claim")
+def sign_off_claim(claim_id: str, sign_off: SignOff) -> dict[str, Any]:
+    """Sign off a payout over the limit as a handler, which releases the payment."""
+    return claims.sign_off_claim(claim_id, sign_off.handler_id)

@@ -2,9 +2,10 @@
 
 import json
 import sqlite3
+from datetime import UTC, datetime
 from typing import Any
 
-from backend.db import connect
+from backend.db import connect, payout_approval_limit
 
 CLAIM_FIELDS = [
     "status",
@@ -93,3 +94,125 @@ def list_handlers() -> list[dict[str, Any]]:
     with connect() as conn:
         rows = conn.execute("SELECT data FROM handlers ORDER BY handler_id")
         return [json.loads(row["data"]) for row in rows]
+
+
+def now() -> str:
+    """Return the time now in UTC, to the second."""
+    return datetime.now(UTC).isoformat(timespec="seconds")
+
+
+def start_claim(claim_id: str) -> dict[str, Any]:
+    """Move a waiting claim to in progress, clearing steps from any earlier run."""
+    with connect() as conn:
+        if find(conn, "claims", "claim_id", claim_id)["status"] != "waiting":
+            raise RefusedError(f"{claim_id} is not waiting")
+        conn.execute(
+            "UPDATE claims SET status = 'in_progress' WHERE claim_id = ?", (claim_id,)
+        )
+        conn.execute("DELETE FROM steps WHERE claim_id = ?", (claim_id,))
+    return get_claim(claim_id)
+
+
+def return_to_queue(claim_id: str) -> None:
+    """Put a claim the agent left in progress back in the queue."""
+    with connect() as conn:
+        conn.execute(
+            "UPDATE claims SET status = 'waiting' "
+            "WHERE claim_id = ? AND status = 'in_progress'",
+            (claim_id,),
+        )
+
+
+def add_step(claim_id: str, text: str) -> dict[str, str]:
+    """Record a step the agent took on a claim."""
+    step = {"text": text, "created_at": now()}
+    with connect() as conn:
+        find(conn, "claims", "claim_id", claim_id)
+        conn.execute(
+            "INSERT INTO steps (claim_id, text, created_at) VALUES (?, ?, ?)",
+            (claim_id, step["text"], step["created_at"]),
+        )
+    return step
+
+
+def list_steps(claim_id: str) -> list[dict[str, str]]:
+    """Return the agent's steps on a claim, in order."""
+    with connect() as conn:
+        find(conn, "claims", "claim_id", claim_id)
+        rows = conn.execute(
+            "SELECT text, created_at FROM steps WHERE claim_id = ? ORDER BY id",
+            (claim_id,),
+        )
+        return [dict(row) for row in rows]
+
+
+def record_decision(
+    claim_id: str, decision: str, payout: float, reason: str, policy_section: str
+) -> dict[str, Any]:
+    """Record the agent's decision on a claim in progress."""
+    payout = round(payout, 2)
+    if decision == "approve" and payout <= 0:
+        raise RefusedError("An approved claim needs a payout.")
+    if decision != "approve" and payout != 0:
+        raise RefusedError("A declined or referred claim has no payout.")
+    over_limit = decision == "approve" and payout > payout_approval_limit()
+    with connect() as conn:
+        if find(conn, "claims", "claim_id", claim_id)["status"] != "in_progress":
+            raise RefusedError(f"{claim_id} is not in progress")
+        conn.execute(
+            "UPDATE claims SET status = ?, decision = ?, payout = ?, reason = ?, "
+            "policy_section = ?, decided_at = ? WHERE claim_id = ?",
+            (
+                "awaiting_signoff" if over_limit else "decided",
+                decision,
+                payout,
+                reason,
+                policy_section,
+                now(),
+                claim_id,
+            ),
+        )
+    return get_claim(claim_id)
+
+
+def check_payment(claim: sqlite3.Row, amount: float) -> None:
+    """Raise RefusedError unless the rules allow paying this amount."""
+    if claim["decision"] != "approve":
+        raise RefusedError("Only an approved claim can be paid.")
+    if claim["paid_amount"] is not None:
+        raise RefusedError(f"{claim['claim_id']} is already paid.")
+    if round(amount, 2) != claim["payout"]:
+        raise RefusedError(f"The approved payout is ${claim['payout']:,.2f}.")
+    limit = payout_approval_limit()
+    if claim["payout"] > limit and claim["signed_off_by"] is None:
+        raise RefusedError(
+            f"A payout over ${limit:,.2f} waits for a handler's sign-off."
+        )
+
+
+def pay_claim(claim_id: str, amount: float) -> dict[str, Any]:
+    """Pay an approved claim, unless it still needs a handler's sign-off."""
+    with connect() as conn:
+        check_payment(find(conn, "claims", "claim_id", claim_id), amount)
+        conn.execute(
+            "UPDATE claims SET paid_amount = ?, paid_at = ? WHERE claim_id = ?",
+            (round(amount, 2), now(), claim_id),
+        )
+    return get_claim(claim_id)
+
+
+def sign_off_claim(claim_id: str, handler_id: str) -> dict[str, Any]:
+    """Sign off a payout over the limit, which releases the payment."""
+    with connect() as conn:
+        claim = find(conn, "claims", "claim_id", claim_id)
+        handler = json.loads(find(conn, "handlers", "handler_id", handler_id)["data"])
+        if claim["status"] != "awaiting_signoff":
+            raise RefusedError(f"{claim_id} is not waiting for sign-off")
+        if not handler["can_approve_over_limit"]:
+            raise RefusedError(f"{handler['name']} can't sign off this payout")
+        conn.execute(
+            "UPDATE claims SET status = 'decided', signed_off_by = ?, "
+            "signed_off_at = ?, paid_amount = payout, paid_at = ? WHERE claim_id = ?",
+            (handler["name"], signed_off_at := now(), signed_off_at, claim_id),
+        )
+    return get_claim(claim_id)

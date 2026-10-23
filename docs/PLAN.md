@@ -117,15 +117,15 @@ Builds the operations that change a claim, with the $1,000 rule enforced here in
 
 Success criteria:
 
-- [ ] Tests cover every transition and every refusal, including:
-  - [ ] Approve $420, pay $420: status `decided`, paid $420
-  - [ ] Approve $1,500, pay $1,500: 409, status `awaiting_signoff`, nothing paid
-  - [ ] Sign off by HND-01: status `decided`, paid $1,500, signed off by Dana Whitfield
-  - [ ] Pay a declined claim, pay twice, or pay a different amount: 409
-  - [ ] Decide a claim that isn't in progress, or decline with a payout: refused
-  - [ ] Sign off a claim that isn't waiting for sign-off, or with an unknown handler: refused
-- [ ] The same over-limit flow through `curl` against the running backend gives the same responses
-- [ ] `npm run check:python` passes with coverage of at least 80%
+- [x] Tests cover every transition and every refusal, including:
+  - [x] Approve $420, pay $420: status `decided`, paid $420
+  - [x] Approve $1,500, pay $1,500: 409, status `awaiting_signoff`, nothing paid
+  - [x] Sign off by HND-01: status `decided`, paid $1,500, signed off by Dana Whitfield
+  - [x] Pay a declined claim, pay twice, or pay a different amount: 409
+  - [x] Decide a claim that isn't in progress, or decline with a payout: refused
+  - [x] Sign off a claim that isn't waiting for sign-off, or with an unknown handler: refused
+- [x] The same over-limit flow through `curl` against the running backend gives the same responses
+- [x] `npm run check:python` passes with coverage of at least 80%
 
 ### Phase 3: The UnderCover Agent
 
