@@ -622,13 +622,163 @@ h1 {
   font-weight: 500;
 }
 
+/* Claim page */
+
+.wide-column {
+  grid-column: span 3;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  min-width: 0;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.story {
+  margin-top: 24px;
+  max-width: 760px;
+  line-height: 1.6;
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.items-table th {
+  height: 36px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--slate);
+  text-align: left;
+}
+
+.items-table td {
+  height: 44px;
+  border-top: 1px dashed #cfcfcf;
+}
+
+.items-table .amount {
+  text-align: right;
+}
+
+.items-table .total td {
+  font-weight: 500;
+}
+
+.documents {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.documents h3 {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.documents p {
+  line-height: 1.6;
+}
+
+.decision {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  line-height: 1.5;
+}
+
+.decision-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.card-number {
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.dark-panel p {
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.handler-select {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fog);
+}
+
+.handler-select select {
+  height: 44px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: #ffffff;
+  color: var(--graphite);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.dark-panel .main-action {
+  width: 100%;
+}
+
+.dark-panel .error {
+  margin: 16px 0 0;
+  color: var(--sunflower);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 1200px) {
   .summary-row,
   .main-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .table-card {
+  .table-card,
+  .wide-column {
     grid-column: auto;
   }
 }

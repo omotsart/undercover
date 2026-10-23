@@ -80,3 +80,8 @@ export function percent(count: number, total: number): string {
 export function errorMessage(reason: unknown): string {
   return reason instanceof Error ? reason.message : String(reason);
 }
+
+export function sentenceCase(name: string): string {
+  const words = name.replaceAll("_", " ");
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}

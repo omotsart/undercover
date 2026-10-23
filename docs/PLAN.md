@@ -199,16 +199,16 @@ Builds the claim page, where a handler reads a claim in full, follows the agent'
 
 Success criteria:
 
-- [ ] Vitest tests cover the claim page's sections, the steps list, and sign-off
-- [ ] Playwright tests pass:
-  - [ ] The queue loads with 25 waiting claims
-  - [ ] A claim approved at $420 and paid through the API shows as Decided and Approved with $420.00 in the queue, and its page shows the reason, the section and the steps
-  - [ ] A claim approved at $1,500 has its payment refused, shows as Waiting for sign-off and appears in the Next for sign-off panel; on its page a handler signs off, and it shows as Decided and paid $1,500.00
-  - [ ] The instructions page shows the instructions
-  - [ ] At 375px wide no page scrolls sideways
-- [ ] In the browser with the Playwright MCP server, clicking "Work the queue" with the real model shows a claim go In progress, its steps appear on its page while it works, and it ends Decided or Waiting for sign-off
-- [ ] `docs/STATUS.md` describes what's built and how to run it, and the root `README.md` is untouched
-- [ ] `npm run check` passes in full
+- [x] Vitest tests cover the claim page's sections, the steps list, and sign-off
+- [x] Playwright tests pass:
+  - [x] The queue loads with 25 waiting claims
+  - [x] A claim approved at $420 and paid through the API shows as Decided and Approved with $420.00 in the queue, and its page shows the reason, the section and the steps
+  - [x] A claim approved at $1,500 has its payment refused, shows as Waiting for sign-off and appears in the Next for sign-off panel; on its page a handler signs off, and it shows as Decided and paid $1,500.00
+  - [x] The instructions page shows the instructions
+  - [x] At 375px wide no page scrolls sideways
+- [x] In the browser with the Playwright MCP server, clicking "Work the queue" with the real model shows a claim go In progress, its steps appear on its page while it works, and it ends Decided or Waiting for sign-off
+- [x] `docs/STATUS.md` describes what's built and how to run it, and the root `README.md` is untouched
+- [x] `npm run check` passes in full
 
 ## Not in this plan
 
