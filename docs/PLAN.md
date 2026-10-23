@@ -179,14 +179,14 @@ Builds the queue page from the screen recipe in `docs/BRAND.md`, and the read-on
 
 Success criteria:
 
-- [ ] Vitest tests, with `fetch` stubbed, cover the formatting, the chips, the status bar's counts and percentages (including "0 · 0%"), the empty states, the button calling `work_queue`, and the instructions page
-- [ ] `npm run check:ts` passes with coverage of at least 80%
-- [ ] In the browser with the Playwright MCP server, after `npm run seed`, the queue at 1440px wide shows 25 claims, the status bar reads "25 · 100%" under Waiting and "0 · 0%" in the other three, and the cards on the right show their empty lines
-- [ ] Every status is a filled chip in the exact status colors, every decision a tinted chip with its icon, and a claim with no decision shows "–"
-- [ ] Hovering a row turns it white with rounded corners and hides the dashed lines either side; tabbing to a row shows the same highlight
-- [ ] At 375px wide the page doesn't scroll sideways, the right-hand cards sit under the table, and the table scrolls inside its card
-- [ ] After a few claims are decided through the API, the page updates within two seconds without a reload
-- [ ] The Instructions pill shows the agent's instructions
+- [x] Vitest tests, with `fetch` stubbed, cover the formatting, the chips, the status bar's counts and percentages (including "0 · 0%"), the empty states, the button calling `work_queue`, and the instructions page
+- [x] `npm run check:ts` passes with coverage of at least 80%
+- [x] In the browser with the Playwright MCP server, after `npm run seed`, the queue at 1440px wide shows 25 claims, the status bar reads "25 · 100%" under Waiting and "0 · 0%" in the other three, and the cards on the right show their empty lines
+- [x] Every status is a filled chip in the exact status colors, every decision a tinted chip with its icon, and a claim with no decision shows "–"
+- [x] Hovering a row turns it white with rounded corners and hides the dashed lines either side; tabbing to a row shows the same highlight
+- [x] At 375px wide the page doesn't scroll sideways, the right-hand cards sit under the table, and the table scrolls inside its card
+- [x] After a few claims are decided through the API, the page updates within two seconds without a reload
+- [x] The Instructions pill shows the agent's instructions
 
 ### Phase 6: The claim page, sign-off and end-to-end tests
 

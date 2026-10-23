@@ -1,19 +1,15 @@
-import { useEffect, useState } from "react";
+import { Header } from "./components";
+import { usePath } from "./hooks";
+import { InstructionsPage } from "./InstructionsPage";
+import { QueuePage } from "./QueuePage";
+import "./styles.css";
 
 export function App() {
-  const [status, setStatus] = useState("checking");
-
-  useEffect(() => {
-    void fetch("/api/health")
-      .then((response) => (response.ok ? "up" : "down"))
-      .catch(() => "down")
-      .then(setStatus);
-  }, []);
-
+  const path = usePath();
   return (
-    <main>
-      <h1>UnderCover</h1>
-      <p>Backend: {status}</p>
-    </main>
+    <div className="page">
+      <Header path={path} />
+      {path === "/instructions" ? <InstructionsPage /> : <QueuePage />}
+    </div>
   );
 }
