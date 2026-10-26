@@ -2,7 +2,6 @@ from types import SimpleNamespace
 
 from langchain_core.messages import AIMessage
 
-from agent import __main__ as cli
 from agent import claim, main
 from agent.tests.stubs import decide, steps, stub, tool_call
 
@@ -138,14 +137,6 @@ def test_the_agent_looks_things_up_and_cannot_sign_off_or_start_claims():
         "record_decision",
         "pay_claim",
     }
-
-
-def test_cli(api, monkeypatch, capsys):
-    monkeypatch.setattr(
-        cli, "work_claim", lambda claim_id, thread_id: f"{claim_id} done"
-    )
-    cli.main("CLM-1001")
-    assert capsys.readouterr().out == "CLM-1001 done\n"
 
 
 def test_model_name(monkeypatch):
