@@ -90,7 +90,13 @@ No decision yet: show a single en dash `–` in Slate. Do not use Sunflower for 
 1. **Header**: product name on the left, navigation pills (Queue, Instructions) and icon buttons on the right.
 2. **Title row**: "Claims queue" and the claim count on the left, "Work the queue" Sunflower button on the right, with the "Claims to work" number field (a white pill) before it.
 3. **Summary row**: the status bar card on the left (about 60% of the width) and the dark Next for sign-off panel on the right. With nothing waiting for sign-off the panel shrinks to one line, "Nothing is waiting for sign-off." Below 1200px the panel goes straight under the status bar.
-4. **The agent's run**: a card across the full width with the run's status chip, its to-do list in columns and, once it ends, its summary.
+4. **The agent's run**: a card across the full width.
+   - A head with the run's status chip, "Run N" and "N of M claims".
+   - Once the run ends, four numbers inside the card (40px, weight 300): Paid and Waiting for sign-off, each with its dollar total, then Declined and Back in the queue.
+   - The run's claims in the order worked, one row each: the outcome's round icon, the claim ID, the type, the amount claimed, the outcome chip and a › arrow. The whole row opens the claim. Outcomes: Paid in the Approved colors, Declined and Referred in theirs, and Waiting for sign-off, Left for a handler and Back in the queue (Waiting) in their status colors.
+   - The claim being worked has the moving In progress chip and the agent's last step in Slate after it, on a slightly darker row. It doesn't open.
+   - While the run works, "Queued" rows (a Waiting chip, Slate text, not clickable) fill up to the cap with the rest of the agent's to-do list.
+   - Below, two collapsed sections side by side: "The agent's plan", the full to-do list with status chips, and "Run summary".
 5. **Main grid**: four columns.
    - The Claims table card spans three columns.
    - The right column stacks two cards: By status (ring chart) and Decisions: Paid in dollars as a number inside the card (40px, weight 300) with the label "Paid", then the Approved, Referred, Declined bar in decision colors.

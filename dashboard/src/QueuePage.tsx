@@ -166,7 +166,7 @@ export function QueuePage() {
         </section>
         <SignOffPanel claims={claims} />
       </div>
-      <RunCard run={run.data} error={run.error} />
+      <RunCard run={run.data} error={run.error} claims={claims} />
       <div className="main-grid">
         <ClaimsTable claims={claims} />
         <div className="side-column">

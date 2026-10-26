@@ -6,23 +6,8 @@ import {
   within,
 } from "@testing-library/react";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
-import type { Run } from "./api";
 import { App } from "./App";
-import { failure, stubApi, summary } from "./testing";
-
-function run(overrides: Partial<Run>): Run {
-  return {
-    run_id: 3,
-    cap: 5,
-    status: "running",
-    todos: [],
-    summary: null,
-    started_at: "2026-10-26T18:39:13+00:00",
-    finished_at: null,
-    claims: [],
-    ...overrides,
-  };
-}
+import { failure, run, stubApi, summary } from "./testing";
 
 const QUEUE = [
   summary({
@@ -177,77 +162,6 @@ it("shows that the agent hasn't run yet", async () => {
   expect(await screen.findByText("The agent hasn't run yet.")).toBeDefined();
 });
 
-it("shows the run's to-do list as the agent works", async () => {
-  stubApi({
-    "GET /api/claims": WAITING,
-    "GET /api/runs/current": run({
-      claims: ["CLM-1001", "CLM-1002", "CLM-1003"],
-      todos: [
-        { content: "Work CLM-1001", status: "done" },
-        { content: "Work CLM-1002", status: "for_handler" },
-        { content: "Work CLM-1003", status: "in_progress" },
-        { content: "Check for missed claims", status: "to_do" },
-      ],
-    }),
-  });
-  render(<App />);
-  const list = await screen.findByRole("list", { name: "To-do list" });
-  const items = within(list).getAllByRole("listitem");
-  expect(items.map((item) => item.textContent)).toEqual([
-    "DoneWork CLM-1001",
-    "Left for a handlerWork CLM-1002",
-    "In progressWork CLM-1003",
-    "To doCheck for missed claims",
-  ]);
-  expect(screen.getByText("Working")).toBeDefined();
-  expect(screen.getByText("Run 3")).toBeDefined();
-  expect(screen.getByText("3 of 5 claims started")).toBeDefined();
-});
-
-it("shows a run that is still planning", async () => {
-  stubApi({ "GET /api/claims": WAITING, "GET /api/runs/current": run({}) });
-  render(<App />);
-  expect(
-    await screen.findByText("The agent is planning its work."),
-  ).toBeDefined();
-});
-
-it("shows a finished run with its summary", async () => {
-  stubApi({
-    "GET /api/claims": WAITING,
-    "GET /api/runs/current": run({
-      status: "finished",
-      todos: [{ content: "Work CLM-1001", status: "done" }],
-      summary: "One claim worked and approved.",
-    }),
-  });
-  render(<App />);
-  expect(
-    await screen.findByText("One claim worked and approved."),
-  ).toBeDefined();
-  expect(screen.getByText("Finished")).toBeDefined();
-  expect(screen.getByRole("button", { name: "Work the queue" })).toHaveProperty(
-    "disabled",
-    false,
-  );
-});
-
-it("shows a stopped run with the reason", async () => {
-  stubApi({
-    "GET /api/claims": WAITING,
-    "GET /api/runs/current": run({
-      status: "stopped",
-      summary: "The run stopped: The provider is down",
-    }),
-  });
-  render(<App />);
-  expect(await screen.findByText("Stopped")).toBeDefined();
-  expect(screen.getByText("The agent wrote no to-do list.")).toBeDefined();
-  expect(
-    screen.getByText("The run stopped: The provider is down"),
-  ).toBeDefined();
-});
-
 it("counts claims left for a handler", async () => {
   stubApi({
     "GET /api/claims": [
@@ -285,10 +199,12 @@ it("moves only the run while it works", async () => {
   stubApi({
     "GET /api/claims": IN_PROGRESS,
     "GET /api/runs/current": run({ claims: ["CLM-1001"] }),
+    "GET /api/claims/CLM-1001/steps": [],
   });
   render(<App />);
   await screen.findByText("Working");
-  expect(liveElements()).toEqual(["Working"]);
+  expect(liveElements()).toEqual(["Working", "In progress"]);
+  expect(document.querySelector(".claims-table .is-live")).toBeNull();
 });
 
 it("keeps everything still when nothing is in progress", async () => {

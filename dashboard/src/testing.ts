@@ -1,5 +1,5 @@
 import { vi } from "vitest";
-import type { ClaimSummary } from "./api";
+import type { ClaimSummary, Run } from "./api";
 
 class Failure {
   constructor(
@@ -40,6 +40,20 @@ export function summary(overrides: Partial<ClaimSummary>): ClaimSummary {
     decision: null,
     payout: null,
     paid_amount: null,
+    ...overrides,
+  };
+}
+
+export function run(overrides: Partial<Run>): Run {
+  return {
+    run_id: 3,
+    cap: 5,
+    status: "running",
+    todos: [],
+    summary: null,
+    started_at: "2026-10-26T18:39:13+00:00",
+    finished_at: null,
+    claims: [],
     ...overrides,
   };
 }

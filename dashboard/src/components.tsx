@@ -109,6 +109,10 @@ export function TodoChip({ status }: Readonly<{ status: TodoStatus }>) {
   );
 }
 
+export function QueuedChip() {
+  return <FilledChip status="waiting" label="Queued" />;
+}
+
 const RUN_COLORS: Record<RunStatus, Status> = {
   running: "in_progress",
   finished: "decided",
