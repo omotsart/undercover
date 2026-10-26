@@ -252,19 +252,19 @@ Shows the run on the queue page, the new status everywhere, and both sets of ins
 
 - `api.ts`: the run, its to-do items, `workQueue(cap)`, and the `for_handler` status
 - The title row: a "Claims to work" number field next to "Work the queue", starting at 5, from 1 to the number waiting. The button is disabled while a run is running and reads "Working the queue"
-- A new card, "The agent's run", across the full width between the summary row and the main grid. It shows the run's status, its cap and how many claims it has done, then the to-do list. Each item has a chip: To do in Steel Grey, In progress hatched, Done in Graphite, and Left for a handler in Deep Sunflower, since it needs someone. When the run finishes, its summary appears, with the reason when it stopped. Empty state: "The agent hasn't run yet." It polls `get_current_run` every two seconds
+- A new card, "The agent's run", across the full width between the summary row and the main grid. It shows the run's status, its cap and how many claims it has done, then the to-do list. Each item has a chip in the claim status color that means the same thing: To do in Steel Grey, In progress hatched, Done in Graphite, and Left for a handler in Slate. (The first draft of this plan gave Left for a handler Deep Sunflower here; I matched it to the claim status instead, so one label always has one color.) When the run finishes, its summary appears, with the reason when it stopped. Empty state: "The agent hasn't run yet." It polls `get_current_run` every two seconds
 - The new status "Left for a handler" in the status chip, the status bar, the ring chart and the legends (see "Choices for you to check")
 - The claim page: for a claim left for a handler, the decision card reads "The agent couldn't decide this claim. It's left for a handler." Its steps, across both attempts, show what went wrong
 - The instructions page: "Running the queue" and "Working a claim", each in its own card, read only
 
 Success criteria:
 
-- [ ] Vitest tests, with `fetch` stubbed, cover the to-do card (every item status, the empty state, a running, finished and stopped run, the summary), the field and button calling `work_queue` with the cap, the new status chip and its counts, the claim page for a claim left for a handler, and both sets of instructions
-- [ ] Playwright tests pass, updated for the new instructions and the new status, plus a test that the queue shows "The agent hasn't run yet." and the "Claims to work" field. The end-to-end tests never start a run, since that would call a model
-- [ ] `npm run check:ts` passes with coverage of at least 80%
-- [ ] In the browser with the Playwright MCP server, after `npm run seed`, with "Claims to work" at 5 and the real model: clicking "Work the queue" shows the to-do list fill in and its items ticked off as the run goes. Each claim's page shows its steps as it is worked, including the sections it read. At the end the run's summary shows, five claims have moved and twenty are still waiting
-- [ ] At 1440px and 375px wide no page scrolls sideways, and the status bar's five pills fit
-- [ ] Every status is a filled chip in its exact color, and every to-do item has its chip
+- [x] Vitest tests, with `fetch` stubbed, cover the to-do card (every item status, the empty state, a running, finished and stopped run, the summary), the field and button calling `work_queue` with the cap, the new status chip and its counts, the claim page for a claim left for a handler, and both sets of instructions
+- [x] Playwright tests pass, updated for the new instructions and the new status, plus a test that the queue shows "The agent hasn't run yet." and the "Claims to work" field. The end-to-end tests never start a run, since that would call a model
+- [x] `npm run check:ts` passes with coverage of at least 80%
+- [x] In the browser (a Playwright script driving Chromium, since the Playwright MCP server wasn't available in this session), after `npm run seed`, with "Claims to work" at 5 and the real model: clicking "Work the queue" shows the to-do list fill in and its items ticked off as the run goes. Each claim's page shows its steps as it is worked, including the sections it read. At the end the run's summary shows, five claims have moved and twenty are still waiting
+- [x] At 1440px and 375px wide no page scrolls sideways, and the status bar's five pills fit
+- [x] Every status is a filled chip in its exact color, and every to-do item has its chip
 
 ### Phase 6: The product documents and the full check
 

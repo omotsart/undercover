@@ -34,6 +34,7 @@ function claim(overrides: Partial<Claim>): Claim {
       },
     ],
     status: "waiting",
+    failures: 0,
     decision: null,
     payout: null,
     reason: null,
@@ -197,6 +198,35 @@ it("shows an approval that isn't paid yet, and a decline", async () => {
   render(<App />);
   expect(await screen.findByText("Declined")).toBeDefined();
   expect(screen.getByText("No documents attached.")).toBeDefined();
+});
+
+it("shows a claim left for a handler with the steps of both attempts", async () => {
+  stubApi(
+    routes(claim({ status: "for_handler", failures: 2 }), {
+      "GET /api/claims/CLM-1002/steps": [
+        {
+          text: "Back in the queue: The model timed out",
+          created_at: "2026-10-23T10:00:00+00:00",
+        },
+        { text: "Attempt 2", created_at: "2026-10-23T10:05:00+00:00" },
+        {
+          text: "Left for a handler: The model timed out",
+          created_at: "2026-10-23T10:06:00+00:00",
+        },
+      ],
+    }),
+  );
+  render(<App />);
+  expect(
+    await screen.findByText(
+      "The agent couldn't decide this claim. It's left for a handler.",
+    ),
+  ).toBeDefined();
+  expect(screen.getAllByText("Left for a handler")).toHaveLength(1);
+  expect(
+    await screen.findByText("Left for a handler: The model timed out"),
+  ).toBeDefined();
+  expect(screen.getByText("Attempt 2")).toBeDefined();
 });
 
 it("says when a claim doesn't exist", async () => {

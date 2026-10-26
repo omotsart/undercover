@@ -4,6 +4,7 @@ import { DecisionsBar, RingChart, StatusBar } from "./charts";
 import { Card, DecisionChip, Link, StatusChip } from "./components";
 import { claimType, date, errorMessage, money } from "./format";
 import { usePolling } from "./hooks";
+import { RunCard } from "./RunCard";
 
 const COLUMNS = [
   "Claim",
@@ -105,27 +106,32 @@ function BigNumber({
 
 export function QueuePage() {
   const { data: claims, error, refresh } = usePolling(api.listClaims);
+  const run = usePolling(api.getCurrentRun);
+  const [cap, setCap] = useState(5);
   const [message, setMessage] = useState<string>();
 
   if (!claims) return <p className="card">{error ?? "Loading the queue."}</p>;
 
   const count = (status: ClaimSummary["status"]) =>
     claims.filter((claim) => claim.status === status).length;
-  const working = count("in_progress") > 0;
+  const working = run.data?.status === "running";
+  const waiting = count("waiting");
   const paid = claims.reduce((sum, claim) => sum + (claim.paid_amount ?? 0), 0);
 
   const workQueue = () =>
     api
-      .workQueue()
+      .workQueue(Math.min(cap, waiting))
       .then(
-        ({ claims: started }) => {
-          setMessage(`The agent is working ${String(started)} claims.`);
+        (started) => {
+          setMessage(
+            `The agent is working up to ${String(started.cap)} claims.`,
+          );
         },
         (reason: unknown) => {
           setMessage(errorMessage(reason));
         },
       )
-      .then(refresh);
+      .then(() => Promise.all([refresh(), run.refresh()]));
 
   return (
     <main className="stack">
@@ -136,10 +142,23 @@ export function QueuePage() {
         </div>
         <div className="title-actions">
           {message && <span className="message">{message}</span>}
+          <label className="cap-field">
+            <span>Claims to work</span>
+            <input
+              type="number"
+              min={1}
+              max={waiting}
+              value={cap}
+              disabled={working}
+              onChange={(event) => {
+                setCap(Number(event.target.value));
+              }}
+            />
+          </label>
           <button
             type="button"
             className="main-action"
-            disabled={working || count("waiting") === 0}
+            disabled={working || waiting === 0 || cap < 1}
             onClick={() => void workQueue()}
           >
             {working ? "Working the queue" : "Work the queue"}
@@ -159,6 +178,7 @@ export function QueuePage() {
           <BigNumber value={money(paid)} label="Paid" />
         </section>
       </div>
+      <RunCard run={run.data} error={run.error} />
       <div className="main-grid">
         <ClaimsTable claims={claims} />
         <div className="side-column">

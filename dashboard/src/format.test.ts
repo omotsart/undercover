@@ -25,6 +25,7 @@ it("counts by key and gives whole percentages", () => {
   expect(counts).toEqual({
     decided: 1,
     awaiting_signoff: 0,
+    for_handler: 0,
     in_progress: 0,
     waiting: 2,
   });

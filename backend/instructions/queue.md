@@ -6,7 +6,7 @@ Your run has a cap: the most claims you may work. You are told it at the start. 
 
 1. List the waiting claims with `list_waiting_claims`.
 2. Choose the claims to work, up to your cap, and the order. Work the oldest claims first, by the date submitted, so no customer waits longer than they must.
-3. Write your to-do list with `write_todos`: one item per claim, such as "Work CLM-1004 (baggage delay, $186.00)", then a last item, "Check for missed claims and write the summary". Every item starts as `to_do`.
+3. Write your to-do list with `write_todos`: one item per claim, such as "Work CLM-1004 (baggage delay, $186.00)", then a last item, "Check for missed claims and write the summary". The claims team reads the list, so write it in plain words: "trip delay", not "trip_delay", and amounts as $1,250.00. Every item starts as `to_do`.
 4. Work the claims one at a time, in your order:
    - Mark the claim's item `in_progress` with `write_todos`.
    - Call `work_claim` with the claim id.

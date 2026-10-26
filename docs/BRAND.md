@@ -41,6 +41,9 @@ Every status is a filled chip. Never show a status as plain text.
 | In progress | hatched (see Patterns), text on a small white inner pill | Graphite |
 | Waiting for sign-off | Deep Sunflower `#F5C400` | Graphite |
 | Decided | Graphite `#232323` | white |
+| Left for a handler | Slate `#55585E` | white |
+
+The agent's to-do items wear the status colors that mean the same thing: To do as Waiting, In progress as In progress, Done as Decided and Left for a handler as Left for a handler.
 
 Use these exact status colors everywhere: the status bar, table chips, the ring chart and legends. Do not use lighter tints for statuses, they disappear on the cards.
 
@@ -77,7 +80,7 @@ No decision yet: show a single en dash `–` in Slate. Do not use Sunflower for 
 - **Main action**: Sunflower pill with Graphite text, 48px tall.
 - **Icon buttons**: 44px circles, solid white, 1.8px stroke icon.
 - **Hatching**: `repeating-linear-gradient(120deg, #FFFFFF 0 6px, #6B7079 6px 10px)`. The stripes must be clearly visible.
-- **Status bar (fixed size, decided)**: four pills of equal width in one row (`grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px`), 52px tall, always in the order Decided, Waiting for sign-off, In progress, Waiting. The status name sits above each pill (13px, weight 500, Graphite). Inside the pill is "count · percent" (16px, weight 500), for example "19 · 76%". Fill each pill with its status color. Keep pills with zero claims and show "0 · 0%". **Widths never follow the data**: the ring chart shows the proportions.
+- **Status bar (fixed size, decided)**: five pills of equal width in one row (`grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px`), 52px tall, always in the order Decided, Waiting for sign-off, Left for a handler, In progress, Waiting. The status name sits above each pill (13px, weight 500, Graphite). Inside the pill is "count · percent" (16px, weight 500), for example "19 · 76%". Fill each pill with its status color. Keep pills with zero claims and show "0 · 0%". **Widths never follow the data**: the ring chart shows the proportions.
 - **Ring chart**: a thick rounded arc per status in the status colors, with the total in the center (40px, weight 300) and a legend below.
 - **Row separators**: 1px dashed `#CFCFCF` lines between table rows. Rows are 44px tall.
 - **Row hover**: the row under the mouse turns solid white with 14px rounded corners and a soft shadow (`0 2px 10px rgba(35,35,35,0.08)`). Hide the dashed lines above and below that row. The cursor is a pointer, and the whole row opens the claim. The change fades in over 0.15s. Also show the same highlight when the row has keyboard focus.
@@ -85,13 +88,14 @@ No decision yet: show a single en dash `–` in Slate. Do not use Sunflower for 
 ## Screen recipe: Claims queue
 
 1. **Header**: product name on the left, navigation pills (Queue, Instructions) and icon buttons on the right.
-2. **Title row**: "Claims queue" and the claim count on the left, "Work the queue" Sunflower button on the right.
+2. **Title row**: "Claims queue" and the claim count on the left, "Work the queue" Sunflower button on the right, with the "Claims to work" number field (a white pill) before it.
 3. **Summary row**: the status bar on the left (about 60% of the width), three big numbers on the right: Waiting, For sign-off and Paid in dollars, each with a 13px label below.
-4. **Main grid**: four columns.
+4. **The agent's run**: a card across the full width with the run's status chip, its to-do list in columns and, once it ends, its summary.
+5. **Main grid**: four columns.
    - The Claims table card spans three columns.
    - The right column stacks three cards: By status (ring chart), Decisions (Approved, Referred, Declined bar in decision colors) and the dark Next for sign-off panel.
    - Below 1200px the right column moves under the table.
-5. **Empty states**: when a card has nothing to show, keep the card and write one short line, such as "Nothing is waiting for sign-off."
+6. **Empty states**: when a card has nothing to show, keep the card and write one short line, such as "Nothing is waiting for sign-off."
 
 ## Ready-to-use tokens
 
@@ -106,6 +110,7 @@ No decision yet: show a single en dash `–` in Slate. Do not use Sunflower for 
   --status-progress-stripe: #6B7079;
   --status-signoff: #F5C400;
   --status-decided: #232323;
+  --status-handler: #55585E;
   --charcoal: #2B2B2B;
   --fog: #B5B5B5;
   --card: rgba(255, 255, 255, 0.6);

@@ -1,4 +1,4 @@
-import type { Decision, Status } from "./api";
+import type { Decision, RunStatus, Status, TodoStatus } from "./api";
 
 const dollars = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -43,11 +43,25 @@ export function claimType(type: string): string {
 export const STATUS_LABELS: Record<Status, string> = {
   decided: "Decided",
   awaiting_signoff: "Waiting for sign-off",
+  for_handler: "Left for a handler",
   in_progress: "In progress",
   waiting: "Waiting",
 };
 
 export const STATUSES = Object.keys(STATUS_LABELS) as Status[];
+
+export const TODO_LABELS: Record<TodoStatus, string> = {
+  to_do: "To do",
+  in_progress: "In progress",
+  done: "Done",
+  for_handler: "Left for a handler",
+};
+
+export const RUN_LABELS: Record<RunStatus, string> = {
+  running: "Working",
+  finished: "Finished",
+  stopped: "Stopped",
+};
 
 export const DECISION_LABELS: Record<Decision, string> = {
   approve: "Approved",

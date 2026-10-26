@@ -14,9 +14,9 @@ export function failure(status: number, detail: string) {
 
 export function stubApi(routes: Record<string, unknown>) {
   const fetch = vi.fn((path: string, init?: RequestInit) => {
+    const key = `${init?.method ?? "GET"} ${path}`;
     const route =
-      routes[`${init?.method ?? "GET"} ${path}`] ??
-      failure(404, `${path} not found`);
+      key in routes ? routes[key] : failure(404, `${path} not found`);
     return Promise.resolve(
       route instanceof Failure
         ? new Response(JSON.stringify({ detail: route.detail }), {

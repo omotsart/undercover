@@ -93,7 +93,11 @@ function DecisionCard({ claim }: Readonly<{ claim: Claim }>) {
   return (
     <Card title="Decision">
       {claim.decision === null ? (
-        <p className="empty">The agent hasn't decided this claim yet.</p>
+        <p className="empty">
+          {claim.status === "for_handler"
+            ? "The agent couldn't decide this claim. It's left for a handler."
+            : "The agent hasn't decided this claim yet."}
+        </p>
       ) : (
         <div className="decision">
           <div className="decision-head">

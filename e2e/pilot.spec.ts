@@ -29,14 +29,29 @@ async function decide(
 test("the queue loads with 25 waiting claims", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByText("25 claims")).toBeVisible();
-  await expect(page.locator(".status-bar-item").nth(3)).toContainText(
+  await expect(page.locator(".status-bar-item").nth(4)).toContainText(
     "25 · 100%",
   );
-  await expect(page.getByText("0 · 0%")).toHaveCount(3);
+  await expect(page.getByText("0 · 0%")).toHaveCount(4);
+  await expect(page.locator(".status-bar-item").nth(2)).toContainText(
+    "Left for a handler",
+  );
   await expect(
     page.getByText("Nothing is waiting for sign-off."),
   ).toBeVisible();
   await expect(page.getByText("No decisions yet.")).toBeVisible();
+});
+
+// Starting a run would call a model, so these tests never press the button.
+test("the queue shows the agent's run and the claims to work", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page.getByText("The agent hasn't run yet.")).toBeVisible();
+  await expect(page.getByLabel("Claims to work")).toHaveValue("5");
+  await expect(
+    page.getByRole("button", { name: "Work the queue" }),
+  ).toBeEnabled();
 });
 
 test("an approved claim is decided and paid", async ({ page, request }) => {

@@ -6,8 +6,23 @@ import {
   within,
 } from "@testing-library/react";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
+import type { Run } from "./api";
 import { App } from "./App";
 import { failure, stubApi, summary } from "./testing";
+
+function run(overrides: Partial<Run>): Run {
+  return {
+    run_id: 3,
+    cap: 5,
+    status: "running",
+    todos: [],
+    summary: null,
+    started_at: "2026-10-26T18:39:13+00:00",
+    finished_at: null,
+    claims: [],
+    ...overrides,
+  };
+}
 
 const QUEUE = [
   summary({
@@ -43,12 +58,15 @@ afterEach(() => {
 });
 
 it("shows the queue with its status bar, numbers and cards", async () => {
-  stubApi({ "GET /api/claims": QUEUE });
+  stubApi({
+    "GET /api/claims": QUEUE,
+    "GET /api/runs/current": run({ claims: ["CLM-1003"] }),
+  });
   render(<App />);
   expect(await screen.findByText("4 claims")).toBeDefined();
   expect(screen.getAllByText("2 · 50%")).toHaveLength(1);
   expect(screen.getAllByText("1 · 25%")).toHaveLength(2);
-  expect(screen.getByText("0 · 0%")).toBeDefined();
+  expect(screen.getAllByText("0 · 0%")).toHaveLength(2);
   expect(
     screen.getByText("$420.00", { selector: ".big-number .num" }),
   ).toBeDefined();
@@ -64,8 +82,12 @@ it("shows the queue with its status bar, numbers and cards", async () => {
   expect(within(signOff).getByText("Tomás Reyes")).toBeDefined();
   expect(screen.getByRole("img", { name: "4 claims by status" })).toBeDefined();
   expect(
-    screen.getByRole("button", { name: "Working the queue" }),
+    await screen.findByRole("button", { name: "Working the queue" }),
   ).toHaveProperty("disabled", true);
+  expect(screen.getByLabelText("Claims to work")).toHaveProperty(
+    "disabled",
+    true,
+  );
 });
 
 it("shows a line in each card with nothing to show", async () => {
@@ -73,7 +95,7 @@ it("shows a line in each card with nothing to show", async () => {
   render(<App />);
   expect(await screen.findByText("No decisions yet.")).toBeDefined();
   expect(screen.getByText("Nothing is waiting for sign-off.")).toBeDefined();
-  expect(screen.getAllByText("0 · 0%")).toHaveLength(3);
+  expect(screen.getAllByText("0 · 0%")).toHaveLength(4);
   expect(screen.getByText("1 · 100%")).toBeDefined();
 });
 
@@ -81,22 +103,150 @@ it("shows an empty queue", async () => {
   stubApi({ "GET /api/claims": [] });
   render(<App />);
   expect(await screen.findByText("No claims in the queue.")).toBeDefined();
-  expect(screen.getAllByText("0 · 0%")).toHaveLength(4);
+  expect(screen.getAllByText("0 · 0%")).toHaveLength(5);
 });
 
-it("starts the agent on the queue", async () => {
+const WAITING = ["CLM-1001", "CLM-1002", "CLM-1003", "CLM-1004"].map(
+  (claimId) => summary({ claim_id: claimId }),
+);
+
+function workQueueBody(fetch: ReturnType<typeof stubApi>) {
+  const call = fetch.mock.calls.find(([path]) => path === "/api/queue/work");
+  return JSON.parse(call?.[1]?.body as string) as unknown;
+}
+
+it("starts a run capped at the claims to work", async () => {
   const fetch = stubApi({
-    "GET /api/claims": [summary({})],
-    "POST /api/queue/work": { claims: 1 },
+    "GET /api/claims": WAITING,
+    "GET /api/runs/current": null,
+    "POST /api/queue/work": run({ cap: 3 }),
+  });
+  render(<App />);
+  const field = await screen.findByLabelText("Claims to work");
+  expect(field).toHaveProperty("value", "5");
+  fireEvent.change(field, { target: { value: "3" } });
+  fireEvent.click(screen.getByRole("button", { name: "Work the queue" }));
+  expect(
+    await screen.findByText("The agent is working up to 3 claims."),
+  ).toBeDefined();
+  expect(workQueueBody(fetch)).toEqual({ cap: 3 });
+});
+
+it("caps a run at the claims waiting", async () => {
+  const fetch = stubApi({
+    "GET /api/claims": WAITING,
+    "GET /api/runs/current": null,
+    "POST /api/queue/work": run({ cap: 4 }),
   });
   render(<App />);
   fireEvent.click(
     await screen.findByRole("button", { name: "Work the queue" }),
   );
+  await screen.findByText("The agent is working up to 4 claims.");
+  expect(workQueueBody(fetch)).toEqual({ cap: 4 });
+});
+
+it("needs at least one claim to work", async () => {
+  stubApi({ "GET /api/claims": WAITING, "GET /api/runs/current": null });
+  render(<App />);
+  fireEvent.change(await screen.findByLabelText("Claims to work"), {
+    target: { value: "0" },
+  });
+  expect(screen.getByRole("button", { name: "Work the queue" })).toHaveProperty(
+    "disabled",
+    true,
+  );
+});
+
+it("shows that the agent hasn't run yet", async () => {
+  stubApi({ "GET /api/claims": WAITING, "GET /api/runs/current": null });
+  render(<App />);
+  expect(await screen.findByText("The agent hasn't run yet.")).toBeDefined();
+});
+
+it("shows the run's to-do list as the agent works", async () => {
+  stubApi({
+    "GET /api/claims": WAITING,
+    "GET /api/runs/current": run({
+      claims: ["CLM-1001", "CLM-1002", "CLM-1003"],
+      todos: [
+        { content: "Work CLM-1001", status: "done" },
+        { content: "Work CLM-1002", status: "for_handler" },
+        { content: "Work CLM-1003", status: "in_progress" },
+        { content: "Check for missed claims", status: "to_do" },
+      ],
+    }),
+  });
+  render(<App />);
+  const list = await screen.findByRole("list", { name: "To-do list" });
+  const items = within(list).getAllByRole("listitem");
+  expect(items.map((item) => item.textContent)).toEqual([
+    "DoneWork CLM-1001",
+    "Left for a handlerWork CLM-1002",
+    "In progressWork CLM-1003",
+    "To doCheck for missed claims",
+  ]);
+  expect(screen.getByText("Working")).toBeDefined();
+  expect(screen.getByText("Run 3")).toBeDefined();
+  expect(screen.getByText("3 of 5 claims started")).toBeDefined();
+});
+
+it("shows a run that is still planning", async () => {
+  stubApi({ "GET /api/claims": WAITING, "GET /api/runs/current": run({}) });
+  render(<App />);
   expect(
-    await screen.findByText("The agent is working 1 claims."),
+    await screen.findByText("The agent is planning its work."),
   ).toBeDefined();
-  expect(fetch).toHaveBeenCalledWith("/api/queue/work", expect.anything());
+});
+
+it("shows a finished run with its summary", async () => {
+  stubApi({
+    "GET /api/claims": WAITING,
+    "GET /api/runs/current": run({
+      status: "finished",
+      todos: [{ content: "Work CLM-1001", status: "done" }],
+      summary: "One claim worked and approved.",
+    }),
+  });
+  render(<App />);
+  expect(
+    await screen.findByText("One claim worked and approved."),
+  ).toBeDefined();
+  expect(screen.getByText("Finished")).toBeDefined();
+  expect(screen.getByRole("button", { name: "Work the queue" })).toHaveProperty(
+    "disabled",
+    false,
+  );
+});
+
+it("shows a stopped run with the reason", async () => {
+  stubApi({
+    "GET /api/claims": WAITING,
+    "GET /api/runs/current": run({
+      status: "stopped",
+      summary: "The run stopped: The provider is down",
+    }),
+  });
+  render(<App />);
+  expect(await screen.findByText("Stopped")).toBeDefined();
+  expect(screen.getByText("The agent wrote no to-do list.")).toBeDefined();
+  expect(
+    screen.getByText("The run stopped: The provider is down"),
+  ).toBeDefined();
+});
+
+it("counts claims left for a handler", async () => {
+  stubApi({
+    "GET /api/claims": [
+      summary({ claim_id: "CLM-1001", status: "for_handler" }),
+      summary({ claim_id: "CLM-1002" }),
+    ],
+    "GET /api/runs/current": null,
+  });
+  render(<App />);
+  const table = await screen.findByRole("table", { name: "Claims" });
+  expect(within(table).getByText("Left for a handler")).toBeDefined();
+  expect(screen.getAllByText("1 · 50%")).toHaveLength(2);
 });
 
 it("says why the queue didn't start", async () => {
@@ -119,13 +269,19 @@ it("says when the backend can't be reached", async () => {
   expect(await screen.findByText("offline")).toBeDefined();
 });
 
-it("refreshes the queue from the header", async () => {
-  const fetch = stubApi({ "GET /api/claims": [summary({})] });
+it("refreshes the queue and the run from the header", async () => {
+  const fetch = stubApi({
+    "GET /api/claims": [summary({})],
+    "GET /api/runs/current": null,
+  });
   render(<App />);
   await screen.findByText("1 claims");
   const calls = fetch.mock.calls.length;
   fireEvent.click(screen.getByRole("button", { name: "Refresh" }));
-  expect(fetch.mock.calls).toHaveLength(calls + 1);
+  expect(fetch.mock.calls.slice(calls).map(([path]) => path)).toEqual([
+    "/api/claims",
+    "/api/runs/current",
+  ]);
 });
 
 it("opens a claim from its row", async () => {

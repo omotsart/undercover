@@ -1,6 +1,6 @@
 # Status
 
-The pilot is built (`docs/PLAN.md`). The harness (`docs/PLAN_HARNESS.md`) is being built: Phases 1 to 4 of 6 are done.
+The pilot is built (`docs/PLAN.md`). The harness (`docs/PLAN_HARNESS.md`) is being built: Phases 1 to 5 of 6 are done.
 
 ## What's built
 
@@ -18,8 +18,8 @@ The pilot is built (`docs/PLAN.md`). The harness (`docs/PLAN_HARNESS.md`) is bei
   - `agent/queue.py`: the queue agent. `run_queue(run_id, cap)` lists the waiting claims, writes a to-do list, hands each claim to a fresh claim agent through `work_claim`, ticks the list off and finishes the run with a summary, through four tools: `list_waiting_claims`, `write_todos`, `work_claim` and `finish_run`. The backend's worker runs it for each run
   - `agent/main.py`: the backend client, the instructions and the model, shared by the agents
 - `dashboard/`: React, in the brand from `docs/BRAND.md`, updating every two seconds
-  - Queue: the status bar, the Waiting, For sign-off and Paid numbers, the claims table, the ring chart, the decisions bar, the Next for sign-off panel and the "Work the queue" button
-  - Claim: the claim in full with its items, documents and policy, the agent's decision and reason, its steps as it works, and sign-off by a handler for a payout over $1,000
+  - Queue: the status bar with five statuses (including Left for a handler), the Waiting, For sign-off and Paid numbers, "The agent's run" card with the run's status, its to-do list as the agent ticks it off and its summary, the claims table, the ring chart, the decisions bar, the Next for sign-off panel, and the "Claims to work" field (starting at 5) with the "Work the queue" button
+  - Claim: the claim in full with its items, documents and policy, the agent's decision and reason, its steps as it works (including the sections it read and every attempt), sign-off by a handler for a payout over $1,000, and a line for a claim left for a handler
   - Instructions: the agent's instructions for running the queue and for working a claim, read only
 - `e2e/`: Playwright tests of the whole flow. They start their own backend on port 8001 and dashboard on port 5174 with a fresh database (`e2e/e2e.db`), and play the agent's part through the API, so they never call a model
 

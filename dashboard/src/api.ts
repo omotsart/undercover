@@ -1,4 +1,5 @@
-export type Status = "waiting" | "in_progress" | "awaiting_signoff" | "decided";
+export type Status =
+  "waiting" | "in_progress" | "awaiting_signoff" | "decided" | "for_handler";
 export type Decision = "approve" | "decline" | "refer";
 
 export interface ClaimSummary {
@@ -27,6 +28,7 @@ export interface Claim {
   amount_claimed: number;
   documents: { name: string; type: string; content: string }[];
   status: Status;
+  failures: number;
   decision: Decision | null;
   payout: number | null;
   reason: string | null;
@@ -55,6 +57,26 @@ export interface Policy {
 export interface Step {
   text: string;
   created_at: string;
+}
+
+export type TodoStatus = "to_do" | "in_progress" | "done" | "for_handler";
+
+export interface Todo {
+  content: string;
+  status: TodoStatus;
+}
+
+export type RunStatus = "running" | "finished" | "stopped";
+
+export interface Run {
+  run_id: number;
+  cap: number;
+  status: RunStatus;
+  todos: Todo[];
+  summary: string | null;
+  started_at: string;
+  finished_at: string | null;
+  claims: string[];
 }
 
 export interface Instructions {
@@ -93,7 +115,8 @@ export const api = {
     request<Step[]>(`/api/claims/${claimId}/steps`),
   listHandlers: () => request<Handler[]>("/api/handlers"),
   getInstructions: () => request<Instructions[]>("/api/instructions"),
-  workQueue: () => request<{ claims: number }>("/api/queue/work", {}),
+  getCurrentRun: () => request<Run | null>("/api/runs/current"),
+  workQueue: (cap: number) => request<Run>("/api/queue/work", { cap }),
   signOff: (claimId: string, handlerId: string) =>
     request<Claim>(`/api/claims/${claimId}/sign-off`, {
       handler_id: handlerId,

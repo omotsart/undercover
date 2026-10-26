@@ -1,6 +1,11 @@
 import type { MouseEvent, ReactNode } from "react";
-import type { Decision, Status } from "./api";
-import { DECISION_LABELS, STATUS_LABELS } from "./format";
+import type { Decision, RunStatus, Status, TodoStatus } from "./api";
+import {
+  DECISION_LABELS,
+  RUN_LABELS,
+  STATUS_LABELS,
+  TODO_LABELS,
+} from "./format";
 import { REFRESH, navigate } from "./hooks";
 
 export function Link({
@@ -64,16 +69,47 @@ export function Header({ path }: Readonly<{ path: string }>) {
   );
 }
 
-export function StatusChip({ status }: Readonly<{ status: Status }>) {
+function FilledChip({
+  status,
+  label,
+}: Readonly<{ status: Status; label: string }>) {
   return (
     <span className={`chip status-${status}`}>
       {status === "in_progress" ? (
-        <span className="chip-inner">{STATUS_LABELS[status]}</span>
+        <span className="chip-inner">{label}</span>
       ) : (
-        STATUS_LABELS[status]
+        label
       )}
     </span>
   );
+}
+
+export function StatusChip({ status }: Readonly<{ status: Status }>) {
+  return <FilledChip status={status} label={STATUS_LABELS[status]} />;
+}
+
+// To-do items and runs wear the claim status colors that mean the same thing.
+const TODO_COLORS: Record<TodoStatus, Status> = {
+  to_do: "waiting",
+  in_progress: "in_progress",
+  done: "decided",
+  for_handler: "for_handler",
+};
+
+export function TodoChip({ status }: Readonly<{ status: TodoStatus }>) {
+  return (
+    <FilledChip status={TODO_COLORS[status]} label={TODO_LABELS[status]} />
+  );
+}
+
+const RUN_COLORS: Record<RunStatus, Status> = {
+  running: "in_progress",
+  finished: "decided",
+  stopped: "awaiting_signoff",
+};
+
+export function RunChip({ status }: Readonly<{ status: RunStatus }>) {
+  return <FilledChip status={RUN_COLORS[status]} label={RUN_LABELS[status]} />;
 }
 
 const DECISION_ICONS: Record<Decision, string> = {
