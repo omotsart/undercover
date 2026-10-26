@@ -35,11 +35,24 @@ export function StatusBar({
 const RADIUS = 52;
 const WIDTH = 16;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+const GAP = 2;
+// Each arc loses its rounded caps and a gap, so a small share gets at least
+// enough room to show as a short arc rather than a dot.
+const MIN_DASH = 8;
+const MIN_ARC = WIDTH + GAP + MIN_DASH;
 
 function arcs(counts: Record<Status, number>, total: number) {
+  const shown = STATUSES.filter((status) => counts[status] > 0);
+  const small = shown.filter(
+    (status) => (counts[status] / total) * CIRCUMFERENCE < MIN_ARC,
+  );
+  const rest = total - small.reduce((sum, status) => sum + counts[status], 0);
+  const room = CIRCUMFERENCE - small.length * MIN_ARC;
   let offset = 0;
-  return STATUSES.filter((status) => counts[status] > 0).map((status) => {
-    const length = (counts[status] / total) * CIRCUMFERENCE;
+  return shown.map((status) => {
+    const length = small.includes(status)
+      ? MIN_ARC
+      : (counts[status] / rest) * room;
     const arc = { status, length, offset };
     offset += length;
     return arc;
@@ -66,8 +79,8 @@ export function RingChart({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
             patternUnits="userSpaceOnUse"
             patternTransform="rotate(30)"
           >
-            <rect width="10" height="10" fill="#FFFFFF" />
-            <rect width="4" height="10" fill="#6B7079" />
+            <rect className="hatch-light" width="10" height="10" />
+            <rect className="hatch-stripe" width="4" height="10" />
           </pattern>
         </defs>
         <circle className="ring-track" cx="70" cy="70" r={RADIUS} />
@@ -83,9 +96,9 @@ export function RingChart({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
             strokeDasharray={
               whole
                 ? undefined
-                : `${String(Math.max(length - WIDTH - 2, 0.01))} ${String(CIRCUMFERENCE)}`
+                : `${String(length - WIDTH - GAP)} ${String(CIRCUMFERENCE)}`
             }
-            strokeDashoffset={-(offset + WIDTH / 2 + 1)}
+            strokeDashoffset={-(offset + WIDTH / 2 + GAP / 2)}
             transform="rotate(-90 70 70)"
           />
         ))}

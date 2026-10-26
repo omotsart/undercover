@@ -162,7 +162,9 @@ test("rows that open a claim share hover, focus and the arrow", async ({
   await expect(signOff).toHaveCSS("outline-style", "solid");
   await expect(signOff).toHaveCSS("outline-color", "rgb(255, 255, 255)");
 
-  await page.keyboard.press("Tab");
+  // Past the table's four filter tabs to its first row.
+  for (const key of Array<string>(5).fill("Tab"))
+    await page.keyboard.press(key);
   expect(await focused()).toBe("CLM-1001");
   const link = page.getByRole("link", { name: "CLM-1001" });
   const outline = await link.evaluate((el) => {
@@ -174,6 +176,77 @@ test("rows that open a claim share hover, focus and the arrow", async ({
     "background-color",
     "rgb(255, 255, 255)",
   );
+});
+
+test("the table keeps one line a row and its page across a claim", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const medical = page.getByRole("row").filter({ hasText: "CLM-1003" });
+  await expect(medical).toHaveCSS("height", "44px");
+  await expect(medical.getByRole("cell").nth(2)).toHaveCSS(
+    "white-space",
+    "nowrap",
+  );
+  const gap = await page.locator(".claims-head").evaluate((head) => {
+    const [claimed, status] = [head.children[4], head.children[5]];
+    const left =
+      status.getBoundingClientRect().left +
+      parseFloat(getComputedStyle(status).paddingLeft);
+    return left - claimed.getBoundingClientRect().right;
+  });
+  expect(gap).toBeGreaterThanOrEqual(24);
+
+  await page.getByRole("button", { name: "Page 2" }).click();
+  await expect(page).toHaveURL("/?page=2");
+  const firstRow = page.locator(".claims-body .row-link").first();
+  const first = await firstRow.textContent();
+  await firstRow.click();
+  await expect(page).toHaveURL(`/claims/${first ?? ""}`);
+  await page.goBack();
+  await expect(page).toHaveURL("/?page=2");
+  await expect(page.locator(".claims-body .row-link").first()).toHaveText(
+    first ?? "",
+  );
+  await expect(page.getByRole("button", { name: "Page 2" })).toHaveAttribute(
+    "aria-current",
+    "page",
+  );
+});
+
+test("Show all opens every row and keeps the column in view", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Show all" }).click();
+  await expect(page.locator(".claims-body .claim-row")).toHaveCount(25);
+  await expect(page.locator(".side-column")).toHaveCSS("position", "sticky");
+  await expect(page.locator(".pager")).toHaveCSS("visibility", "hidden");
+  await page.getByRole("button", { name: "Collapse" }).click();
+  await expect(page.locator(".pager")).toHaveCSS("visibility", "visible");
+  await expect(page.locator(".side-column")).toHaveCSS("position", "static");
+});
+
+test("Referred's icon and the legends read clearly", async ({
+  page,
+  request,
+}) => {
+  await request.post("/api/claims/CLM-1005/start");
+  await request.post("/api/claims/CLM-1005/decision", {
+    data: {
+      decision: "refer",
+      payout: 0,
+      reason: "The embassy receipt is missing.",
+      policy_section: "Claims manual 5. Documents and document requests",
+    },
+  });
+  await page.goto("/");
+  await expect(
+    page.locator(".claims-table .decision-refer .decision-icon"),
+  ).toHaveCSS("color", "rgb(35, 35, 35)");
+  const legendRow = page.locator(".legend li").first();
+  await expect(legendRow).toHaveCSS("justify-content", "normal");
+  await expect(legendRow).toHaveCSS("column-gap", "8px");
 });
 
 test("the instructions are shown read only", async ({ page }) => {

@@ -8,7 +8,7 @@ import {
   StatusChip,
   TodoChip,
 } from "./components";
-import { claimType, money } from "./format";
+import { claimType, money, plural } from "./format";
 import { usePolling } from "./hooks";
 
 interface Outcome {
@@ -259,7 +259,7 @@ export function RunCard({
             <RunChip status={run.status} />
             <span className="num">Run {run.run_id}</span>
             <span className="count num">
-              {run.claims.length} of {run.cap} claims
+              {run.claims.length} of {plural(run.cap, "claim")}
             </span>
           </div>
           {run.status !== "running" && <Metrics claims={inRun} />}

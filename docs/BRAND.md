@@ -57,6 +57,8 @@ Use these only for outcomes. Each decision is a tinted chip with a solid round i
 | Referred | Orange `#F08A00` | → | `#FDEBD3` | `#9A4D00` |
 | Declined | Red `#DC3B3B` | ✕ | `#FBDDDD` | `#A8232A` |
 
+The icon is white on Green and Red and Graphite on Orange, where white would be only 2.5:1.
+
 No decision yet: show a single en dash `–` in Slate. Do not use Sunflower for a decision.
 
 ## Surfaces
@@ -82,7 +84,8 @@ No decision yet: show a single en dash `–` in Slate. Do not use Sunflower for 
 - **Hatching**: `repeating-linear-gradient(120deg, #FFFFFF 0 6px, #6B7079 6px 10px)`. The stripes must be clearly visible.
 - **Moving hatching**: the one place where work is happening right now has its stripes slide sideways (`.is-live`, 11.547px a second, which loops seamlessly). While a run works, that is the run's Working chip and the claim being worked; with claims in progress but no run, it is the status bar's In progress pill. Everything else, including the table, the legend and the ring chart, stays still, and nothing moves under `prefers-reduced-motion: reduce`.
 - **Status bar (fixed size, decided)**: five pills of equal width in one row (`grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px`), 52px tall, always in the order Decided, Waiting for sign-off, Left for a handler, In progress, Waiting. The status name sits above each pill (13px, weight 500, Graphite). Inside the pill is "count · percent" (16px, weight 500), for example "19 · 76%". Fill each pill with its status color. Keep pills with zero claims and show "0 · 0%". **Widths never follow the data**: the ring chart shows the proportions.
-- **Ring chart**: a thick rounded arc per status in the status colors, with the total in the center (40px, weight 300) and a legend below.
+- **Ring chart**: a thick rounded arc per status in the status colors, with the total in the center (40px, weight 300) and a legend below. A small share still shows as a short arc, never a dot.
+- **Legends**: each count sits right after its chip, 8px away, not at the far edge.
 - **Row separators**: 1px dashed `#CFCFCF` lines between table rows. Rows are 44px tall.
 - **Row hover**: the row under the mouse turns solid white with 14px rounded corners and a soft shadow (`0 2px 10px rgba(35,35,35,0.08)`). Hide the dashed lines above and below that row. The cursor is a pointer, and the whole row opens the claim. The change fades in over 0.15s. Also show the same highlight when the row has keyboard focus. On the dark panel the highlight is white at 10% with no shadow.
 - **Rows that open a claim** (the claims table, the run's claims, Next for sign-off) end with a › arrow in Slate (Fog on the dark panel). On hover and focus it turns Graphite (white on the dark panel) and moves 3px right. Keyboard focus also draws a 2px Graphite outline with a 2px offset around the whole row (white on the dark panel).
@@ -101,7 +104,7 @@ No decision yet: show a single en dash `–` in Slate. Do not use Sunflower for 
    - While the run works, "Queued" rows (a Waiting chip, Slate text, not clickable) fill up to the cap with the rest of the agent's to-do list.
    - Below, two collapsed sections side by side: "The agent's plan", the full to-do list with status chips, and "Run summary".
 5. **Main grid**: four columns.
-   - The Claims table card spans three columns.
+   - The Claims table card spans three columns. Above the table, filter pills (36px tall) for All, Waiting for sign-off, Waiting and Decided, each with its count; an empty one is Slate but still works. Cells stay on one line and end in an ellipsis. The table shows as many 44px rows as fit beside the right column (at least 8; 10 once the columns stack), and below it a round Show all button on the left and the pager on the right: round ‹ › buttons and page-number pills, shortened as 1 … 4 5 6 … 12. Show all opens every row and keeps the right column in view. The filter and the page live in the address, so Back from a claim returns to them.
    - The right column stacks two cards: By status (ring chart) and Decisions: Paid in dollars as a number inside the card (40px, weight 300) with the label "Paid", then the Approved, Referred, Declined bar in decision colors.
    - Below 1200px the right column moves under the table.
 6. **Empty states**: when a card has nothing to show, keep the card and write one short line, such as "Nothing is waiting for sign-off."
@@ -132,6 +135,8 @@ No decision yet: show a single en dash `–` in Slate. Do not use Sunflower for 
   --radius-card: 32px;
   --radius-pill: 999px;
   --gap: 16px;
+  --white: #FFFFFF;
+  --divider: #CFCFCF;
 }
 
 *, *::before, *::after { box-sizing: border-box; }

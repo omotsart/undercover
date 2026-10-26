@@ -87,6 +87,10 @@ export function countBy<K extends string, T>(
   return counts;
 }
 
+export function plural(count: number, noun: string): string {
+  return `${String(count)} ${noun}${count === 1 ? "" : "s"}`;
+}
+
 export function percent(count: number, total: number): string {
   return `${String(total ? Math.round((count / total) * 100) : 0)}%`;
 }

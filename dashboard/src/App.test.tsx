@@ -113,16 +113,24 @@ function workQueueBody(fetch: ReturnType<typeof stubApi>) {
   return JSON.parse(call?.[1]?.body as string) as unknown;
 }
 
-it("starts a run capped at the claims to work", async () => {
-  const fetch = stubApi({
+// The routes object is read on every call, so a test can move the run along.
+function startableQueue(started: ReturnType<typeof run>) {
+  const routes: Record<string, unknown> = {
     "GET /api/claims": WAITING,
     "GET /api/runs/current": null,
-    "POST /api/queue/work": run({ cap: 3 }),
-  });
+    "POST /api/queue/work": started,
+  };
+  const fetch = stubApi(routes);
+  return { routes, fetch };
+}
+
+it("starts a run capped at the claims to work", async () => {
+  const { routes, fetch } = startableQueue(run({ cap: 3 }));
   render(<App />);
   const field = await screen.findByLabelText("Claims to work");
   expect(field).toHaveProperty("value", "5");
   fireEvent.change(field, { target: { value: "3" } });
+  routes["GET /api/runs/current"] = run({ cap: 3 });
   fireEvent.click(screen.getByRole("button", { name: "Work the queue" }));
   expect(
     await screen.findByText("The agent is working up to 3 claims."),
@@ -130,18 +138,41 @@ it("starts a run capped at the claims to work", async () => {
   expect(workQueueBody(fetch)).toEqual({ cap: 3 });
 });
 
-it("caps a run at the claims waiting", async () => {
-  const fetch = stubApi({
-    "GET /api/claims": WAITING,
-    "GET /api/runs/current": null,
-    "POST /api/queue/work": run({ cap: 4 }),
-  });
+it("clears the run's message once the run has finished", async () => {
+  const { routes } = startableQueue(run({ cap: 1 }));
   render(<App />);
-  fireEvent.click(
-    await screen.findByRole("button", { name: "Work the queue" }),
-  );
+  routes["GET /api/runs/current"] = run({ cap: 1 });
+  fireEvent.change(await screen.findByLabelText("Claims to work"), {
+    target: { value: "1" },
+  });
+  fireEvent.click(screen.getByRole("button", { name: "Work the queue" }));
+  await screen.findByText("The agent is working up to 1 claim.");
+  routes["GET /api/runs/current"] = run({ cap: 1, status: "finished" });
+  fireEvent.click(screen.getByRole("button", { name: "Refresh" }));
+  await screen.findByText("Finished");
+  expect(screen.queryByText("The agent is working up to 1 claim.")).toBeNull();
+});
+
+it("caps a run at the claims waiting", async () => {
+  const { routes, fetch } = startableQueue(run({ cap: 4 }));
+  render(<App />);
+  const button = await screen.findByRole("button", { name: "Work the queue" });
+  routes["GET /api/runs/current"] = run({ cap: 4 });
+  fireEvent.click(button);
   await screen.findByText("The agent is working up to 4 claims.");
   expect(workQueueBody(fetch)).toEqual({ cap: 4 });
+});
+
+it("keeps Claims to work usable only with claims waiting", async () => {
+  stubApi({
+    "GET /api/claims": [summary({ status: "decided", decision: "decline" })],
+    "GET /api/runs/current": null,
+  });
+  render(<App />);
+  const field = await screen.findByLabelText("Claims to work");
+  expect(field).toHaveProperty("disabled", true);
+  expect(field.getAttribute("min")).toBe("1");
+  expect(field.getAttribute("max")).toBe("1");
 });
 
 it("needs at least one claim to work", async () => {
@@ -231,6 +262,27 @@ it("ends every row that opens a claim with an arrow", async () => {
   );
 });
 
+it("draws one claim in 25 as a short arc, not a dot", async () => {
+  stubApi({
+    "GET /api/claims": [
+      summary({ status: "decided", decision: "decline" }),
+      ...Array.from({ length: 24 }, () => summary({})),
+    ],
+    "GET /api/runs/current": null,
+  });
+  render(<App />);
+  await screen.findByText("25 claims");
+  const dash = (status: string) =>
+    Number(
+      document
+        .querySelector(`.ring-${status}`)
+        ?.getAttribute("stroke-dasharray")
+        ?.split(" ")[0],
+    );
+  expect(dash("decided")).toBe(8);
+  expect(dash("waiting")).toBeGreaterThan(250);
+});
+
 it("says why the queue didn't start", async () => {
   stubApi({
     "GET /api/claims": [summary({})],
@@ -257,7 +309,7 @@ it("refreshes the queue and the run from the header", async () => {
     "GET /api/runs/current": null,
   });
   render(<App />);
-  await screen.findByText("1 claims");
+  await screen.findByText("1 claim");
   const calls = fetch.mock.calls.length;
   fireEvent.click(screen.getByRole("button", { name: "Refresh" }));
   expect(fetch.mock.calls.slice(calls).map(([path]) => path)).toEqual([

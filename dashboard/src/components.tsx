@@ -1,4 +1,4 @@
-import type { MouseEvent, ReactNode } from "react";
+import type { MouseEvent, ReactNode, Ref } from "react";
 import type { Decision, RunStatus, Status, TodoStatus } from "./api";
 import {
   DECISION_LABELS,
@@ -153,13 +153,15 @@ export function Card({
   title,
   className,
   children,
+  ref,
 }: Readonly<{
   title: string;
   className?: string;
   children: ReactNode;
+  ref?: Ref<HTMLElement>;
 }>) {
   return (
-    <section className={className ? `card ${className}` : "card"}>
+    <section ref={ref} className={className ? `card ${className}` : "card"}>
       <h2 className="card-title">{title}</h2>
       {children}
     </section>

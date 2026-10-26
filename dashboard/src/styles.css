@@ -20,7 +20,7 @@
   );
   --hatch: repeating-linear-gradient(
     120deg,
-    #ffffff 0 6px,
+    var(--white) 0 6px,
     var(--status-progress-stripe) 6px 10px
   );
 
@@ -37,6 +37,8 @@
   --radius-card: 32px;
   --radius-pill: 999px;
   --gap: 16px;
+  --white: #ffffff;
+  --divider: #cfcfcf;
 }
 
 *,
@@ -140,7 +142,7 @@ button {
   height: 44px;
   padding: 0 20px;
   border-radius: var(--radius-pill);
-  background: #ffffff;
+  background: var(--white);
   color: var(--graphite);
   font-weight: 500;
   text-decoration: none;
@@ -148,7 +150,7 @@ button {
 
 .pill.active {
   background: var(--graphite);
-  color: #ffffff;
+  color: var(--white);
 }
 
 .icon-button {
@@ -159,7 +161,18 @@ button {
   height: 44px;
   border: none;
   border-radius: 50%;
-  background: #ffffff;
+  background: var(--white);
+  cursor: pointer;
+}
+
+.icon-button:disabled {
+  background: transparent;
+  color: var(--slate);
+  cursor: default;
+}
+
+button.pill {
+  border: none;
   cursor: pointer;
 }
 
@@ -228,13 +241,13 @@ h1 {
 }
 
 .pill:hover,
-.icon-button:hover,
+.icon-button:hover:not(:disabled),
 .main-action:hover:not(:disabled) {
   filter: brightness(0.94);
 }
 
 .pill:active,
-.icon-button:active,
+.icon-button:active:not(:disabled),
 .main-action:active:not(:disabled) {
   transform: scale(0.98);
 }
@@ -248,13 +261,18 @@ h1 {
   font-weight: 500;
 }
 
+.cap-field input:disabled {
+  background: var(--card);
+  color: var(--slate);
+}
+
 .cap-field input {
   width: 80px;
   height: 48px;
   padding: 0 12px 0 20px;
   border: none;
   border-radius: var(--radius-pill);
-  background: #ffffff;
+  background: var(--white);
   color: var(--graphite);
   font: inherit;
   font-size: 15px;
@@ -292,7 +310,7 @@ h1 {
 }
 
 .run-claims > li + li {
-  border-top: 1px dashed #cfcfcf;
+  border-top: 1px dashed var(--divider);
 }
 
 .run-claims > li:has(.clickable-row:hover, .clickable-row:focus-within),
@@ -327,17 +345,17 @@ h1 {
 
 .icon-paid {
   background: var(--approved);
-  color: #ffffff;
+  color: var(--white);
 }
 
 .icon-declined {
   background: var(--declined);
-  color: #ffffff;
+  color: var(--white);
 }
 
 .icon-referred {
   background: var(--referred);
-  color: #ffffff;
+  color: var(--graphite);
 }
 
 .icon-signoff {
@@ -347,7 +365,7 @@ h1 {
 
 .icon-handler {
   background: var(--status-handler);
-  color: #ffffff;
+  color: var(--white);
 }
 
 .icon-back,
@@ -454,7 +472,7 @@ h1 {
 
 .clickable-row:hover,
 .clickable-row:focus-within {
-  background: #ffffff;
+  background: var(--white);
   box-shadow: 0 2px 10px rgba(35, 35, 35, 0.08);
 }
 
@@ -492,7 +510,7 @@ h1 {
 }
 
 .dark-panel .clickable-row:focus-visible {
-  outline-color: #ffffff;
+  outline-color: var(--white);
 }
 
 .dark-panel .row-arrow {
@@ -501,7 +519,7 @@ h1 {
 
 .dark-panel .clickable-row:hover .row-arrow,
 .dark-panel .clickable-row:focus-within .row-arrow {
-  color: #ffffff;
+  color: var(--white);
 }
 
 .run-row .row-arrow {
@@ -528,7 +546,7 @@ h1 {
   height: 20px;
   padding: 0 8px;
   border-radius: var(--radius-pill);
-  background: #ffffff;
+  background: var(--white);
   color: var(--graphite);
 }
 
@@ -585,12 +603,12 @@ h1 {
 
 .status-decided {
   background: var(--status-decided);
-  color: #ffffff;
+  color: var(--white);
 }
 
 .status-for_handler {
   background: var(--status-handler);
-  color: #ffffff;
+  color: var(--white);
 }
 
 .decision-icon {
@@ -601,7 +619,7 @@ h1 {
   height: 18px;
   margin-left: -6px;
   border-radius: 50%;
-  color: #ffffff;
+  color: var(--white);
   font-size: 13px;
   line-height: 1;
 }
@@ -622,6 +640,7 @@ h1 {
 
 .decision-refer .decision-icon {
   background: var(--referred);
+  color: var(--graphite);
 }
 
 .decision-decline {
@@ -711,7 +730,7 @@ h1 {
 }
 
 .claims-table {
-  min-width: 972px;
+  min-width: 986px;
 }
 
 .claims-head,
@@ -719,9 +738,23 @@ h1 {
   display: grid;
   grid-template-columns:
     88px minmax(120px, 1.2fr) minmax(120px, 1fr) 96px 92px
-    156px 112px 92px 16px;
+    170px 112px 92px 16px;
   align-items: center;
   gap: 10px;
+}
+
+.claims-head > *,
+.claim-row > [role="cell"] {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 24px between Claimed and Status: the 10px gap plus 14px. */
+.claims-head > :nth-child(6),
+.claim-row > :nth-child(6) {
+  padding-left: 14px;
 }
 
 .claims-head {
@@ -743,7 +776,7 @@ h1 {
 .claim-row {
   position: relative;
   height: 44px;
-  border-top: 1px dashed #cfcfcf;
+  border-top: 1px dashed var(--divider);
   border-radius: 14px;
   margin: 0 -12px;
   padding: 0 12px;
@@ -762,6 +795,71 @@ h1 {
 .row-link {
   font-weight: 500;
   text-decoration: none;
+}
+
+.table-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.table-filters .pill {
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+}
+
+.pill.is-empty:not(.active) {
+  color: var(--slate);
+}
+
+.table-empty {
+  padding: 12px 0;
+}
+
+.table-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.expand svg {
+  transition: transform 0.15s ease;
+}
+
+.expand.is-expanded svg {
+  transform: rotate(180deg);
+}
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.pager.is-hidden {
+  visibility: hidden;
+}
+
+.pager .icon-button {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.page-pill {
+  justify-content: center;
+  min-width: 44px;
+  padding: 0 12px;
+}
+
+.pager-gap {
+  padding: 0 4px;
+  color: var(--slate);
 }
 
 .row-link::after {
@@ -788,6 +886,14 @@ h1 {
 
 .ring-arc {
   fill: none;
+}
+
+.hatch-light {
+  fill: var(--white);
+}
+
+.hatch-stripe {
+  fill: var(--status-progress-stripe);
 }
 
 .ring-waiting {
@@ -829,7 +935,6 @@ h1 {
 .legend li {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 8px;
 }
 
@@ -861,7 +966,7 @@ h1 {
   background: var(--charcoal);
   border-radius: 28px;
   padding: 24px;
-  color: #ffffff;
+  color: var(--white);
 }
 
 .dark-panel .empty {
@@ -976,7 +1081,7 @@ h1 {
 
 .items-table td {
   height: 44px;
-  border-top: 1px dashed #cfcfcf;
+  border-top: 1px dashed var(--divider);
 }
 
 .items-table .amount {
@@ -1047,7 +1152,7 @@ h1 {
   padding: 0 16px;
   border: none;
   border-radius: var(--radius-pill);
-  background: #ffffff;
+  background: var(--white);
   color: var(--graphite);
   font: inherit;
   font-size: 15px;
@@ -1078,6 +1183,13 @@ h1 {
   gap: 2px;
   line-height: 1.5;
   overflow-wrap: anywhere;
+}
+
+@media (min-width: 1201px) {
+  .side-column.is-sticky {
+    position: sticky;
+    top: 24px;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -1126,6 +1238,7 @@ h1 {
 
   .clickable-row,
   .row-arrow,
+  .expand svg,
   .pill,
   .icon-button,
   .main-action {

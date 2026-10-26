@@ -1,78 +1,11 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { api, type ClaimSummary } from "./api";
 import { DecisionsBar, RingChart, StatusBar } from "./charts";
-import { Card, DecisionChip, Link, StatusChip } from "./components";
-import { claimType, date, errorMessage, money } from "./format";
+import { ClaimsTable } from "./ClaimsTable";
+import { Link } from "./components";
+import { errorMessage, money, plural } from "./format";
 import { usePolling } from "./hooks";
 import { RunCard } from "./RunCard";
-
-const COLUMNS = [
-  "Claim",
-  "Customer",
-  "Type",
-  "Submitted",
-  "Claimed",
-  "Status",
-  "Decision",
-  "Payout",
-];
-
-function ClaimsTable({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
-  return (
-    <Card title="Claims" className="table-card">
-      <div className="table-scroll">
-        <div className="claims-table" role="table" aria-label="Claims">
-          <div className="claims-head" role="row">
-            {COLUMNS.map((column) => (
-              <span key={column} role="columnheader">
-                {column}
-              </span>
-            ))}
-            <span aria-hidden="true" />
-          </div>
-          {claims.map((claim) => (
-            <div
-              key={claim.claim_id}
-              className="claim-row clickable-row"
-              role="row"
-            >
-              <span role="cell" className="num">
-                <Link to={`/claims/${claim.claim_id}`} className="row-link">
-                  {claim.claim_id}
-                </Link>
-              </span>
-              <span role="cell">{claim.customer_name}</span>
-              <span role="cell">{claimType(claim.claim_type)}</span>
-              <span role="cell" className="num">
-                {date(claim.submitted_on)}
-              </span>
-              <span role="cell" className="num amount">
-                {money(claim.amount_claimed)}
-              </span>
-              <span role="cell">
-                <StatusChip status={claim.status} />
-              </span>
-              <span role="cell">
-                <DecisionChip decision={claim.decision} />
-              </span>
-              <span role="cell" className="num amount">
-                {claim.payout === null ? (
-                  <span className="no-decision">–</span>
-                ) : (
-                  money(claim.payout)
-                )}
-              </span>
-              <span className="row-arrow" aria-hidden="true">
-                ›
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-      {claims.length === 0 && <p className="empty">No claims in the queue.</p>}
-    </Card>
-  );
-}
 
 function SignOffPanel({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
   const waiting = claims.filter((claim) => claim.status === "awaiting_signoff");
@@ -115,7 +48,13 @@ export function QueuePage() {
   const { data: claims, error, refresh } = usePolling(api.listClaims);
   const run = usePolling(api.getCurrentRun);
   const [cap, setCap] = useState(5);
-  const [message, setMessage] = useState<string>();
+  // A message about a started run only lasts while that run works.
+  const [message, setMessage] = useState<{
+    text: string;
+    whileWorking: boolean;
+  }>();
+  const [expanded, setExpanded] = useState(false);
+  const column = useRef<HTMLDivElement>(null);
 
   if (!claims) return <p className="card">{error ?? "Loading the queue."}</p>;
 
@@ -129,12 +68,13 @@ export function QueuePage() {
       .workQueue(Math.min(cap, waiting))
       .then(
         (started) => {
-          setMessage(
-            `The agent is working up to ${String(started.cap)} claims.`,
-          );
+          setMessage({
+            text: `The agent is working up to ${plural(started.cap, "claim")}.`,
+            whileWorking: true,
+          });
         },
         (reason: unknown) => {
-          setMessage(errorMessage(reason));
+          setMessage({ text: errorMessage(reason), whileWorking: false });
         },
       )
       .then(() => Promise.all([refresh(), run.refresh()]));
@@ -144,18 +84,20 @@ export function QueuePage() {
       <div className="title-row">
         <div className="title">
           <h1>Claims queue</h1>
-          <span className="count num">{claims.length} claims</span>
+          <span className="count num">{plural(claims.length, "claim")}</span>
         </div>
         <div className="title-actions">
-          {message && <span className="message">{message}</span>}
+          {message && (working || !message.whileWorking) && (
+            <span className="message">{message.text}</span>
+          )}
           <label className="cap-field">
             <span>Claims to work</span>
             <input
               type="number"
               min={1}
-              max={waiting}
+              max={Math.max(waiting, 1)}
               value={cap}
-              disabled={working}
+              disabled={working || waiting === 0}
               onChange={(event) => {
                 setCap(Number(event.target.value));
               }}
@@ -182,8 +124,16 @@ export function QueuePage() {
       </div>
       <RunCard run={run.data} error={run.error} claims={claims} />
       <div className="main-grid">
-        <ClaimsTable claims={claims} />
-        <div className="side-column">
+        <ClaimsTable
+          claims={claims}
+          column={column}
+          expanded={expanded}
+          onExpand={setExpanded}
+        />
+        <div
+          ref={column}
+          className={`side-column${expanded ? " is-sticky" : ""}`}
+        >
           <RingChart claims={claims} />
           <DecisionsBar claims={claims} />
         </div>
