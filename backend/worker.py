@@ -3,7 +3,7 @@
 import threading
 from typing import Any
 
-from agent.claim import work_claim
+from agent.queue import run_queue
 from backend import claims, runs
 
 lock = threading.Lock()
@@ -20,15 +20,6 @@ def work_queue(cap: int) -> dict[str, Any]:
         raise
     threading.Thread(target=work, args=(run["run_id"], cap), daemon=True).start()
     return run
-
-
-def run_queue(run_id: int, cap: int) -> None:
-    """Work the waiting claims in order up to the cap (until the queue agent)."""
-    waiting = [c["claim_id"] for c in claims.list_claims() if c["status"] == "waiting"]
-    for claim_id in waiting[:cap]:
-        runs.add_run_claim(run_id, claim_id)
-        work_claim(claim_id, f"{claim_id}-run-{run_id}")
-    runs.finish_run(run_id, f"Worked {min(cap, len(waiting))} claims.")
 
 
 def work(run_id: int, cap: int) -> None:

@@ -3,7 +3,7 @@ from contextlib import nullcontext
 import pytest
 from fastapi.testclient import TestClient
 
-from agent import claim, main
+from agent import claim, main, queue
 from backend.main import app
 
 
@@ -13,6 +13,6 @@ def api(tmp_path, monkeypatch):
     monkeypatch.setenv("DATABASE_PATH", str(tmp_path / "test.db"))
     monkeypatch.setattr(claim, "RETRY_DELAY", 0)
     with TestClient(app) as client:
-        for module in [main, claim]:
+        for module in [main, claim, queue]:
             monkeypatch.setattr(module, "backend", lambda: nullcontext(client))
         yield client

@@ -11,32 +11,6 @@ def wait_for_the_run():
         pass
 
 
-def decline(claim_id, thread_id):
-    claims.start_claim(claim_id)
-    claims.record_decision(claim_id, "decline", 0, "Not covered.", "9. General")
-    return f"{claim_id}: decline"
-
-
-def test_a_run_works_claims_up_to_its_cap(client, monkeypatch):
-    worked = []
-
-    def work_claim(claim_id, thread_id):
-        worked.append(thread_id)
-        return decline(claim_id, thread_id)
-
-    monkeypatch.setattr(worker, "work_claim", work_claim)
-    run = client.post("/api/queue/work", json={"cap": 3}).json()
-    assert (run["cap"], run["status"]) == (3, "running")
-    wait_for_the_run()
-    run_id = run["run_id"]
-    assert worked == [f"CLM-{n}-run-{run_id}" for n in range(1001, 1004)]
-    current = client.get("/api/runs/current").json()
-    assert (current["status"], current["summary"]) == ("finished", "Worked 3 claims.")
-    statuses = [c["status"] for c in client.get("/api/claims").json()]
-    assert statuses.count("decided") == 3
-    assert statuses.count("waiting") == 22
-
-
 def test_one_run_at_a_time(client, monkeypatch):
     release = threading.Event()
     monkeypatch.setattr(worker, "run_queue", lambda run_id, cap: release.wait())

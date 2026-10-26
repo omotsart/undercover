@@ -1,6 +1,6 @@
 # Status
 
-The pilot is built (`docs/PLAN.md`). The harness (`docs/PLAN_HARNESS.md`) is being built: Phases 1 to 3 of 6 are done.
+The pilot is built (`docs/PLAN.md`). The harness (`docs/PLAN_HARNESS.md`) is being built: Phases 1 to 4 of 6 are done.
 
 ## What's built
 
@@ -11,11 +11,11 @@ The pilot is built (`docs/PLAN.md`). The harness (`docs/PLAN_HARNESS.md`) is bei
   - `release_claim` puts a claim that failed back to waiting, or leaves it for a handler (status `for_handler`) on its second failure. A claim is released only while in progress, so a decided claim is never decided or paid again. On startup, any claim left in progress is released
   - `start_claim` keeps the steps of earlier attempts and marks a retry "Attempt 2"
   - Runs (`backend/runs.py`): `POST /api/queue/work` with `{"cap": 5}` starts a run in a background thread, one run at a time. `add_run_claim` refuses a claim past the cap (a retry of a claim already in the run doesn't count), `write_todos` stores the run's to-do list, and `finish_run` refuses while a claim is still waiting within the cap. `GET /api/runs/current` returns the latest run. A run that fails or ends without finishing is stopped, and its claims in progress are released; a restart does the same
-  - Until the queue agent (Phase 4), a run works the waiting claims in order up to its cap
-  - The agent's instructions are in `backend/instructions/`: `claim.md` for working a claim, written from the wording and the manual, and `queue.md` for running the queue (a first version)
+  - The agent's instructions are in `backend/instructions/`: `claim.md` for working a claim, written from the wording and the manual, and `queue.md` for running the queue
 - `agent/`: the UnderCover Agent on LangChain's `create_agent`, with `deepseek/deepseek-v4.1-flash` at low reasoning effort or the model in `MODEL_NAME`
   - `agent/claim.py`: `run(claim_id, thread_id)` fetches the claim instructions and the contents of both documents, starts the claim, and reads, looks up sections, decides and pays through seven tools that call the API, posting each step (including each section it read) to the backend as it goes
   - `work_claim(claim_id, thread_id)` runs a fresh claim agent with retries on the model and the tools and a limit of 30 model calls, releases the claim if it fails or ends without a decision, and returns one line, such as `CLM-1001: approve, $420.00, paid`
+  - `agent/queue.py`: the queue agent. `run_queue(run_id, cap)` lists the waiting claims, writes a to-do list, hands each claim to a fresh claim agent through `work_claim`, ticks the list off and finishes the run with a summary, through four tools: `list_waiting_claims`, `write_todos`, `work_claim` and `finish_run`. The backend's worker runs it for each run
   - `agent/main.py`: the backend client, the instructions and the model, shared by the agents
 - `dashboard/`: React, in the brand from `docs/BRAND.md`, updating every two seconds
   - Queue: the status bar, the Waiting, For sign-off and Paid numbers, the claims table, the ring chart, the decisions bar, the Next for sign-off panel and the "Work the queue" button

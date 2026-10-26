@@ -234,17 +234,17 @@ Builds the agent that runs the queue, with its tools and instructions, and conne
 
 Success criteria:
 
-- [ ] Tests with stub models cover the brief's list:
-  - [ ] The to-do list the agent writes is stored on the run, in order, with its statuses
-  - [ ] A run capped at 3 on a queue of 25 works three claims; the other 22 stay waiting
-  - [ ] A claim agent that fails doesn't stop the run: the next claim is still worked and the run finishes
-  - [ ] A failed claim goes back in the queue and is worked again later in the same run, and decided
-  - [ ] A claim that fails twice is left for a handler, and the run still finishes
-  - [ ] The check for missed claims: `finish_run` called with a claim still waiting within the cap is refused, the agent works it, and the second `finish_run` succeeds
-  - [ ] A queue agent that raises: the run is `stopped` and no claim is left in progress
-- [ ] After `npm run seed`, `curl -X POST http://localhost:8000/api/queue/work -d '{"cap": 5}'` on the real model works five claims on its own. Afterwards `GET /api/runs/current` shows a finished run with five to-do items done or left for a handler and a summary. Five claims are decided, waiting for sign-off or left for a handler, twenty are waiting, and none is in progress. A run of five claims on DeepSeek V4.1 Flash should cost a few cents.
-- [ ] No claim over $1,000 is paid without a sign-off, and every decision has a reason and a section
-- [ ] `npm run check:python` passes with coverage of at least 80%
+- [x] Tests with stub models cover the brief's list:
+  - [x] The to-do list the agent writes is stored on the run, in order, with its statuses
+  - [x] A run capped at 3 on a queue of 25 works three claims; the other 22 stay waiting
+  - [x] A claim agent that fails doesn't stop the run: the next claim is still worked and the run finishes
+  - [x] A failed claim goes back in the queue and is worked again later in the same run, and decided
+  - [x] A claim that fails twice is left for a handler, and the run still finishes
+  - [x] The check for missed claims: `finish_run` called with a claim still waiting within the cap is refused, the agent works it, and the second `finish_run` succeeds
+  - [x] A queue agent that raises: the run is `stopped` and no claim is left in progress (in `backend/tests/test_worker.py`)
+- [x] After `npm run seed`, `curl -X POST http://localhost:8000/api/queue/work -d '{"cap": 5}'` on the real model works five claims on its own. Afterwards `GET /api/runs/current` shows a finished run with five to-do items done or left for a handler and a summary. Five claims are decided, waiting for sign-off or left for a handler, twenty are waiting, and none is in progress. A run of five claims on DeepSeek V4.1 Flash should cost a few cents.
+- [x] No claim over $1,000 is paid without a sign-off, and every decision has a reason and a section
+- [x] `npm run check:python` passes with coverage of at least 80%
 
 ### Phase 5: The dashboard
 

@@ -168,7 +168,10 @@ def run(claim_id: str, thread_id: str, llm: BaseChatModel | None = None) -> str:
         reply = ""
         for update in agent.stream(
             {"messages": [{"role": "user", "content": task}]},
-            config={"configurable": {"thread_id": thread_id}},
+            config={
+                "configurable": {"thread_id": thread_id},
+                "recursion_limit": 10 * MODEL_CALL_LIMIT,
+            },
             stream_mode="updates",
         ):
             for node in update.values():
