@@ -66,7 +66,8 @@ function Filters({
               onChoose(tab.filter);
             }}
           >
-            {tab.label} <span className="num">{count}</span>
+            <span>{tab.label}</span>{" "}
+            <span className="tab-count num">{count}</span>
           </button>
         );
       })}
@@ -171,11 +172,13 @@ function Pager({
 
 export function ClaimsTable({
   claims,
+  main,
   column,
   expanded,
   onExpand,
 }: Readonly<{
   claims: ClaimSummary[];
+  main: RefObject<HTMLElement | null>;
   column: RefObject<HTMLElement | null>;
   expanded: boolean;
   onExpand: (expanded: boolean) => void;
@@ -184,7 +187,8 @@ export function ClaimsTable({
   const [page, setPage] = useState(pageFromUrl);
   const card = useRef<HTMLElement>(null);
   const body = useRef<HTMLDivElement>(null);
-  const pageSize = usePageSize(column, card, body);
+  const footer = useRef<HTMLDivElement>(null);
+  const pageSize = usePageSize(main, column, card, body, footer);
 
   const shown = claims.filter((claim) => matches(claim, filter));
   const pageCount = Math.max(1, Math.ceil(shown.length / pageSize));
@@ -218,7 +222,6 @@ export function ClaimsTable({
                 {name}
               </span>
             ))}
-            <span aria-hidden="true" />
           </div>
           <div
             ref={body}
@@ -240,7 +243,7 @@ export function ClaimsTable({
         </div>
       </div>
       {pageCount > 1 && (
-        <div className="table-footer">
+        <div ref={footer} className="table-footer">
           <button
             type="button"
             className={`icon-button expand${expanded ? " is-expanded" : ""}`}

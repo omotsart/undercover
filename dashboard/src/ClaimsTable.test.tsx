@@ -9,7 +9,7 @@ import {
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import type { ClaimSummary, Status } from "./api";
 import { App } from "./App";
-import { pageItems, rowsFor } from "./paging";
+import { contentBottom, pageItems, rowsFor } from "./paging";
 import { stubApi, summary } from "./testing";
 
 const STATUSES: Status[] = [
@@ -173,9 +173,29 @@ it("shows ten rows a page once the columns stack", async () => {
   });
 });
 
-it("fits the rows to the column beside the table", () => {
-  expect(rowsFor(800, 280)).toBe(11);
-  expect(rowsFor(300, 280)).toBe(8);
+it("fits as many rows as the height allows, at least eight", () => {
+  expect(rowsFor(520)).toBe(11);
+  expect(rowsFor(20)).toBe(8);
+  expect(rowsFor(Number.NaN)).toBe(8);
+});
+
+it("measures the column's content, not the room its last card is stretched into", () => {
+  const box = (element: Element, top: number, bottom: number) => {
+    element.getBoundingClientRect = () =>
+      ({ top, bottom, height: bottom - top }) as DOMRect;
+  };
+  const column = document.createElement("div");
+  column.innerHTML = '<div class="fill-body"><svg></svg><ul></ul></div>';
+  const fill = column.querySelector(".fill-body") ?? column;
+  box(column, 0, 1000);
+  box(fill, 600, 1000);
+  box(fill.children[0], 700, 760);
+  box(fill.children[1], 760, 900);
+  expect(contentBottom(column)).toBe(800);
+
+  const plain = document.createElement("div");
+  box(plain, 0, 640);
+  expect(contentBottom(plain)).toBe(640);
 });
 
 it("shortens long runs of page numbers", () => {

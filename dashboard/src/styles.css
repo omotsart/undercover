@@ -656,13 +656,41 @@ h1 {
   color: var(--slate);
 }
 
-/* Summary row */
+/* The queue: two columns whose bottoms always line up. Whichever is shorter
+   stretches: the Claims card on the left, By status on the right. */
 
-.summary-row {
+.queue-grid {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
   gap: var(--gap);
-  align-items: start;
+  align-items: stretch;
+}
+
+.queue-main,
+.queue-grid .side-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  min-width: 0;
+}
+
+.table-card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.ring-card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.fill-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .status-bar {
@@ -712,10 +740,6 @@ h1 {
   align-items: start;
 }
 
-.table-card {
-  grid-column: span 3;
-}
-
 .side-column {
   display: flex;
   flex-direction: column;
@@ -725,22 +749,26 @@ h1 {
 
 .table-scroll {
   overflow-x: auto;
-  padding: 4px 12px;
-  margin: -4px -12px;
+  padding: 4px 18px;
+  margin: -4px -18px;
 }
 
+/* Fits a 3/4 column from 1201px up, even with a 17px scrollbar (780px), so
+   only narrower screens scroll it inside the card. Widths are measured in
+   Outfit: CLM-1001 is 74px, "Aug 25, 2026" 91px, the sign-off chip 138px and
+   Approved 100px. Amounts take 80px ($10,000.00) where there is room. */
 .claims-table {
-  min-width: 986px;
+  min-width: 769px;
 }
 
 .claims-head,
 .claim-row {
   display: grid;
   grid-template-columns:
-    88px minmax(120px, 1.2fr) minmax(120px, 1fr) 96px 92px
-    170px 112px 92px 16px;
+    74px minmax(80px, 1fr) minmax(80px, 1fr) 91px minmax(72px, 80px)
+    157px 101px minmax(72px, 80px);
   align-items: center;
-  gap: 10px;
+  gap: 6px;
 }
 
 .claims-head > *,
@@ -751,10 +779,20 @@ h1 {
   white-space: nowrap;
 }
 
-/* 24px between Claimed and Status: the 10px gap plus 14px. */
+/* 24px between Claimed and Status: the 6px gap plus 18px. */
 .claims-head > :nth-child(6),
 .claim-row > :nth-child(6) {
-  padding-left: 14px;
+  padding-left: 18px;
+}
+
+/* The arrow sits in the row's right padding rather than a column of its own. */
+.claim-row .row-arrow {
+  position: absolute;
+  top: 0;
+  right: 6px;
+  bottom: 0;
+  display: flex;
+  align-items: center;
 }
 
 .claims-head {
@@ -778,8 +816,8 @@ h1 {
   height: 44px;
   border-top: 1px dashed var(--divider);
   border-radius: 14px;
-  margin: 0 -12px;
-  padding: 0 12px;
+  margin: 0 -18px;
+  padding: 0 18px;
 }
 
 .claim-row:hover,
@@ -814,6 +852,14 @@ h1 {
   color: var(--slate);
 }
 
+.tab-count {
+  color: var(--slate);
+}
+
+.pill.active .tab-count {
+  color: var(--white);
+}
+
 .table-empty {
   padding: 12px 0;
 }
@@ -824,7 +870,8 @@ h1 {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-top: 16px;
+  margin-top: auto;
+  padding-top: 16px;
 }
 
 .expand svg {
@@ -993,19 +1040,36 @@ h1 {
   list-style: none;
 }
 
+/* Two lines for the narrow column: ID and amount, then the customer. */
 .signoff-link {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto 16px;
-  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) auto 16px;
+  grid-template-areas:
+    "id amount arrow"
+    "name name .";
+  gap: 2px 8px;
   align-items: center;
   min-height: 44px;
-  padding: 0 12px;
+  padding: 8px 12px;
   margin: 0 -12px;
   border-radius: 14px;
   text-decoration: none;
 }
 
+.signoff-id {
+  grid-area: id;
+}
+
+.signoff-amount {
+  grid-area: amount;
+}
+
+.signoff-link .row-arrow {
+  grid-area: arrow;
+}
+
 .signoff-name {
+  grid-area: name;
   color: var(--fog);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1189,18 +1253,58 @@ h1 {
   .side-column.is-sticky {
     position: sticky;
     top: 24px;
+    align-self: start;
+  }
+
+  .side-column.is-sticky .ring-card {
+    flex: none;
   }
 }
 
 @media (max-width: 1200px) {
-  .summary-row,
   .main-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .table-card,
   .wide-column {
     grid-column: auto;
+  }
+
+  /* One column: the cards interleave as status bar, Next for sign-off, the
+     run, Claims, Decisions, By status. */
+  .queue-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .queue-main,
+  .queue-grid .side-column {
+    display: contents;
+  }
+
+  .status-card {
+    order: 1;
+  }
+
+  .queue-grid .dark-panel {
+    order: 2;
+  }
+
+  .run-card {
+    order: 3;
+  }
+
+  .table-card {
+    order: 4;
+  }
+
+  .decisions-card {
+    order: 5;
+  }
+
+  .ring-card {
+    order: 6;
+    flex: none;
   }
 }
 

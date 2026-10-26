@@ -95,19 +95,27 @@ No decision yet: show a single en dash `–` in Slate. Do not use Sunflower for 
 
 1. **Header**: product name on the left, navigation pills (Queue, Instructions) and icon buttons on the right.
 2. **Title row**: "Claims queue" and the claim count on the left, "Work the queue" Sunflower button on the right, with the "Claims to work" number field (a white pill) before it.
-3. **Summary row**: the status bar card on the left (about 60% of the width) and the dark Next for sign-off panel on the right. With nothing waiting for sign-off the panel shrinks to one line, "Nothing is waiting for sign-off." Below 1200px the panel goes straight under the status bar.
-4. **The agent's run**: a card across the full width.
+3. **Two columns** under the title row, 3:1, 16px apart. Every card sits in one of them.
+   - **Left, top to bottom**: the status bar card, The agent's run, Claims.
+   - **Right, top to bottom**: the dark Next for sign-off panel, Decisions, By status.
+   - **The bottoms of the two columns always line up, and whichever is shorter stretches.** The table first takes as many 44px rows as fit down to the end of the right column's content (at least 8), and the Claims card absorbs the rest, with its footer pinned to the bottom. If the left column is still taller, By status stretches and centers its ring and legend in the extra height. While the whole table is open, the right column instead sticks 24px from the top and nothing on the right stretches.
+   - **Below 1200px** there is one column, in this order: status bar, Next for sign-off, The agent's run, Claims, Decisions, By status. Nothing stretches, and the table shows 10 rows a page.
+4. **Next for sign-off**: one row per claim on two lines, the ID on the left and the amount with a › arrow on the right, the customer below in Fog. With nothing waiting for sign-off the panel shrinks to one line, "Nothing is waiting for sign-off."
+5. **The agent's run**:
    - A head with the run's status chip, "Run N" and "N of M claims".
    - Once the run ends, four numbers inside the card (40px, weight 300): Paid and Waiting for sign-off, each with its dollar total, then Declined and Back in the queue.
    - The run's claims in the order worked, one row each: the outcome's round icon, the claim ID, the type, the amount claimed, the outcome chip and a › arrow. The whole row opens the claim. Outcomes: Paid in the Approved colors, Declined and Referred in theirs, and Waiting for sign-off, Left for a handler and Back in the queue (Waiting) in their status colors.
    - The claim being worked has the moving In progress chip and the agent's last step in Slate after it, on a slightly darker row. It doesn't open.
    - While the run works, "Queued" rows (a Waiting chip, Slate text, not clickable) fill up to the cap with the rest of the agent's to-do list.
    - Below, two collapsed sections side by side: "The agent's plan", the full to-do list with status chips, and "Run summary".
-5. **Main grid**: four columns.
-   - The Claims table card spans three columns. Above the table, filter pills (36px tall) for All, Waiting for sign-off, Waiting and Decided, each with its count; an empty one is Slate but still works. Cells stay on one line and end in an ellipsis. The table shows as many 44px rows as fit beside the right column (at least 8; 10 once the columns stack), and below it a round Show all button on the left and the pager on the right: round ‹ › buttons and page-number pills, shortened as 1 … 4 5 6 … 12. Show all opens every row and keeps the right column in view. The filter and the page live in the address, so Back from a claim returns to them.
-   - The right column stacks two cards: By status (ring chart) and Decisions: Paid in dollars as a number inside the card (40px, weight 300) with the label "Paid", then the Approved, Referred, Declined bar in decision colors.
-   - Below 1200px the right column moves under the table.
-6. **Empty states**: when a card has nothing to show, keep the card and write one short line, such as "Nothing is waiting for sign-off."
+6. **Claims**:
+   - Above the table, filter pills (36px tall) for All, Waiting for sign-off, Waiting and Decided. The count sits 6px after the name, in Slate (white on the active pill). An empty pill is Slate but still works.
+   - Cells stay on one line and end in an ellipsis. Customer and Type give way first; the other columns are sized to their longest content, so from 1201px up the table fits its column without scrolling sideways. Only narrower screens scroll it inside the card.
+   - Below the table, a round Show all button on the left and the pager on the right: round ‹ › buttons and page-number pills, shortened as 1 … 4 5 6 … 12. With one page, neither shows.
+   - The filter and the page live in the address, so Back from a claim returns to them.
+7. **Decisions**: Paid in dollars as a number inside the card (40px, weight 300) with the label "Paid", then the Approved, Referred, Declined bar in decision colors.
+8. **By status**: the ring chart with its legend.
+9. **Empty states**: when a card has nothing to show, keep the card and write one short line, such as "Nothing is waiting for sign-off."
 
 ## Ready-to-use tokens
 

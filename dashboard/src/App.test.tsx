@@ -65,16 +65,20 @@ it("shows the queue with its status bar, numbers and cards", async () => {
 
   const signOff = screen.getByRole("region", { name: "Next for sign-off" });
   expect(within(signOff).getByText("Tomás Reyes")).toBeDefined();
-  expect(signOff.parentElement?.className).toBe("summary-row");
-  expect(signOff.previousElementSibling?.getAttribute("aria-label")).toBe(
+  const titles = (selector: string) =>
+    [
+      ...(document.querySelector(selector)?.querySelectorAll(".card-title") ??
+        []),
+    ].map((title) => title.textContent);
+  expect(titles(".queue-main")).toEqual(["The agent's run", "Claims"]);
+  expect(document.querySelector(".queue-main > .status-card")?.ariaLabel).toBe(
     "Claims by status",
   );
-  const side = document.querySelector(".side-column");
-  expect(
-    [...(side?.querySelectorAll(".card-title") ?? [])].map(
-      (h) => h.textContent,
-    ),
-  ).toEqual(["By status", "Decisions"]);
+  expect(titles(".side-column")).toEqual([
+    "Next for sign-off",
+    "Decisions",
+    "By status",
+  ]);
   expect(screen.getByRole("img", { name: "4 claims by status" })).toBeDefined();
   expect(
     await screen.findByRole("button", { name: "Working the queue" }),

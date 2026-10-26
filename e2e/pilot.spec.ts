@@ -151,20 +151,13 @@ test("rows that open a claim share hover, focus and the arrow", async ({
   await expect(button).toHaveCSS("filter", "brightness(0.94)");
   await page.mouse.move(0, 0);
 
-  // After the field and the button, the sign-off link comes first, then the
-  // table's rows.
+  // Keyboard focus, starting from the control just before each row: the
+  // last filter tab before the table, the last pager button before the
+  // right-hand column.
   const focused = () =>
     page.evaluate(() => document.activeElement?.textContent ?? "");
-  await page.getByLabel("Claims to work").focus();
+  await page.getByRole("button", { name: /^Decided/ }).focus();
   await page.keyboard.press("Tab");
-  await page.keyboard.press("Tab");
-  expect(await focused()).toBe("CLM-1004Danielle Okafor$1,200.00›");
-  await expect(signOff).toHaveCSS("outline-style", "solid");
-  await expect(signOff).toHaveCSS("outline-color", "rgb(255, 255, 255)");
-
-  // Past the table's four filter tabs to its first row.
-  for (const key of Array<string>(5).fill("Tab"))
-    await page.keyboard.press(key);
   expect(await focused()).toBe("CLM-1001");
   const link = page.getByRole("link", { name: "CLM-1001" });
   const outline = await link.evaluate((el) => {
@@ -176,6 +169,12 @@ test("rows that open a claim share hover, focus and the arrow", async ({
     "background-color",
     "rgb(255, 255, 255)",
   );
+
+  await page.getByRole("button", { name: "Next page" }).focus();
+  await page.keyboard.press("Tab");
+  expect(await focused()).toBe("CLM-1004Danielle Okafor$1,200.00›");
+  await expect(signOff).toHaveCSS("outline-style", "solid");
+  await expect(signOff).toHaveCSS("outline-color", "rgb(255, 255, 255)");
 });
 
 test("the table keeps one line a row and its page across a claim", async ({
@@ -247,6 +246,49 @@ test("Referred's icon and the legends read clearly", async ({
   const legendRow = page.locator(".legend li").first();
   await expect(legendRow).toHaveCSS("justify-content", "normal");
   await expect(legendRow).toHaveCSS("column-gap", "8px");
+});
+
+test("the two columns end on one line, and stack in order", async ({
+  page,
+}) => {
+  const bottoms = () =>
+    page.evaluate(() =>
+      [".queue-main", ".queue-grid .side-column"].map((selector) =>
+        Math.round(
+          document.querySelector(selector)?.getBoundingClientRect().bottom ?? 0,
+        ),
+      ),
+    );
+  for (const width of [1440, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+    await expect(page.locator(".claims-body .claim-row").first()).toBeVisible();
+    const [left, right] = await bottoms();
+    expect(Math.abs(left - right)).toBeLessThanOrEqual(1);
+    const scroll = page.locator(".table-scroll");
+    expect(await scroll.evaluate((el) => el.scrollWidth - el.clientWidth)).toBe(
+      0,
+    );
+  }
+
+  await page.setViewportSize({ width: 1100, height: 900 });
+  await page.goto("/");
+  const order = await page.evaluate(() =>
+    [
+      ".status-card",
+      ".queue-grid .dark-panel",
+      ".run-card",
+      ".table-card",
+      ".decisions-card",
+      ".ring-card",
+    ].map((selector) =>
+      Math.round(
+        document.querySelector(selector)?.getBoundingClientRect().top ?? 0,
+      ),
+    ),
+  );
+  expect(order).toEqual([...order].sort((a, b) => a - b));
+  await expect(page.locator(".claims-body .claim-row")).toHaveCount(10);
 });
 
 test("the instructions are shown read only", async ({ page }) => {

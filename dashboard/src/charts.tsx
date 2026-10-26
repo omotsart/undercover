@@ -64,62 +64,64 @@ export function RingChart({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
   const segments = arcs(counts, claims.length);
   const whole = segments.length === 1;
   return (
-    <Card title="By status">
-      <svg
-        className="ring"
-        viewBox="0 0 140 140"
-        role="img"
-        aria-label={`${String(claims.length)} claims by status`}
-      >
-        <defs>
-          <pattern
-            id="hatch"
-            width="10"
-            height="10"
-            patternUnits="userSpaceOnUse"
-            patternTransform="rotate(30)"
-          >
-            <rect className="hatch-light" width="10" height="10" />
-            <rect className="hatch-stripe" width="4" height="10" />
-          </pattern>
-        </defs>
-        <circle className="ring-track" cx="70" cy="70" r={RADIUS} />
-        {segments.map(({ status, length, offset }) => (
-          <circle
-            key={status}
-            className={`ring-arc ring-${status}`}
-            cx="70"
-            cy="70"
-            r={RADIUS}
-            strokeWidth={WIDTH}
-            strokeLinecap={whole ? "butt" : "round"}
-            strokeDasharray={
-              whole
-                ? undefined
-                : `${String(length - WIDTH - GAP)} ${String(CIRCUMFERENCE)}`
-            }
-            strokeDashoffset={-(offset + WIDTH / 2 + GAP / 2)}
-            transform="rotate(-90 70 70)"
-          />
-        ))}
-        <text
-          className="ring-total"
-          x="70"
-          y="70"
-          textAnchor="middle"
-          dominantBaseline="central"
+    <Card title="By status" className="ring-card">
+      <div className="fill-body">
+        <svg
+          className="ring"
+          viewBox="0 0 140 140"
+          role="img"
+          aria-label={`${String(claims.length)} claims by status`}
         >
-          {claims.length}
-        </text>
-      </svg>
-      <ul className="legend">
-        {STATUSES.map((status) => (
-          <li key={status}>
-            <StatusChip status={status} />
-            <span className="num">{counts[status]}</span>
-          </li>
-        ))}
-      </ul>
+          <defs>
+            <pattern
+              id="hatch"
+              width="10"
+              height="10"
+              patternUnits="userSpaceOnUse"
+              patternTransform="rotate(30)"
+            >
+              <rect className="hatch-light" width="10" height="10" />
+              <rect className="hatch-stripe" width="4" height="10" />
+            </pattern>
+          </defs>
+          <circle className="ring-track" cx="70" cy="70" r={RADIUS} />
+          {segments.map(({ status, length, offset }) => (
+            <circle
+              key={status}
+              className={`ring-arc ring-${status}`}
+              cx="70"
+              cy="70"
+              r={RADIUS}
+              strokeWidth={WIDTH}
+              strokeLinecap={whole ? "butt" : "round"}
+              strokeDasharray={
+                whole
+                  ? undefined
+                  : `${String(length - WIDTH - GAP)} ${String(CIRCUMFERENCE)}`
+              }
+              strokeDashoffset={-(offset + WIDTH / 2 + GAP / 2)}
+              transform="rotate(-90 70 70)"
+            />
+          ))}
+          <text
+            className="ring-total"
+            x="70"
+            y="70"
+            textAnchor="middle"
+            dominantBaseline="central"
+          >
+            {claims.length}
+          </text>
+        </svg>
+        <ul className="legend">
+          {STATUSES.map((status) => (
+            <li key={status}>
+              <StatusChip status={status} />
+              <span className="num">{counts[status]}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </Card>
   );
 }
@@ -129,7 +131,7 @@ export function DecisionsBar({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
   const counts = countBy(DECISIONS, decided, (claim) => claim.decision);
   const paid = claims.reduce((sum, claim) => sum + (claim.paid_amount ?? 0), 0);
   return (
-    <Card title="Decisions">
+    <Card title="Decisions" className="decisions-card">
       <div className="paid-total">
         <span className="card-number num">{money(paid)}</span>
         <span className="label">Paid</span>

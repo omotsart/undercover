@@ -248,7 +248,7 @@ export function RunCard({
       )
     : [];
   return (
-    <Card title="The agent's run">
+    <Card title="The agent's run" className="run-card">
       {run === undefined && (
         <p className="empty">{error ?? "Loading the run."}</p>
       )}

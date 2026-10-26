@@ -30,9 +30,11 @@ function SignOffPanel({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
               to={`/claims/${claim.claim_id}`}
               className="signoff-link clickable-row"
             >
-              <span className="num">{claim.claim_id}</span>
+              <span className="signoff-id num">{claim.claim_id}</span>
               <span className="signoff-name">{claim.customer_name}</span>
-              <span className="num">{money(claim.payout ?? 0)}</span>
+              <span className="signoff-amount num">
+                {money(claim.payout ?? 0)}
+              </span>
               <span className="row-arrow" aria-hidden="true">
                 ›
               </span>
@@ -54,6 +56,7 @@ export function QueuePage() {
     whileWorking: boolean;
   }>();
   const [expanded, setExpanded] = useState(false);
+  const main = useRef<HTMLDivElement>(null);
   const column = useRef<HTMLDivElement>(null);
 
   if (!claims) return <p className="card">{error ?? "Loading the queue."}</p>;
@@ -113,29 +116,30 @@ export function QueuePage() {
           </button>
         </div>
       </div>
-      <div className="summary-row">
-        <section className="card" aria-label="Claims by status">
-          <StatusBar
+      <div className="queue-grid">
+        <div ref={main} className="queue-main">
+          <section className="card status-card" aria-label="Claims by status">
+            <StatusBar
+              claims={claims}
+              live={!working && count("in_progress") > 0}
+            />
+          </section>
+          <RunCard run={run.data} error={run.error} claims={claims} />
+          <ClaimsTable
             claims={claims}
-            live={!working && count("in_progress") > 0}
+            main={main}
+            column={column}
+            expanded={expanded}
+            onExpand={setExpanded}
           />
-        </section>
-        <SignOffPanel claims={claims} />
-      </div>
-      <RunCard run={run.data} error={run.error} claims={claims} />
-      <div className="main-grid">
-        <ClaimsTable
-          claims={claims}
-          column={column}
-          expanded={expanded}
-          onExpand={setExpanded}
-        />
+        </div>
         <div
           ref={column}
           className={`side-column${expanded ? " is-sticky" : ""}`}
         >
-          <RingChart claims={claims} />
+          <SignOffPanel claims={claims} />
           <DecisionsBar claims={claims} />
+          <RingChart claims={claims} />
         </div>
       </div>
     </main>
