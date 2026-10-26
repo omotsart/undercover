@@ -3,7 +3,7 @@
 import threading
 import uuid
 
-from agent.claim import run
+from agent.claim import work_claim
 from backend import claims
 
 lock = threading.Lock()
@@ -24,17 +24,11 @@ def work(claim_ids: list[str]) -> None:
     """Work each claim in order, then free the queue for the next run."""
     try:
         for claim_id in claim_ids:
-            work_claim(claim_id)
+            work_claim(claim_id, f"{claim_id}-{uuid.uuid4().hex[:8]}")
     finally:
         lock.release()
 
 
-def work_claim(claim_id: str) -> None:
-    """Run the agent on a claim, and put it back in the queue if it isn't decided."""
-    try:
-        run(claim_id, f"{claim_id}-{uuid.uuid4().hex[:8]}")
-    except Exception as error:  # one failed claim mustn't stop the queue
-        claims.add_step(claim_id, f"The agent stopped: {error}")
-    if claims.get_claim(claim_id)["status"] == "in_progress":
-        claims.add_step(claim_id, "Back in the queue: the agent made no decision.")
-        claims.return_to_queue(claim_id)
+def recover() -> None:
+    """Put right what a restart left behind: claims stuck in progress."""
+    claims.release_stuck_claims("The server restarted while the agent worked it.")

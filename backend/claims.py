@@ -7,8 +7,11 @@ from typing import Any
 
 from backend.db import connect, payout_approval_limit
 
+MAX_FAILURES = 2
+
 CLAIM_FIELDS = [
     "status",
+    "failures",
     "decision",
     "payout",
     "reason",
@@ -102,25 +105,41 @@ def now() -> str:
 
 
 def start_claim(claim_id: str) -> dict[str, Any]:
-    """Move a waiting claim to in progress, clearing steps from any earlier run."""
+    """Move a waiting claim to in progress, keeping the steps of earlier attempts."""
     with connect() as conn:
-        if find(conn, "claims", "claim_id", claim_id)["status"] != "waiting":
+        claim = find(conn, "claims", "claim_id", claim_id)
+        if claim["status"] != "waiting":
             raise RefusedError(f"{claim_id} is not waiting")
         conn.execute(
             "UPDATE claims SET status = 'in_progress' WHERE claim_id = ?", (claim_id,)
         )
-        conn.execute("DELETE FROM steps WHERE claim_id = ?", (claim_id,))
+    if claim["failures"]:
+        add_step(claim_id, f"Attempt {claim['failures'] + 1}")
     return get_claim(claim_id)
 
 
-def return_to_queue(claim_id: str) -> None:
-    """Put a claim the agent left in progress back in the queue."""
+def release_claim(claim_id: str, reason: str) -> dict[str, Any]:
+    """Put a claim that failed back in the queue, or leave it for a handler."""
     with connect() as conn:
+        claim = find(conn, "claims", "claim_id", claim_id)
+        if claim["status"] != "in_progress":
+            raise RefusedError(f"{claim_id} is not in progress")
+        failures = claim["failures"] + 1
+        status = "waiting" if failures < MAX_FAILURES else "for_handler"
         conn.execute(
-            "UPDATE claims SET status = 'waiting' "
-            "WHERE claim_id = ? AND status = 'in_progress'",
-            (claim_id,),
+            "UPDATE claims SET status = ?, failures = ? WHERE claim_id = ?",
+            (status, failures, claim_id),
         )
+    where = "Back in the queue" if status == "waiting" else "Left for a handler"
+    add_step(claim_id, f"{where}: {reason}")
+    return get_claim(claim_id)
+
+
+def release_stuck_claims(reason: str) -> None:
+    """Release every claim left in progress, such as after a restart."""
+    for claim in list_claims():
+        if claim["status"] == "in_progress":
+            release_claim(claim["claim_id"], reason)
 
 
 def add_step(claim_id: str, text: str) -> dict[str, str]:

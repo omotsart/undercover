@@ -3,11 +3,11 @@
 import sys
 import uuid
 
-from agent.claim import run
+from agent.claim import work_claim
 
 
 def main(claim_id: str) -> None:
-    print(run(claim_id, f"{claim_id}-{uuid.uuid4().hex[:8]}"))
+    print(work_claim(claim_id, f"{claim_id}-{uuid.uuid4().hex[:8]}"))
 
 
 if __name__ == "__main__":

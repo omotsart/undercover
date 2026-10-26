@@ -110,7 +110,7 @@ def test_decline(api):
 def test_the_agent_reads_its_instructions_and_the_contents(api, monkeypatch):
     seen = []
 
-    def create_agent(model, tools, system_prompt):
+    def create_agent(model, tools, system_prompt, middleware):
         def stream(state, **kwargs):
             seen.append(state["messages"][0]["content"])
             return []
@@ -141,7 +141,9 @@ def test_the_agent_looks_things_up_and_cannot_sign_off_or_start_claims():
 
 
 def test_cli(api, monkeypatch, capsys):
-    monkeypatch.setattr(cli, "run", lambda claim_id, thread_id: f"{claim_id} done")
+    monkeypatch.setattr(
+        cli, "work_claim", lambda claim_id, thread_id: f"{claim_id} done"
+    )
     cli.main("CLM-1001")
     assert capsys.readouterr().out == "CLM-1001 done\n"
 

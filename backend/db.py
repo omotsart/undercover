@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS claims (
     customer_id TEXT NOT NULL,
     data TEXT NOT NULL,
     status TEXT NOT NULL,
+    failures INTEGER NOT NULL DEFAULT 0,
     decision TEXT,
     payout REAL,
     reason TEXT,

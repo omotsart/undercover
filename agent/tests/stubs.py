@@ -9,6 +9,18 @@ class StubModel(GenericFakeChatModel):
         return self
 
 
+class FailingModel(StubModel):
+    """A stub model that fails its first calls, then gives its scripted replies."""
+
+    failures: int = 0
+
+    def _generate(self, *args, **kwargs):
+        if self.failures:
+            self.failures -= 1
+            raise TimeoutError("The model timed out")
+        return super()._generate(*args, **kwargs)
+
+
 def tool_call(name, **args):
     return AIMessage(content="", tool_calls=[{"name": name, "args": args, "id": name}])
 

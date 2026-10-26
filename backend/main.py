@@ -18,6 +18,7 @@ INSTRUCTIONS = Path(__file__).parent / "instructions"
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     init_db()
+    worker.recover()
     yield
 
 
@@ -128,6 +129,10 @@ class SignOff(BaseModel):
     handler_id: str
 
 
+class Release(BaseModel):
+    reason: str = Field(min_length=1, description="What went wrong")
+
+
 @app.post("/api/claims/{claim_id}/start", operation_id="start_claim")
 def start_claim(claim_id: str) -> dict[str, Any]:
     """Start work on a waiting claim."""
@@ -162,6 +167,12 @@ def pay_claim(claim_id: str, payment: Payment) -> dict[str, Any]:
 def sign_off_claim(claim_id: str, sign_off: SignOff) -> dict[str, Any]:
     """Sign off a payout over the limit as a handler, which releases the payment."""
     return claims.sign_off_claim(claim_id, sign_off.handler_id)
+
+
+@app.post("/api/claims/{claim_id}/release", operation_id="release_claim")
+def release_claim(claim_id: str, release: Release) -> dict[str, Any]:
+    """Put a claim that failed back in the queue, or after two failures leave it."""
+    return claims.release_claim(claim_id, release.reason)
 
 
 @app.post("/api/queue/work", operation_id="work_queue")

@@ -1,14 +1,25 @@
 """The claim agent, which decides one claim through the backend's API."""
 
 import json
-from typing import Literal
+from typing import Any, Literal
 
 from langchain.agents import create_agent
+from langchain.agents.middleware import (
+    AgentMiddleware,
+    ModelCallLimitMiddleware,
+    ModelRetryMiddleware,
+    ToolRetryMiddleware,
+)
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import AIMessage, BaseMessage, ToolMessage
 from langchain_core.tools import tool
 
 from agent.main import backend, call, instructions, model
+
+RETRIES = 2
+RETRY_DELAY = 1.0
+MODEL_CALL_LIMIT = 30
+PROBLEM_LENGTH = 200
 
 Document = Literal["policy_wording", "claims_manual"]
 DOCUMENT_NAMES = {
@@ -132,10 +143,24 @@ def describe(message: BaseMessage) -> list[str]:
     return steps
 
 
+def middleware() -> list[AgentMiddleware[Any, Any, Any]]:
+    """Return the claim agent's retries and its limit on model calls."""
+    return [
+        ModelRetryMiddleware(
+            max_retries=RETRIES, on_failure="error", initial_delay=RETRY_DELAY
+        ),
+        ToolRetryMiddleware(max_retries=RETRIES, initial_delay=RETRY_DELAY),
+        ModelCallLimitMiddleware(run_limit=MODEL_CALL_LIMIT, exit_behavior="end"),
+    ]
+
+
 def run(claim_id: str, thread_id: str, llm: BaseChatModel | None = None) -> str:
     """Run the agent on one claim, reporting its steps, and return its final reply."""
     agent = create_agent(
-        llm or model(), tools=TOOLS, system_prompt=instructions("claim")
+        llm or model(),
+        tools=TOOLS,
+        system_prompt=instructions("claim"),
+        middleware=middleware(),
     )
     task = f"Decide claim {claim_id}.\n\nThe documents you can look up:\n\n{contents()}"
     with backend() as client:
@@ -147,10 +172,51 @@ def run(claim_id: str, thread_id: str, llm: BaseChatModel | None = None) -> str:
             stream_mode="updates",
         ):
             for node in update.values():
-                for message in node["messages"]:
+                for message in (node or {}).get("messages", []):
                     for step in describe(message):
                         client.post(
                             f"/api/claims/{claim_id}/steps", json={"text": step}
                         ).raise_for_status()
                     reply = message.text
     return reply
+
+
+def report(claim: dict[str, Any]) -> str:
+    """Return the outcome of a claim in one line, from its record."""
+    claim_id, decision = claim["claim_id"], claim["decision"]
+    if claim["status"] == "for_handler":
+        return f"{claim_id}: left for a handler"
+    if decision != "approve":
+        return f"{claim_id}: {decision}"
+    if claim["paid_amount"] is not None:
+        payment = "paid"
+    elif claim["status"] == "awaiting_signoff":
+        payment = "waiting for sign-off"
+    else:
+        payment = "not paid"
+    return f"{claim_id}: approve, ${claim['payout']:,.2f}, {payment}"
+
+
+def work_claim(claim_id: str, thread_id: str, llm: BaseChatModel | None = None) -> str:
+    """Work one claim with a fresh claim agent, put right a failure, and report the
+    outcome in one line."""
+    problem = "the agent made no decision"
+    try:
+        run(claim_id, thread_id, llm)
+    except Exception as error:  # a failed claim must never stop the run
+        problem = (str(error) or type(error).__name__)[:PROBLEM_LENGTH]
+    with backend() as client:
+        claim = client.get(f"/api/claims/{claim_id}").raise_for_status().json()
+        if claim["status"] == "waiting":
+            return f"{claim_id}: not started ({problem})"
+        if claim["status"] != "in_progress":
+            return report(claim)
+        claim = (
+            client.post(f"/api/claims/{claim_id}/release", json={"reason": problem})
+            .raise_for_status()
+            .json()
+        )
+    where = (
+        "back in the queue" if claim["status"] == "waiting" else "left for a handler"
+    )
+    return f"{claim_id}: failed ({problem}), {where}"

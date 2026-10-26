@@ -190,16 +190,16 @@ Builds failure handling for a single claim: retries in the agent, a failure coun
 
 Success criteria:
 
-- [ ] Backend tests: release once goes back to waiting with one failure; release twice is `for_handler`; release on a waiting or decided claim gets 409; a decided claim is never moved by a release; a claim in progress at startup is released
-- [ ] Agent tests with stub models:
-  - [ ] A model that fails once and then answers is retried, and the claim is decided
-  - [ ] A claim agent that raises every time: the claim is back in the queue, with a step that says why, and the report reads "CLM-1001: failed (…), back in the queue"
-  - [ ] The same claim failing a second time: it is `for_handler`, and the report says so
-  - [ ] A claim agent that ends without deciding counts as a failure
-  - [ ] A claim agent that records a decision and then raises: the claim stays decided and isn't released
-  - [ ] The reports for an approval paid, an approval waiting for sign-off, a decline and a referral
-- [ ] `uv run -m agent CLM-1001` against the running backend on the real model prints one line with the decision and payout
-- [ ] `npm run check:python` passes with coverage of at least 80%
+- [x] Backend tests: release once goes back to waiting with one failure; release twice is `for_handler`; release on a waiting or decided claim gets 409; a decided claim is never moved by a release; a claim in progress at startup is released
+- [x] Agent tests with stub models:
+  - [x] A model that fails once and then answers is retried, and the claim is decided
+  - [x] A claim agent that raises every time: the claim is back in the queue, with a step that says why, and the report reads "CLM-1001: failed (…), back in the queue"
+  - [x] The same claim failing a second time: it is `for_handler`, and the report says so
+  - [x] A claim agent that ends without deciding counts as a failure
+  - [x] A claim agent that records a decision and then raises: the claim stays decided and isn't released
+  - [x] The reports for an approval paid, an approval waiting for sign-off, a decline and a referral
+- [x] `uv run -m agent CLM-1001` against the running backend on the real model prints one line with the decision and payout
+- [x] `npm run check:python` passes with coverage of at least 80%
 
 ### Phase 3: Runs in the backend
 
