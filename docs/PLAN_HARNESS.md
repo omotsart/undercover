@@ -213,15 +213,15 @@ Builds the run record and its rules (the cap, the to-do list and the finish chec
 
 Success criteria:
 
-- [ ] Tests cover:
-  - [ ] A run with a cap of 5 takes five distinct claims, refuses a sixth with 409, and accepts a claim it already has (a retry)
-  - [ ] `write_todos` stores the list in order and refuses an unknown status
-  - [ ] `finish_run` refuses while a claim is waiting within the cap, then accepts once the cap is used and the run's claims are decided or left for a handler; the run is `finished` with the summary
-  - [ ] A second `work_queue` while a run is running gets 409; a cap below 1 gets 422
-  - [ ] `get_current_run` returns null before any run, then the latest run with its to-do list
-- [ ] Through `curl` against the running backend: `POST /api/queue/work {"cap": 5}`, `PUT /api/runs/{id}/todos` and `GET /api/runs/current` give the same responses
-- [ ] `/openapi.json` shows an `operation_id` and a one-line description on every operation, and no optional parameters
-- [ ] `npm run check:python` passes with coverage of at least 80%
+- [x] Tests cover:
+  - [x] A run with a cap of 5 takes five distinct claims, refuses a sixth with 409, and accepts a claim it already has (a retry)
+  - [x] `write_todos` stores the list in order and refuses an unknown status
+  - [x] `finish_run` refuses while a claim is waiting within the cap, then accepts once the cap is used and the run's claims are decided or left for a handler; the run is `finished` with the summary
+  - [x] A second `work_queue` while a run is running gets 409; a cap below 1 gets 422
+  - [x] `get_current_run` returns null before any run, then the latest run with its to-do list
+- [x] Through `curl` against the running backend: `POST /api/queue/work` (checked with `{"cap": 1}`, since until Phase 4 a run works its claims on the real model), `PUT /api/runs/{id}/todos` and `GET /api/runs/current` give the same responses
+- [x] `/openapi.json` shows an `operation_id` and a one-line description on every operation, and no optional parameters
+- [x] `npm run check:python` passes with coverage of at least 80%
 
 ### Phase 4: The queue agent
 

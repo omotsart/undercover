@@ -11,7 +11,7 @@ from typing import Any
 DATA = Path(__file__).parent.parent / "data"
 DEFAULT_PATH = Path(__file__).parent / "undercover.db"
 
-TABLES = ["claims", "policies", "customers", "handlers", "steps"]
+TABLES = ["claims", "policies", "customers", "handlers", "steps", "runs", "run_claims"]
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS claims (
@@ -38,6 +38,20 @@ CREATE TABLE IF NOT EXISTS steps (
     claim_id TEXT NOT NULL,
     text TEXT NOT NULL,
     created_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS runs (
+    run_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cap INTEGER NOT NULL,
+    status TEXT NOT NULL,
+    todos TEXT NOT NULL,
+    summary TEXT,
+    started_at TEXT NOT NULL,
+    finished_at TEXT
+);
+CREATE TABLE IF NOT EXISTS run_claims (
+    run_id INTEGER NOT NULL,
+    claim_id TEXT NOT NULL,
+    PRIMARY KEY (run_id, claim_id)
 );
 """
 

@@ -9,7 +9,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
-from backend import claims, documents, worker
+from backend import claims, documents, runs, worker
 from backend.db import init_db
 
 INSTRUCTIONS = Path(__file__).parent / "instructions"
@@ -175,7 +175,52 @@ def release_claim(claim_id: str, release: Release) -> dict[str, Any]:
     return claims.release_claim(claim_id, release.reason)
 
 
+class Run(BaseModel):
+    cap: int = Field(ge=1, description="The most claims the run may work")
+
+
+class RunClaim(BaseModel):
+    claim_id: str
+
+
+class Todo(BaseModel):
+    content: str = Field(min_length=1)
+    status: Literal["to_do", "in_progress", "done", "for_handler"]
+
+
+class Todos(BaseModel):
+    todos: list[Todo]
+
+
+class Finish(BaseModel):
+    summary: str = Field(min_length=1, description="A short summary for the handlers")
+
+
 @app.post("/api/queue/work", operation_id="work_queue")
-def work_queue() -> dict[str, int]:
-    """Start the agent on every waiting claim, one claim at a time."""
-    return {"claims": worker.work_queue()}
+def work_queue(run: Run) -> dict[str, Any]:
+    """Start a run of the agent over the queue, capped at a number of claims."""
+    return worker.work_queue(run.cap)
+
+
+@app.get("/api/runs/current", operation_id="get_current_run")
+def get_current_run() -> dict[str, Any] | None:
+    """Get the latest run with its to-do list, or null before the first."""
+    return runs.current_run()
+
+
+@app.post("/api/runs/{run_id}/claims", operation_id="add_run_claim")
+def add_run_claim(run_id: int, run_claim: RunClaim) -> dict[str, Any]:
+    """Count a claim against the run's cap before working it."""
+    return runs.add_run_claim(run_id, run_claim.claim_id)
+
+
+@app.put("/api/runs/{run_id}/todos", operation_id="write_todos")
+def write_todos(run_id: int, todos: Todos) -> dict[str, Any]:
+    """Replace the run's to-do list."""
+    return runs.write_todos(run_id, [todo.model_dump() for todo in todos.todos])
+
+
+@app.post("/api/runs/{run_id}/finish", operation_id="finish_run")
+def finish_run(run_id: int, finish: Finish) -> dict[str, Any]:
+    """Finish the run with a summary, once no claim is waiting within its cap."""
+    return runs.finish_run(run_id, finish.summary)

@@ -1,6 +1,6 @@
 # Status
 
-The pilot is built (`docs/PLAN.md`). The harness (`docs/PLAN_HARNESS.md`) is being built: Phases 1 and 2 of 6 are done.
+The pilot is built (`docs/PLAN.md`). The harness (`docs/PLAN_HARNESS.md`) is being built: Phases 1 to 3 of 6 are done.
 
 ## What's built
 
@@ -10,7 +10,8 @@ The pilot is built (`docs/PLAN.md`). The harness (`docs/PLAN_HARNESS.md`) is bei
   - Operations to start a claim, record the agent's steps and decision, pay a claim and sign off a payout. `pay_claim` refuses a payout over $1,000 until a handler signs off, and signing off releases the payment
   - `release_claim` puts a claim that failed back to waiting, or leaves it for a handler (status `for_handler`) on its second failure. A claim is released only while in progress, so a decided claim is never decided or paid again. On startup, any claim left in progress is released
   - `start_claim` keeps the steps of earlier attempts and marks a retry "Attempt 2"
-  - `POST /api/queue/work` runs the agent on every waiting claim, one at a time, in a background thread
+  - Runs (`backend/runs.py`): `POST /api/queue/work` with `{"cap": 5}` starts a run in a background thread, one run at a time. `add_run_claim` refuses a claim past the cap (a retry of a claim already in the run doesn't count), `write_todos` stores the run's to-do list, and `finish_run` refuses while a claim is still waiting within the cap. `GET /api/runs/current` returns the latest run. A run that fails or ends without finishing is stopped, and its claims in progress are released; a restart does the same
+  - Until the queue agent (Phase 4), a run works the waiting claims in order up to its cap
   - The agent's instructions are in `backend/instructions/`: `claim.md` for working a claim, written from the wording and the manual, and `queue.md` for running the queue (a first version)
 - `agent/`: the UnderCover Agent on LangChain's `create_agent`, with `deepseek/deepseek-v4.1-flash` at low reasoning effort or the model in `MODEL_NAME`
   - `agent/claim.py`: `run(claim_id, thread_id)` fetches the claim instructions and the contents of both documents, starts the claim, and reads, looks up sections, decides and pays through seven tools that call the API, posting each step (including each section it read) to the backend as it goes
