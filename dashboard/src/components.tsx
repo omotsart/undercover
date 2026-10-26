@@ -151,19 +151,58 @@ export function DecisionChip({
 
 export function Card({
   title,
+  aside,
   className,
   children,
   ref,
 }: Readonly<{
   title: string;
+  aside?: ReactNode;
   className?: string;
   children: ReactNode;
   ref?: Ref<HTMLElement>;
 }>) {
   return (
     <section ref={ref} className={className ? `card ${className}` : "card"}>
-      <h2 className="card-title">{title}</h2>
+      {aside ? (
+        <div className="card-head">
+          <h2 className="card-title">{title}</h2>
+          {aside}
+        </div>
+      ) : (
+        <h2 className="card-title">{title}</h2>
+      )}
       {children}
     </section>
+  );
+}
+
+// The round button that opens a long list in full and folds it back.
+export function ExpandButton({
+  expanded,
+  show,
+  onToggle,
+}: Readonly<{ expanded: boolean; show: string; onToggle: () => void }>) {
+  const label = expanded ? "Collapse" : show;
+  return (
+    <button
+      type="button"
+      className={`icon-button expand${expanded ? " is-expanded" : ""}`}
+      aria-label={label}
+      title={label}
+      aria-expanded={expanded}
+      onClick={onToggle}
+    >
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path
+          d="M6 9l6 6 6-6"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
   );
 }

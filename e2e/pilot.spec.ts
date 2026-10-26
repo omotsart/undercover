@@ -291,6 +291,69 @@ test("the two columns end on one line, and stack in order", async ({
   await expect(page.locator(".claims-body .claim-row")).toHaveCount(10);
 });
 
+test("a claim's steps fill the right column and open in full", async ({
+  page,
+  request,
+}) => {
+  for (const n of Array.from({ length: 30 }, (_, index) => index + 1))
+    await request.post("/api/claims/CLM-1008/steps", {
+      data: {
+        text: `**Step ${String(n)}**: checked the claim against the wording.`,
+      },
+    });
+  const bottoms = () =>
+    page.evaluate(() =>
+      [".policy-card", ".steps-card"].map((selector) =>
+        Math.round(
+          document.querySelector(selector)?.getBoundingClientRect().bottom ?? 0,
+        ),
+      ),
+    );
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/claims/CLM-1008");
+  await expect(page.getByText("30 steps")).toBeVisible();
+  await expect(page.locator(".steps .step-text").first()).toHaveText(
+    "Step 30: checked the claim against the wording.",
+  );
+  await expect(page.locator(".steps strong").first()).toHaveText("Step 30");
+  const [policy, steps] = await bottoms();
+  expect(Math.abs(policy - steps)).toBeLessThanOrEqual(1);
+  const list = page.locator(".steps");
+  expect(await list.evaluate((el) => el.scrollHeight > el.clientHeight)).toBe(
+    true,
+  );
+
+  await page.getByRole("button", { name: "Show all steps" }).click();
+  expect(await list.evaluate((el) => el.scrollHeight > el.clientHeight)).toBe(
+    false,
+  );
+  const [policyOpen, stepsOpen] = await bottoms();
+  expect(stepsOpen).toBeGreaterThan(policyOpen);
+  await page.getByRole("button", { name: "Collapse" }).click();
+  await expect(
+    page.getByRole("button", { name: "Show all steps" }),
+  ).toBeVisible();
+
+  await page.setViewportSize({ width: 1100, height: 900 });
+  const tops = await page.evaluate(() =>
+    [
+      ".decision-card",
+      ".claim-card",
+      ".items-card",
+      ".documents-card",
+      ".policy-card",
+      ".steps-card",
+    ].map((selector) =>
+      Math.round(
+        document.querySelector(selector)?.getBoundingClientRect().top ?? 0,
+      ),
+    ),
+  );
+  expect(tops).toEqual([...tops].sort((a, b) => a - b));
+  await expect(page.locator(".steps > li:visible")).toHaveCount(5);
+});
+
 test("the instructions are shown read only", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: "Instructions" }).click();

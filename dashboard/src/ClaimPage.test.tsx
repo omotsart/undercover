@@ -237,3 +237,113 @@ it("says when a claim doesn't exist", async () => {
   ).toBeDefined();
   expect(screen.getByRole("link", { name: "Back to the queue" })).toBeDefined();
 });
+
+function step(text: string, second: number) {
+  return {
+    text,
+    created_at: `2026-10-23T10:00:${String(second).padStart(2, "0")}+00:00`,
+  };
+}
+
+function titles(selector: string) {
+  return [
+    ...(document.querySelector(selector)?.querySelectorAll(".card-title") ??
+      []),
+  ].map((title) => title.textContent);
+}
+
+function stepTexts() {
+  const list = document.querySelector(".steps");
+  return [...(list?.querySelectorAll(".step-text") ?? [])].map(
+    (text) => text.textContent,
+  );
+}
+
+it("puts the policy under the documents and the steps beside them", async () => {
+  stubApi(routes(AWAITING));
+  render(<App />);
+  await screen.findByText("Lisbon, Portugal", { selector: ".field span" });
+  expect(titles(".claim-main")).toEqual([
+    "The claim",
+    "Items claimed",
+    "Documents",
+    "Policy",
+  ]);
+  expect(titles(".claim-side")).toEqual([
+    "Decision",
+    "Sign off",
+    "Agent steps",
+  ]);
+});
+
+it("lists the newest step first, counts them and renders their markdown", async () => {
+  stubApi(
+    routes(claim({}), {
+      "GET /api/claims/CLM-1002/steps": [
+        step("Reading the claim", 1),
+        step("**Approve** it:\n\n- the bag\n- the clothes", 2),
+      ],
+    }),
+  );
+  render(<App />);
+  expect(await screen.findByText("2 steps")).toBeDefined();
+  const [newest, oldest] = stepTexts();
+  expect(newest.replace(/\s+/g, " ").trim()).toBe(
+    "Approve it: the bag the clothes",
+  );
+  expect(oldest).toBe("Reading the claim");
+  const bold = screen.getByText("Approve");
+  expect(bold.tagName).toBe("STRONG");
+  expect(
+    screen
+      .getAllByRole("listitem")
+      .some((item) => item.textContent === "the bag"),
+  ).toBe(true);
+});
+
+it("opens every step and folds them back to the top of the card", async () => {
+  const scroll = vi.spyOn(Element.prototype, "scrollIntoView");
+  stubApi(
+    routes(claim({}), {
+      "GET /api/claims/CLM-1002/steps": Array.from({ length: 7 }, (_, index) =>
+        step(`Step ${String(index + 1)}`, index),
+      ),
+    }),
+  );
+  render(<App />);
+  expect(await screen.findByText("7 steps")).toBeDefined();
+  const card = document.querySelector(".steps-card");
+  const grid = document.querySelector(".claim-grid");
+  expect(card?.className).toBe("card steps-card has-more");
+
+  const open = screen.getByRole("button", { name: "Show all steps" });
+  expect(open.getAttribute("title")).toBe("Show all steps");
+  fireEvent.click(open);
+  expect(card?.className).toBe("card steps-card is-open has-more");
+  expect(grid?.className).toBe("claim-grid steps-open");
+  const collapse = screen.getByRole("button", { name: "Collapse" });
+  expect(collapse.getAttribute("aria-expanded")).toBe("true");
+
+  fireEvent.click(collapse);
+  expect(card?.className).toBe("card steps-card has-more");
+  expect(grid?.className).toBe("claim-grid");
+  expect(scroll).toHaveBeenCalledWith({ block: "start" });
+});
+
+it("adds a new step at the top and stays folded while the claim is worked", async () => {
+  const steps = [step("Reading the claim", 1)];
+  stubApi(
+    routes(claim({ status: "in_progress" }), {
+      "GET /api/claims/CLM-1002/steps": steps,
+    }),
+  );
+  render(<App />);
+  expect(await screen.findByText("1 step")).toBeDefined();
+  steps.push(step("Read the claims manual, 5. Documents", 2));
+  fireEvent.click(screen.getByRole("button", { name: "Refresh" }));
+  expect(await screen.findByText("2 steps")).toBeDefined();
+  expect(stepTexts()[0]).toBe("Read the claims manual, 5. Documents");
+  expect(document.querySelector(".steps-card")?.className).toBe(
+    "card steps-card",
+  );
+});

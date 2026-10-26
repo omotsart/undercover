@@ -117,6 +117,16 @@ No decision yet: show a single en dash `–` in Slate. Do not use Sunflower for 
 8. **By status**: the ring chart with its legend.
 9. **Empty states**: when a card has nothing to show, keep the card and write one short line, such as "Nothing is waiting for sign-off."
 
+## Screen recipe: A claim
+
+1. **Title row**: the claim ID, its status chip and the one-line summary.
+2. **Two columns** under it, 3:1, 16px apart.
+   - **Left, top to bottom**: The claim, Items claimed, Documents, Policy. Policy uses the same field grid as The claim: a Slate label above each value.
+   - **Right, top to bottom**: Decision, the dark Sign off panel while the payout waits for it, Agent steps.
+   - **The bottoms of the two columns line up while the steps are folded.** Agent steps stretches to the bottom of the left column, and its list fills the room, cut off with a fade at the bottom. If the left column is shorter than Decision plus room for two or three steps, the right column is simply taller and the left one doesn't stretch.
+3. **Agent steps**: newest first, with the count on the right of the title ("34 steps"). Folded, each step shows at most three lines. At the bottom, the same round button that opens the claims table, labelled "Show all steps" / "Collapse", its arrow turning over when open. Open, every step shows in full and the right column grows on its own; folding scrolls back to the top of the card. A claim being worked stays folded as new steps arrive at the top. Steps are markdown, so bold and lists show as such.
+4. **Below 1200px**: one column, in this order: Decision, Sign off, The claim, Items claimed, Documents, Policy, Agent steps. Nothing stretches, and folded steps show the newest five.
+
 ## Ready-to-use tokens
 
 ```css
@@ -173,7 +183,7 @@ body {
 - Empty outlined pills, and status bar segments whose width follows the data
 - Content wider than the screen
 - Borders on one edge of a panel, and thin lines across the top of the page
-- Outlines on cards, and any gradient other than the page background
+- Outlines on cards, and any gradient other than the page background, the hatching and the fade that cuts off folded Agent steps
 
 ## Tone
 

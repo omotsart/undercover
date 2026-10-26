@@ -1,6 +1,12 @@
 import { type RefObject, useRef, useState } from "react";
 import type { ClaimSummary, Status } from "./api";
-import { Card, DecisionChip, Link, StatusChip } from "./components";
+import {
+  Card,
+  DecisionChip,
+  ExpandButton,
+  Link,
+  StatusChip,
+} from "./components";
 import { claimType, date, money } from "./format";
 import { readParam, writeParams } from "./hooks";
 import { ROW_HEIGHT, pageItems, usePageSize } from "./paging";
@@ -244,25 +250,7 @@ export function ClaimsTable({
       </div>
       {pageCount > 1 && (
         <div ref={footer} className="table-footer">
-          <button
-            type="button"
-            className={`icon-button expand${expanded ? " is-expanded" : ""}`}
-            aria-label={expanded ? "Collapse" : "Show all"}
-            title={expanded ? "Collapse" : "Show all"}
-            aria-expanded={expanded}
-            onClick={toggle}
-          >
-            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-              <path
-                d="M6 9l6 6 6-6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
+          <ExpandButton expanded={expanded} show="Show all" onToggle={toggle} />
           <Pager
             current={current}
             count={pageCount}

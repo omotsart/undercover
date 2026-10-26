@@ -731,15 +731,6 @@ h1 {
   padding: 0 12px;
 }
 
-/* Main grid */
-
-.main-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--gap);
-  align-items: start;
-}
-
 .side-column {
   display: flex;
   flex-direction: column;
@@ -1100,14 +1091,35 @@ h1 {
   font-weight: 500;
 }
 
-/* Claim page */
+/* Claim page: two columns, 3:1. Folded, Agent steps fills the right column
+   down to the bottom of the left one; if the left is shorter, the right
+   column is simply taller. */
 
-.wide-column {
-  grid-column: span 3;
+.claim-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+  gap: var(--gap);
+  align-items: stretch;
+}
+
+.claim-main,
+.claim-side {
   display: flex;
   flex-direction: column;
   gap: var(--gap);
   min-width: 0;
+}
+
+.card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.card-head .card-title {
+  margin-bottom: 0;
 }
 
 .fields {
@@ -1249,6 +1261,74 @@ h1 {
   overflow-wrap: anywhere;
 }
 
+.steps-card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+/* Folded: room for two or three steps at least, then a fade at the bottom. */
+.steps-card .steps {
+  flex: 1 1 0;
+  min-height: 200px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black calc(100% - 72px),
+    transparent
+  );
+  mask-image: linear-gradient(to bottom, black calc(100% - 72px), transparent);
+}
+
+/* Three lines at most. line-clamp adds the ellipsis to plain text; the height
+   cap also holds a step whose markdown has lists or several paragraphs. */
+.step-text {
+  display: -webkit-box;
+  max-height: 4.5em;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+.step-text p,
+.step-text ul,
+.step-text ol {
+  margin: 0;
+}
+
+.step-text ul,
+.step-text ol {
+  padding-left: 18px;
+}
+
+.steps-footer {
+  padding-top: 16px;
+}
+
+/* Open: every step in full, and the right column grows on its own. */
+.steps-open .claim-side {
+  align-self: start;
+}
+
+.steps-card.is-open {
+  flex: none;
+}
+
+.steps-card.is-open .steps {
+  flex: none;
+  min-height: 0;
+  overflow: visible;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.steps-card.is-open .step-text {
+  display: block;
+  max-height: none;
+  overflow: visible;
+}
+
 @media (min-width: 1201px) {
   .side-column.is-sticky {
     position: sticky;
@@ -1262,12 +1342,61 @@ h1 {
 }
 
 @media (max-width: 1200px) {
-  .main-grid {
-    grid-template-columns: minmax(0, 1fr);
+  /* One column: Decision, sign-off, the claim, items, documents, policy,
+     Agent steps; folded, the steps show the newest five. */
+  .claim-grid {
+    display: flex;
+    flex-direction: column;
   }
 
-  .wide-column {
-    grid-column: auto;
+  .claim-main,
+  .claim-side {
+    display: contents;
+  }
+
+  .decision-card {
+    order: 1;
+  }
+
+  .claim-side .dark-panel {
+    order: 2;
+  }
+
+  .claim-card {
+    order: 3;
+  }
+
+  .items-card {
+    order: 4;
+  }
+
+  .documents-card {
+    order: 5;
+  }
+
+  .policy-card {
+    order: 6;
+  }
+
+  .steps-card {
+    order: 7;
+    flex: none;
+  }
+
+  .steps-card .steps {
+    flex: none;
+    min-height: 0;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .steps-card:not(.is-open) .steps > li:nth-child(n + 6) {
+    display: none;
+  }
+
+  .steps-card:not(.has-more) .steps-footer {
+    display: none;
   }
 
   /* One column: the cards interleave as status bar, Next for sign-off, the

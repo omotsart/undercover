@@ -1,11 +1,19 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
+import Markdown from "react-markdown";
 import { api, type Claim } from "./api";
-import { Card, DecisionChip, Link, StatusChip } from "./components";
+import {
+  Card,
+  DecisionChip,
+  ExpandButton,
+  Link,
+  StatusChip,
+} from "./components";
 import {
   claimType,
   date,
   errorMessage,
   money,
+  plural,
   sentenceCase,
   time,
 } from "./format";
@@ -23,7 +31,7 @@ function Field({ label, value }: Readonly<{ label: string; value: string }>) {
 function ClaimDetails({ claim }: Readonly<{ claim: Claim }>) {
   return (
     <>
-      <Card title="The claim">
+      <Card title="The claim" className="claim-card">
         <div className="fields">
           <Field label="Type" value={claimType(claim.claim_type)} />
           <Field label="Incident" value={date(claim.incident_date)} />
@@ -32,7 +40,7 @@ function ClaimDetails({ claim }: Readonly<{ claim: Claim }>) {
         </div>
         <p className="story">{claim.story}</p>
       </Card>
-      <Card title="Items claimed">
+      <Card title="Items claimed" className="items-card">
         <table className="items-table">
           <thead>
             <tr>
@@ -57,7 +65,7 @@ function ClaimDetails({ claim }: Readonly<{ claim: Claim }>) {
           </tbody>
         </table>
       </Card>
-      <Card title="Documents">
+      <Card title="Documents" className="documents-card">
         {claim.documents.length === 0 ? (
           <p className="empty">No documents attached.</p>
         ) : (
@@ -91,7 +99,7 @@ function Payment({ claim }: Readonly<{ claim: Claim }>) {
 
 function DecisionCard({ claim }: Readonly<{ claim: Claim }>) {
   return (
-    <Card title="Decision">
+    <Card title="Decision" className="decision-card">
       {claim.decision === null ? (
         <p className="empty">
           {claim.status === "for_handler"
@@ -166,22 +174,65 @@ function SignOff({
   );
 }
 
-function Steps({ claimId }: Readonly<{ claimId: string }>) {
+// Newest first. Folded, the list fills the right column down to the bottom of
+// the left one and fades out; open, it shows every step in full.
+function Steps({
+  claimId,
+  open,
+  onOpen,
+}: Readonly<{
+  claimId: string;
+  open: boolean;
+  onOpen: (open: boolean) => void;
+}>) {
   const load = useCallback(() => api.listSteps(claimId), [claimId]);
   const { data: steps } = usePolling(load);
+  const card = useRef<HTMLElement>(null);
+  const newest = [...(steps ?? [])].reverse();
+  const toggle = () => {
+    onOpen(!open);
+    if (open) card.current?.scrollIntoView({ block: "start" });
+  };
+  const className = [
+    "steps-card",
+    open && "is-open",
+    newest.length > 5 && "has-more",
+  ]
+    .filter(Boolean)
+    .join(" ");
   return (
-    <Card title="Agent steps">
-      {!steps?.length ? (
+    <Card
+      title="Agent steps"
+      className={className}
+      ref={card}
+      aside={
+        newest.length > 0 && (
+          <span className="count num">{plural(newest.length, "step")}</span>
+        )
+      }
+    >
+      {newest.length === 0 ? (
         <p className="empty">The agent hasn't worked this claim yet.</p>
       ) : (
-        <ol className="steps">
-          {steps.map((step, index) => (
-            <li key={`${String(index)}-${step.created_at}`}>
-              <span className="label num">{time(step.created_at)}</span>
-              <span>{step.text}</span>
-            </li>
-          ))}
-        </ol>
+        <>
+          <ol className="steps">
+            {newest.map((step, index) => (
+              <li key={`${String(newest.length - index)}-${step.created_at}`}>
+                <span className="label num">{time(step.created_at)}</span>
+                <div className="step-text">
+                  <Markdown>{step.text}</Markdown>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <div className="steps-footer">
+            <ExpandButton
+              expanded={open}
+              show="Show all steps"
+              onToggle={toggle}
+            />
+          </div>
+        </>
       )}
     </Card>
   );
@@ -191,7 +242,7 @@ function PolicyCard({ policyId }: Readonly<{ policyId: string }>) {
   const load = useCallback(() => api.getPolicy(policyId), [policyId]);
   const { data: policy } = usePolling(load, 60000);
   return (
-    <Card title="Policy">
+    <Card title="Policy" className="policy-card">
       {policy && (
         <div className="fields">
           <Field label="Policy" value={policy.policy_id} />
@@ -217,6 +268,7 @@ function PolicyCard({ policyId }: Readonly<{ policyId: string }>) {
 export function ClaimPage({ claimId }: Readonly<{ claimId: string }>) {
   const load = useCallback(() => api.getClaim(claimId), [claimId]);
   const { data: claim, error, refresh } = usePolling(load);
+  const [stepsOpen, setStepsOpen] = useState(false);
 
   if (!claim)
     return (
@@ -235,17 +287,17 @@ export function ClaimPage({ claimId }: Readonly<{ claimId: string }>) {
           <span className="count">{claim.summary}</span>
         </div>
       </div>
-      <div className="main-grid">
-        <div className="wide-column">
+      <div className={`claim-grid${stepsOpen ? " steps-open" : ""}`}>
+        <div className="claim-main">
           <ClaimDetails claim={claim} />
+          <PolicyCard policyId={claim.policy_id} />
         </div>
-        <div className="side-column">
+        <div className="claim-side">
           <DecisionCard claim={claim} />
           {claim.status === "awaiting_signoff" && (
             <SignOff claim={claim} onSignedOff={() => void refresh()} />
           )}
-          <Steps claimId={claimId} />
-          <PolicyCard policyId={claim.policy_id} />
+          <Steps claimId={claimId} open={stepsOpen} onOpen={setStepsOpen} />
         </div>
       </div>
     </main>
