@@ -67,9 +67,9 @@ it("shows the queue with its status bar, numbers and cards", async () => {
   expect(screen.getAllByText("2 · 50%")).toHaveLength(1);
   expect(screen.getAllByText("1 · 25%")).toHaveLength(2);
   expect(screen.getAllByText("0 · 0%")).toHaveLength(2);
-  expect(
-    screen.getByText("$420.00", { selector: ".big-number .num" }),
-  ).toBeDefined();
+  expect(screen.queryByText("For sign-off")).toBeNull();
+  const paid = document.querySelector(".paid-total");
+  expect(paid?.textContent).toBe("$420.00Paid");
 
   const table = screen.getByRole("table", { name: "Claims" });
   expect(within(table).getAllByRole("row")).toHaveLength(5);
@@ -80,6 +80,16 @@ it("shows the queue with its status bar, numbers and cards", async () => {
 
   const signOff = screen.getByRole("region", { name: "Next for sign-off" });
   expect(within(signOff).getByText("Tomás Reyes")).toBeDefined();
+  expect(signOff.parentElement?.className).toBe("summary-row");
+  expect(signOff.previousElementSibling?.getAttribute("aria-label")).toBe(
+    "Claims by status",
+  );
+  const side = document.querySelector(".side-column");
+  expect(
+    [...(side?.querySelectorAll(".card-title") ?? [])].map(
+      (h) => h.textContent,
+    ),
+  ).toEqual(["By status", "Decisions"]);
   expect(screen.getByRole("img", { name: "4 claims by status" })).toBeDefined();
   expect(
     await screen.findByRole("button", { name: "Working the queue" }),
@@ -94,7 +104,10 @@ it("shows a line in each card with nothing to show", async () => {
   stubApi({ "GET /api/claims": [summary({})] });
   render(<App />);
   expect(await screen.findByText("No decisions yet.")).toBeDefined();
-  expect(screen.getByText("Nothing is waiting for sign-off.")).toBeDefined();
+  expect(document.querySelector(".paid-total")?.textContent).toBe("$0.00Paid");
+  const signOff = screen.getByRole("region", { name: "Next for sign-off" });
+  expect(signOff.textContent).toBe("Nothing is waiting for sign-off.");
+  expect(within(signOff).queryByRole("heading")).toBeNull();
   expect(screen.getAllByText("0 · 0%")).toHaveLength(4);
   expect(screen.getByText("1 · 100%")).toBeDefined();
 });

@@ -1,6 +1,13 @@
 import type { ClaimSummary, Decision, Status } from "./api";
 import { Card, DecisionChip, StatusChip } from "./components";
-import { DECISIONS, STATUSES, STATUS_LABELS, countBy, percent } from "./format";
+import {
+  DECISIONS,
+  STATUSES,
+  STATUS_LABELS,
+  countBy,
+  money,
+  percent,
+} from "./format";
 
 export function StatusBar({
   claims,
@@ -107,8 +114,13 @@ export function RingChart({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
 export function DecisionsBar({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
   const decided = claims.filter((claim) => claim.decision !== null);
   const counts = countBy(DECISIONS, decided, (claim) => claim.decision);
+  const paid = claims.reduce((sum, claim) => sum + (claim.paid_amount ?? 0), 0);
   return (
     <Card title="Decisions">
+      <div className="paid-total">
+        <span className="card-number num">{money(paid)}</span>
+        <span className="label">Paid</span>
+      </div>
       {decided.length === 0 ? (
         <p className="empty">No decisions yet.</p>
       ) : (

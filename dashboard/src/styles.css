@@ -419,6 +419,7 @@ h1 {
   display: grid;
   grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   gap: var(--gap);
+  align-items: start;
 }
 
 .status-bar {
@@ -457,27 +458,6 @@ h1 {
 .status-pill .chip-inner {
   height: 30px;
   padding: 0 12px;
-}
-
-.big-numbers {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.big-number {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.big-number .num {
-  font-size: 64px;
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  line-height: 1;
 }
 
 /* Main grid */
@@ -669,6 +649,17 @@ h1 {
 
 .dark-panel .empty {
   color: var(--fog);
+}
+
+.signoff-empty {
+  padding: 16px 24px;
+}
+
+.paid-total {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
 }
 
 .signoff-list {
@@ -901,10 +892,6 @@ h1 {
 
   .status-bar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .big-number .num {
-    font-size: 48px;
   }
 }
 

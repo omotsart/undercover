@@ -68,39 +68,32 @@ function ClaimsTable({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
 
 function SignOffPanel({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
   const waiting = claims.filter((claim) => claim.status === "awaiting_signoff");
+  if (waiting.length === 0)
+    return (
+      <section
+        className="dark-panel signoff-empty"
+        aria-label="Next for sign-off"
+      >
+        <p className="empty">Nothing is waiting for sign-off.</p>
+      </section>
+    );
   return (
     <section className="dark-panel" aria-labelledby="signoff-title">
       <h2 id="signoff-title" className="card-title">
         Next for sign-off
       </h2>
-      {waiting.length === 0 ? (
-        <p className="empty">Nothing is waiting for sign-off.</p>
-      ) : (
-        <ul className="signoff-list">
-          {waiting.map((claim) => (
-            <li key={claim.claim_id}>
-              <Link to={`/claims/${claim.claim_id}`} className="signoff-link">
-                <span className="num">{claim.claim_id}</span>
-                <span className="signoff-name">{claim.customer_name}</span>
-                <span className="num">{money(claim.payout ?? 0)}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul className="signoff-list">
+        {waiting.map((claim) => (
+          <li key={claim.claim_id}>
+            <Link to={`/claims/${claim.claim_id}`} className="signoff-link">
+              <span className="num">{claim.claim_id}</span>
+              <span className="signoff-name">{claim.customer_name}</span>
+              <span className="num">{money(claim.payout ?? 0)}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </section>
-  );
-}
-
-function BigNumber({
-  value,
-  label,
-}: Readonly<{ value: string; label: string }>) {
-  return (
-    <div className="big-number">
-      <span className="num">{value}</span>
-      <span className="label">{label}</span>
-    </div>
   );
 }
 
@@ -116,7 +109,6 @@ export function QueuePage() {
     claims.filter((claim) => claim.status === status).length;
   const working = run.data?.status === "running";
   const waiting = count("waiting");
-  const paid = claims.reduce((sum, claim) => sum + (claim.paid_amount ?? 0), 0);
 
   const workQueue = () =>
     api
@@ -172,14 +164,7 @@ export function QueuePage() {
             live={!working && count("in_progress") > 0}
           />
         </section>
-        <section className="card big-numbers" aria-label="Totals">
-          <BigNumber value={String(count("waiting"))} label="Waiting" />
-          <BigNumber
-            value={String(count("awaiting_signoff"))}
-            label="For sign-off"
-          />
-          <BigNumber value={money(paid)} label="Paid" />
-        </section>
+        <SignOffPanel claims={claims} />
       </div>
       <RunCard run={run.data} error={run.error} />
       <div className="main-grid">
@@ -187,7 +172,6 @@ export function QueuePage() {
         <div className="side-column">
           <RingChart claims={claims} />
           <DecisionsBar claims={claims} />
-          <SignOffPanel claims={claims} />
         </div>
       </div>
     </main>

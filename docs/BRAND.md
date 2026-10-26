@@ -89,11 +89,11 @@ No decision yet: show a single en dash `–` in Slate. Do not use Sunflower for 
 
 1. **Header**: product name on the left, navigation pills (Queue, Instructions) and icon buttons on the right.
 2. **Title row**: "Claims queue" and the claim count on the left, "Work the queue" Sunflower button on the right, with the "Claims to work" number field (a white pill) before it.
-3. **Summary row**: the status bar on the left (about 60% of the width), three big numbers on the right: Waiting, For sign-off and Paid in dollars, each with a 13px label below.
+3. **Summary row**: the status bar card on the left (about 60% of the width) and the dark Next for sign-off panel on the right. With nothing waiting for sign-off the panel shrinks to one line, "Nothing is waiting for sign-off." Below 1200px the panel goes straight under the status bar.
 4. **The agent's run**: a card across the full width with the run's status chip, its to-do list in columns and, once it ends, its summary.
 5. **Main grid**: four columns.
    - The Claims table card spans three columns.
-   - The right column stacks three cards: By status (ring chart), Decisions (Approved, Referred, Declined bar in decision colors) and the dark Next for sign-off panel.
+   - The right column stacks two cards: By status (ring chart) and Decisions: Paid in dollars as a number inside the card (40px, weight 300) with the label "Paid", then the Approved, Referred, Declined bar in decision colors.
    - Below 1200px the right column moves under the table.
 6. **Empty states**: when a card has nothing to show, keep the card and write one short line, such as "Nothing is waiting for sign-off."
 
