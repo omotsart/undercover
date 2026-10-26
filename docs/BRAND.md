@@ -80,10 +80,13 @@ No decision yet: show a single en dash `–` in Slate. Do not use Sunflower for 
 - **Main action**: Sunflower pill with Graphite text, 48px tall.
 - **Icon buttons**: 44px circles, solid white, 1.8px stroke icon.
 - **Hatching**: `repeating-linear-gradient(120deg, #FFFFFF 0 6px, #6B7079 6px 10px)`. The stripes must be clearly visible.
+- **Moving hatching**: the one place where work is happening right now has its stripes slide sideways (`.is-live`, 11.547px a second, which loops seamlessly). While a run works, that is the run's Working chip and the claim being worked; with claims in progress but no run, it is the status bar's In progress pill. Everything else, including the table, the legend and the ring chart, stays still, and nothing moves under `prefers-reduced-motion: reduce`.
 - **Status bar (fixed size, decided)**: five pills of equal width in one row (`grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px`), 52px tall, always in the order Decided, Waiting for sign-off, Left for a handler, In progress, Waiting. The status name sits above each pill (13px, weight 500, Graphite). Inside the pill is "count · percent" (16px, weight 500), for example "19 · 76%". Fill each pill with its status color. Keep pills with zero claims and show "0 · 0%". **Widths never follow the data**: the ring chart shows the proportions.
 - **Ring chart**: a thick rounded arc per status in the status colors, with the total in the center (40px, weight 300) and a legend below.
 - **Row separators**: 1px dashed `#CFCFCF` lines between table rows. Rows are 44px tall.
-- **Row hover**: the row under the mouse turns solid white with 14px rounded corners and a soft shadow (`0 2px 10px rgba(35,35,35,0.08)`). Hide the dashed lines above and below that row. The cursor is a pointer, and the whole row opens the claim. The change fades in over 0.15s. Also show the same highlight when the row has keyboard focus.
+- **Row hover**: the row under the mouse turns solid white with 14px rounded corners and a soft shadow (`0 2px 10px rgba(35,35,35,0.08)`). Hide the dashed lines above and below that row. The cursor is a pointer, and the whole row opens the claim. The change fades in over 0.15s. Also show the same highlight when the row has keyboard focus. On the dark panel the highlight is white at 10% with no shadow.
+- **Rows that open a claim** (the claims table, the run's claims, Next for sign-off) end with a › arrow in Slate (Fog on the dark panel). On hover and focus it turns Graphite (white on the dark panel) and moves 3px right. Keyboard focus also draws a 2px Graphite outline with a 2px offset around the whole row (white on the dark panel).
+- **Buttons and pills** darken slightly on hover (`filter: brightness(0.94)`) and press to `scale(0.98)`.
 
 ## Screen recipe: Claims queue
 

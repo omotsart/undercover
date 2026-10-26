@@ -28,9 +28,14 @@ function ClaimsTable({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
                 {column}
               </span>
             ))}
+            <span aria-hidden="true" />
           </div>
           {claims.map((claim) => (
-            <div key={claim.claim_id} className="claim-row" role="row">
+            <div
+              key={claim.claim_id}
+              className="claim-row clickable-row"
+              role="row"
+            >
               <span role="cell" className="num">
                 <Link to={`/claims/${claim.claim_id}`} className="row-link">
                   {claim.claim_id}
@@ -56,6 +61,9 @@ function ClaimsTable({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
                 ) : (
                   money(claim.payout)
                 )}
+              </span>
+              <span className="row-arrow" aria-hidden="true">
+                ›
               </span>
             </div>
           ))}
@@ -85,10 +93,16 @@ function SignOffPanel({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
       <ul className="signoff-list">
         {waiting.map((claim) => (
           <li key={claim.claim_id}>
-            <Link to={`/claims/${claim.claim_id}`} className="signoff-link">
+            <Link
+              to={`/claims/${claim.claim_id}`}
+              className="signoff-link clickable-row"
+            >
               <span className="num">{claim.claim_id}</span>
               <span className="signoff-name">{claim.customer_name}</span>
               <span className="num">{money(claim.payout ?? 0)}</span>
+              <span className="row-arrow" aria-hidden="true">
+                ›
+              </span>
             </Link>
           </li>
         ))}

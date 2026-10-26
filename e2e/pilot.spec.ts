@@ -115,6 +115,67 @@ test("In progress moves, unless motion is reduced", async ({
   expect(await animation()).toBe("none");
 });
 
+test("rows that open a claim share hover, focus and the arrow", async ({
+  page,
+  request,
+}) => {
+  await request.post("/api/claims/CLM-1004/start");
+  await request.post("/api/claims/CLM-1004/decision", {
+    data: {
+      decision: "approve",
+      payout: 1200,
+      reason: "The bag was delayed for two days.",
+      policy_section: "4. Baggage Delay",
+    },
+  });
+  await page.goto("/");
+
+  const row = page.getByRole("row").filter({ hasText: "CLM-1005" });
+  await row.hover();
+  await expect(row).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  await expect(row.locator(".row-arrow")).toHaveCSS(
+    "transform",
+    "matrix(1, 0, 0, 1, 3, 0)",
+  );
+
+  const panel = page.getByRole("region", { name: "Next for sign-off" });
+  const signOff = panel.getByRole("link", { name: /CLM-1004/ });
+  await signOff.hover();
+  await expect(signOff).toHaveCSS(
+    "background-color",
+    "rgba(255, 255, 255, 0.1)",
+  );
+
+  const button = page.getByRole("button", { name: "Work the queue" });
+  await button.hover();
+  await expect(button).toHaveCSS("filter", "brightness(0.94)");
+  await page.mouse.move(0, 0);
+
+  // After the field and the button, the sign-off link comes first, then the
+  // table's rows.
+  const focused = () =>
+    page.evaluate(() => document.activeElement?.textContent ?? "");
+  await page.getByLabel("Claims to work").focus();
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
+  expect(await focused()).toBe("CLM-1004Danielle Okafor$1,200.00›");
+  await expect(signOff).toHaveCSS("outline-style", "solid");
+  await expect(signOff).toHaveCSS("outline-color", "rgb(255, 255, 255)");
+
+  await page.keyboard.press("Tab");
+  expect(await focused()).toBe("CLM-1001");
+  const link = page.getByRole("link", { name: "CLM-1001" });
+  const outline = await link.evaluate((el) => {
+    const style = getComputedStyle(el, "::after");
+    return `${style.outlineStyle} ${style.outlineColor}`;
+  });
+  expect(outline).toBe("solid rgb(35, 35, 35)");
+  await expect(page.getByRole("row").filter({ hasText: "CLM-1001" })).toHaveCSS(
+    "background-color",
+    "rgb(255, 255, 255)",
+  );
+});
+
 test("the instructions are shown read only", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: "Instructions" }).click();

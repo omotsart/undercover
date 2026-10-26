@@ -217,6 +217,20 @@ it("keeps everything still when nothing is in progress", async () => {
   expect(liveElements()).toEqual([]);
 });
 
+it("ends every row that opens a claim with an arrow", async () => {
+  stubApi({ "GET /api/claims": QUEUE, "GET /api/runs/current": null });
+  render(<App />);
+  await screen.findByText("4 claims");
+  const clickable = [...document.querySelectorAll(".clickable-row")];
+  expect(clickable).toHaveLength(5);
+  for (const row of clickable)
+    expect(row.querySelector(".row-arrow")?.textContent).toBe("›");
+  const signOff = screen.getByRole("region", { name: "Next for sign-off" });
+  expect(within(signOff).getByRole("link").textContent).toBe(
+    "CLM-1002Tomás Reyes$1,500.00›",
+  );
+});
+
 it("says why the queue didn't start", async () => {
   stubApi({
     "GET /api/claims": [summary({})],
