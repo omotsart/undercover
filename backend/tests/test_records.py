@@ -54,13 +54,17 @@ def test_claim_history_leaves_out_personal_details(client):
     assert set(history) == {"customer_id", "name", "previous_claims"}
 
 
-def test_policy_wording(client):
-    text = client.get("/api/policy-wording").json()["text"]
-    assert text.startswith("# UnderCover Travel Insurance: Policy Wording")
+def test_the_whole_wording_is_no_longer_handed_out(client):
+    assert client.get("/api/policy-wording").status_code == 404
 
 
 def test_instructions(client):
-    assert "UnderCover Agent" in client.get("/api/instructions").json()["text"]
+    instructions = client.get("/api/instructions").json()
+    assert [(i["name"], i["title"]) for i in instructions] == [
+        ("queue", "Running the queue"),
+        ("claim", "Working a claim"),
+    ]
+    assert all("UnderCover Agent" in i["text"] for i in instructions)
 
 
 def test_handlers(client):

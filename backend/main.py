@@ -9,10 +9,10 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
-from backend import claims, worker
-from backend.db import DATA, init_db
+from backend import claims, documents, worker
+from backend.db import init_db
 
-INSTRUCTIONS = Path(__file__).parent / "instructions.md"
+INSTRUCTIONS = Path(__file__).parent / "instructions"
 
 
 @asynccontextmanager
@@ -64,16 +64,38 @@ def get_claim_history(customer_id: str) -> dict[str, Any]:
     return claims.get_claim_history(customer_id)
 
 
-@app.get("/api/policy-wording", operation_id="get_policy_wording")
-def get_policy_wording() -> dict[str, str]:
-    """Get the policy wording, the contract with the customer."""
-    return {"text": (DATA / "policy_wording.md").read_text(encoding="utf-8")}
+@app.get("/api/documents", operation_id="list_sections")
+def list_sections() -> list[dict[str, Any]]:
+    """List the sections of the policy wording and the claims manual."""
+    return documents.list_sections()
+
+
+@app.get("/api/documents/search", operation_id="search_documents")
+def search_documents(query: str) -> list[dict[str, str]]:
+    """Find the sections of the wording and the manual that match the query."""
+    return documents.search(query)
+
+
+@app.get("/api/documents/{document}/sections/{section}", operation_id="read_section")
+def read_section(document: str, section: str) -> dict[str, str]:
+    """Read one section of the policy wording or the claims manual."""
+    return documents.read_section(document, section)
 
 
 @app.get("/api/instructions", operation_id="get_instructions")
-def get_instructions() -> dict[str, str]:
-    """Get the UnderCover Agent's instructions."""
-    return {"text": INSTRUCTIONS.read_text(encoding="utf-8")}
+def get_instructions() -> list[dict[str, str]]:
+    """Get the UnderCover Agent's instructions for the queue and for a claim."""
+    return [
+        {
+            "name": name,
+            "title": title,
+            "text": (INSTRUCTIONS / f"{name}.md").read_text(encoding="utf-8"),
+        }
+        for name, title in [
+            ("queue", "Running the queue"),
+            ("claim", "Working a claim"),
+        ]
+    ]
 
 
 @app.get("/api/handlers", operation_id="list_handlers")
@@ -92,7 +114,10 @@ class Decision(BaseModel):
         ge=0, description="The amount to pay in US dollars, 0 unless approved"
     )
     reason: str = Field(min_length=1, description="Two or three sentences")
-    policy_section: str = Field(min_length=1, description="Such as '3. Trip Delay'")
+    policy_section: str = Field(
+        min_length=1,
+        description="Such as '3. Trip Delay' or 'Claims manual 9. Repeat claims'",
+    )
 
 
 class Payment(BaseModel):

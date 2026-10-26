@@ -138,12 +138,26 @@ it("opens a claim from its row", async () => {
 it("shows the agent's instructions, read only", async () => {
   stubApi({
     "GET /api/claims": [],
-    "GET /api/instructions": { text: "## How to work a claim\n\nRead it." },
+    "GET /api/instructions": [
+      { name: "queue", title: "Running the queue", text: "Work the queue." },
+      {
+        name: "claim",
+        title: "Working a claim",
+        text: "## How to work a claim\n\nRead it.",
+      },
+    ],
   });
   render(<App />);
   fireEvent.click(screen.getByRole("link", { name: "Instructions" }));
   expect(
-    await screen.findByRole("heading", { name: "How to work a claim" }),
+    await screen.findByRole("heading", { name: "Running the queue" }),
+  ).toBeDefined();
+  expect(screen.getByText("Work the queue.")).toBeDefined();
+  expect(
+    screen.getByRole("heading", { name: "Working a claim" }),
+  ).toBeDefined();
+  expect(
+    screen.getByRole("heading", { name: "How to work a claim" }),
   ).toBeDefined();
   expect(screen.queryByRole("textbox")).toBeNull();
   fireEvent.click(screen.getByRole("link", { name: "Queue" }));

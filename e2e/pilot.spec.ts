@@ -85,9 +85,13 @@ test("a payout over $1,000 waits for a handler's sign-off", async ({
 test("the instructions are shown read only", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: "Instructions" }).click();
-  await expect(
-    page.getByRole("heading", { name: "How to work a claim" }),
-  ).toBeVisible();
+  for (const name of [
+    "Running the queue",
+    "Working a claim",
+    "How to work a claim",
+  ]) {
+    await expect(page.getByRole("heading", { name })).toBeVisible();
+  }
   await expect(page.getByRole("textbox")).toHaveCount(0);
 });
 

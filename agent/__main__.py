@@ -3,7 +3,7 @@
 import sys
 import uuid
 
-from agent.main import run
+from agent.claim import run
 
 
 def main(claim_id: str) -> None:

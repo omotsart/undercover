@@ -1,5 +1,6 @@
 import Markdown from "react-markdown";
 import { api } from "./api";
+import { Card } from "./components";
 import { usePolling } from "./hooks";
 
 export function InstructionsPage() {
@@ -12,13 +13,19 @@ export function InstructionsPage() {
           <span className="count">The UnderCover Agent's, read only</span>
         </div>
       </div>
-      <section className="card instructions">
-        {data ? (
-          <Markdown>{data.text}</Markdown>
-        ) : (
-          <p>{error ?? "Loading the instructions."}</p>
-        )}
-      </section>
+      {data ? (
+        data.map((instructions) => (
+          <Card
+            key={instructions.name}
+            title={instructions.title}
+            className="instructions"
+          >
+            <Markdown>{instructions.text}</Markdown>
+          </Card>
+        ))
+      ) : (
+        <p className="card">{error ?? "Loading the instructions."}</p>
+      )}
     </main>
   );
 }

@@ -3,7 +3,7 @@
 import threading
 import uuid
 
-from agent.main import run
+from agent.claim import run
 from backend import claims
 
 lock = threading.Lock()

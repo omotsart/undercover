@@ -57,6 +57,12 @@ export interface Step {
   created_at: string;
 }
 
+export interface Instructions {
+  name: string;
+  title: string;
+  text: string;
+}
+
 export interface Handler {
   handler_id: string;
   name: string;
@@ -86,7 +92,7 @@ export const api = {
   listSteps: (claimId: string) =>
     request<Step[]>(`/api/claims/${claimId}/steps`),
   listHandlers: () => request<Handler[]>("/api/handlers"),
-  getInstructions: () => request<{ text: string }>("/api/instructions"),
+  getInstructions: () => request<Instructions[]>("/api/instructions"),
   workQueue: () => request<{ claims: number }>("/api/queue/work", {}),
   signOff: (claimId: string, handlerId: string) =>
     request<Claim>(`/api/claims/${claimId}/sign-off`, {
