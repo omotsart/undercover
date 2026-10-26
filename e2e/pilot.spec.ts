@@ -97,6 +97,24 @@ test("a payout over $1,000 waits for a handler's sign-off", async ({
   await expect(page.locator("h1 + .chip")).toHaveText("Decided");
 });
 
+test("In progress moves, unless motion is reduced", async ({
+  page,
+  request,
+}) => {
+  await request.post("/api/claims/CLM-1003/start");
+  const animation = () =>
+    page
+      .locator(".status-bar .status-in_progress.is-live")
+      .evaluate((el) => getComputedStyle(el, "::before").animationName);
+
+  await page.goto("/");
+  expect(await animation()).toBe("hatch-move");
+  await expect(page.locator(".claims-table .is-live")).toHaveCount(0);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  expect(await animation()).toBe("none");
+});
+
 test("the instructions are shown read only", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: "Instructions" }).click();

@@ -249,6 +249,45 @@ it("counts claims left for a handler", async () => {
   expect(screen.getAllByText("1 · 50%")).toHaveLength(2);
 });
 
+const IN_PROGRESS = [
+  summary({ claim_id: "CLM-1001", status: "in_progress" }),
+  summary({ claim_id: "CLM-1002" }),
+];
+
+function liveElements() {
+  return [...document.querySelectorAll(".is-live")].map((el) => el.textContent);
+}
+
+it("moves the status bar's In progress when no run is working", async () => {
+  stubApi({ "GET /api/claims": IN_PROGRESS, "GET /api/runs/current": null });
+  render(<App />);
+  await screen.findByText("The agent hasn't run yet.");
+  expect(liveElements()).toEqual(["1 · 50%"]);
+  expect(
+    document.querySelector(".status-bar .status-in_progress.is-live"),
+  ).not.toBeNull();
+});
+
+it("moves only the run while it works", async () => {
+  stubApi({
+    "GET /api/claims": IN_PROGRESS,
+    "GET /api/runs/current": run({ claims: ["CLM-1001"] }),
+  });
+  render(<App />);
+  await screen.findByText("Working");
+  expect(liveElements()).toEqual(["Working"]);
+});
+
+it("keeps everything still when nothing is in progress", async () => {
+  stubApi({
+    "GET /api/claims": [summary({})],
+    "GET /api/runs/current": run({ status: "finished" }),
+  });
+  render(<App />);
+  await screen.findByText("Finished");
+  expect(liveElements()).toEqual([]);
+});
+
 it("says why the queue didn't start", async () => {
   stubApi({
     "GET /api/claims": [summary({})],

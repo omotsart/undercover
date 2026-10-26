@@ -322,6 +322,38 @@ h1 {
   color: var(--graphite);
 }
 
+/* Moving hatching for the one place where work is happening. The stripes repeat
+   every 10px at 120deg, so 11.547px across (10 / cos 30deg) loops seamlessly. */
+.status-in_progress.is-live {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: none;
+}
+
+.status-in_progress.is-live::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 -12px;
+  z-index: -1;
+  background: var(--hatch);
+  animation: hatch-move 1s linear infinite;
+}
+
+.status-in_progress.is-live .chip-inner {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes hatch-move {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(11.547px);
+  }
+}
+
 .status-awaiting_signoff {
   background: var(--status-signoff);
   color: var(--graphite);
@@ -873,5 +905,15 @@ h1 {
 
   .big-number .num {
     font-size: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-in_progress.is-live::before {
+    animation: none;
+  }
+
+  .claim-row {
+    transition: none;
   }
 }

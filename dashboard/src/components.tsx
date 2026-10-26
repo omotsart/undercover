@@ -69,12 +69,14 @@ export function Header({ path }: Readonly<{ path: string }>) {
   );
 }
 
+// "live" moves the In progress hatching. Only one place on a screen should move.
 function FilledChip({
   status,
   label,
-}: Readonly<{ status: Status; label: string }>) {
+  live = false,
+}: Readonly<{ status: Status; label: string; live?: boolean }>) {
   return (
-    <span className={`chip status-${status}`}>
+    <span className={`chip status-${status}${live ? " is-live" : ""}`}>
       {status === "in_progress" ? (
         <span className="chip-inner">{label}</span>
       ) : (
@@ -84,8 +86,13 @@ function FilledChip({
   );
 }
 
-export function StatusChip({ status }: Readonly<{ status: Status }>) {
-  return <FilledChip status={status} label={STATUS_LABELS[status]} />;
+export function StatusChip({
+  status,
+  live = false,
+}: Readonly<{ status: Status; live?: boolean }>) {
+  return (
+    <FilledChip status={status} label={STATUS_LABELS[status]} live={live} />
+  );
 }
 
 // To-do items and runs wear the claim status colors that mean the same thing.
@@ -109,7 +116,13 @@ const RUN_COLORS: Record<RunStatus, Status> = {
 };
 
 export function RunChip({ status }: Readonly<{ status: RunStatus }>) {
-  return <FilledChip status={RUN_COLORS[status]} label={RUN_LABELS[status]} />;
+  return (
+    <FilledChip
+      status={RUN_COLORS[status]}
+      label={RUN_LABELS[status]}
+      live={status === "running"}
+    />
+  );
 }
 
 const DECISION_ICONS: Record<Decision, string> = {

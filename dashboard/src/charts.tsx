@@ -2,14 +2,19 @@ import type { ClaimSummary, Decision, Status } from "./api";
 import { Card, DecisionChip, StatusChip } from "./components";
 import { DECISIONS, STATUSES, STATUS_LABELS, countBy, percent } from "./format";
 
-export function StatusBar({ claims }: Readonly<{ claims: ClaimSummary[] }>) {
+export function StatusBar({
+  claims,
+  live,
+}: Readonly<{ claims: ClaimSummary[]; live: boolean }>) {
   const counts = countBy(STATUSES, claims, (claim) => claim.status);
   return (
     <div className="status-bar">
       {STATUSES.map((status) => (
         <div key={status} className="status-bar-item">
           <span className="label">{STATUS_LABELS[status]}</span>
-          <span className={`status-pill status-${status}`}>
+          <span
+            className={`status-pill status-${status}${live && status === "in_progress" ? " is-live" : ""}`}
+          >
             <span className={status === "in_progress" ? "chip-inner" : ""}>
               {counts[status]} · {percent(counts[status], claims.length)}
             </span>

@@ -167,7 +167,10 @@ export function QueuePage() {
       </div>
       <div className="summary-row">
         <section className="card" aria-label="Claims by status">
-          <StatusBar claims={claims} />
+          <StatusBar
+            claims={claims}
+            live={!working && count("in_progress") > 0}
+          />
         </section>
         <section className="card big-numbers" aria-label="Totals">
           <BigNumber value={String(count("waiting"))} label="Waiting" />
