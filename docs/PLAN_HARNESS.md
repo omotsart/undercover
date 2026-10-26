@@ -276,9 +276,9 @@ Brings the product's own documents up to date and checks everything together.
 
 Success criteria:
 
-- [ ] `docs/SPEC.md`, `docs/TECH_STACK.md` and `docs/STATUS.md` describe the product as it now is; `docs/PLAN.md` and the root `README.md` are untouched
-- [ ] Every criterion above is ticked
-- [ ] `npm run check` passes in full
+- [x] `docs/SPEC.md`, `docs/TECH_STACK.md` and `docs/STATUS.md` describe the product as it now is; `docs/PLAN.md` and the root `README.md` are untouched
+- [x] Every criterion above is ticked
+- [x] `npm run check` passes in full
 
 ## Choices for you to check
 

@@ -1,6 +1,6 @@
 # Status
 
-The pilot is built (`docs/PLAN.md`). The harness (`docs/PLAN_HARNESS.md`) is being built: Phases 1 to 5 of 6 are done.
+The pilot (`docs/PLAN.md`) and the harness (`docs/PLAN_HARNESS.md`) are built. The UnderCover Agent works the queue in runs: a queue agent plans each run as a to-do list and hands each claim to a fresh claim agent, which looks up the policy wording and the claims manual section by section.
 
 ## What's built
 
@@ -26,8 +26,10 @@ The pilot is built (`docs/PLAN.md`). The harness (`docs/PLAN_HARNESS.md`) is bei
 ## How to run it
 
 - `npm run dev` starts the backend on port 8000 and the dashboard on http://localhost:5173
-- `npm run seed` resets the database to the claims queue in `data/`. Run it once after pulling this change, since the database has a new column
-- `uv run -m agent CLM-1001` runs the agent on one claim against the running backend
+- `npm run seed` resets the database to the claims queue in `data/`. Run it once after pulling the harness, since the database has new tables and columns
+- On the queue page, set "Claims to work" and press "Work the queue" to start a run. From the command line: `curl -X POST http://localhost:8000/api/queue/work -H "Content-Type: application/json" -d '{"cap": 5}'`, then `curl http://localhost:8000/api/runs/current` to follow it. In PowerShell: `Invoke-RestMethod -Method Post -Uri http://localhost:8000/api/queue/work -ContentType application/json -Body '{"cap": 5}'` and `Invoke-RestMethod http://localhost:8000/api/runs/current`
+- `uv run -m agent CLM-1001` runs the agent on one named claim against the running backend, outside a run, and prints its one-line outcome
+- For a live trial on the real model, reseed first and cap the run at five claims. A run of five on DeepSeek V4.1 Flash takes about five minutes
 - `npm run check` runs every check
 
 ## Known issues
