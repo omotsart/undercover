@@ -25,6 +25,8 @@ The pilot (`docs/PLAN.md`) and the harness (`docs/PLAN_HARNESS.md`) are built. T
 
 ## How to run it
 
+- Week 2 Day 2 lab: `labs/week2day2.ipynb` now allows provisional decisions to be revised during one claim invocation. The evaluator receives only the last valid draft after successful completion, with `decision_history` for auditing. Invocation state is isolated and reset even on failure. One full 25-claim memory run measured accuracy 0.88, mistake cost 150 and found-fact 1.0; three unnecessary referrals remain. See `docs/LAB_DECISIONS.md` and `docs/week2day2_memory_results.json` for checks and results
+
 - `npm run dev` starts the backend on port 8000 and the dashboard on http://localhost:5173
 - `npm run seed` resets the database to the claims queue in `data/`. Run it once after pulling the harness, since the database has new tables and columns
 - On the queue page, set "Claims to work" and press "Work the queue" to start a run. Or `uv run -m agent --cap 5` starts the same run against the running backend and prints the to-do list as the agent ticks it off, then the summary. Through the API: `curl -X POST http://localhost:8000/api/queue/work -H "Content-Type: application/json" -d '{"cap": 5}'`, then `curl http://localhost:8000/api/runs/current` to follow it. In PowerShell: `Invoke-RestMethod -Method Post -Uri http://localhost:8000/api/queue/work -ContentType application/json -Body '{"cap": 5}'` and `Invoke-RestMethod http://localhost:8000/api/runs/current`

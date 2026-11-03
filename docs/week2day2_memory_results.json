@@ -1,0 +1,670 @@
+{
+  "exported_at_utc": "2026-11-03T19:41:32.946033+00:00",
+  "baseline_commit": "06a6400671fd3ca7657a7a0b00ad8fc7421f69ca",
+  "run_name": "Payout tool and memory - revisable decisions - 2026-11-03T19:29:24.281489Z",
+  "dataset_run_id": "a16e98c5-6535-4825-83f1-bbbe0c291f3f",
+  "dataset_name": "even-harder-claims",
+  "run_created_at_utc": "2026-11-03T19:29:24.282000+00:00",
+  "langfuse_run_scores": [
+    {
+      "dataType": "NUMERIC",
+      "value": 0.0150321,
+      "id": "455735ccff453291",
+      "projectId": "cmvsfr4tr0g08ad0kw0zuzmvi",
+      "name": "llm_cost",
+      "source": "API",
+      "timestamp": "2026-11-03T19:35:55.633000Z",
+      "environment": "default",
+      "createdAt": "2026-11-03T19:35:58Z",
+      "updatedAt": "2026-11-03T19:36:02.297000Z",
+      "subject": {
+        "kind": "experiment",
+        "id": "a16e98c5-6535-4825-83f1-bbbe0c291f3f"
+      }
+    },
+    {
+      "dataType": "NUMERIC",
+      "value": 0.8235294117647058,
+      "id": "05f5a7885a1be50d",
+      "projectId": "cmvsfr4tr0g08ad0kw0zuzmvi",
+      "name": "recall",
+      "source": "API",
+      "timestamp": "2026-11-03T19:35:55.633000Z",
+      "environment": "default",
+      "createdAt": "2026-11-03T19:35:58Z",
+      "updatedAt": "2026-11-03T19:36:02.296000Z",
+      "subject": {
+        "kind": "experiment",
+        "id": "a16e98c5-6535-4825-83f1-bbbe0c291f3f"
+      }
+    },
+    {
+      "dataType": "NUMERIC",
+      "value": 0.88,
+      "id": "6d76057d00b9b00f",
+      "projectId": "cmvsfr4tr0g08ad0kw0zuzmvi",
+      "name": "decision_accuracy",
+      "source": "API",
+      "timestamp": "2026-11-03T19:35:55.633000Z",
+      "environment": "default",
+      "createdAt": "2026-11-03T19:35:58Z",
+      "updatedAt": "2026-11-03T19:36:02.295000Z",
+      "subject": {
+        "kind": "experiment",
+        "id": "a16e98c5-6535-4825-83f1-bbbe0c291f3f"
+      }
+    },
+    {
+      "dataType": "NUMERIC",
+      "value": 0.780058651026393,
+      "id": "2b1731c69e36fdd7",
+      "projectId": "cmvsfr4tr0g08ad0kw0zuzmvi",
+      "name": "kappa",
+      "source": "API",
+      "timestamp": "2026-11-03T19:35:55.633000Z",
+      "environment": "default",
+      "createdAt": "2026-11-03T19:35:58Z",
+      "updatedAt": "2026-11-03T19:36:02.295000Z",
+      "subject": {
+        "kind": "experiment",
+        "id": "a16e98c5-6535-4825-83f1-bbbe0c291f3f"
+      }
+    },
+    {
+      "dataType": "NUMERIC",
+      "value": 0.8,
+      "id": "facf07271b268ff0",
+      "projectId": "cmvsfr4tr0g08ad0kw0zuzmvi",
+      "name": "straight_through",
+      "source": "API",
+      "timestamp": "2026-11-03T19:35:55.633000Z",
+      "environment": "default",
+      "createdAt": "2026-11-03T19:35:58Z",
+      "updatedAt": "2026-11-03T19:36:02.290000Z",
+      "subject": {
+        "kind": "experiment",
+        "id": "a16e98c5-6535-4825-83f1-bbbe0c291f3f"
+      }
+    },
+    {
+      "dataType": "NUMERIC",
+      "value": 1.0,
+      "id": "aab494836a16f7f1",
+      "projectId": "cmvsfr4tr0g08ad0kw0zuzmvi",
+      "name": "precision",
+      "source": "API",
+      "timestamp": "2026-11-03T19:35:55.633000Z",
+      "environment": "default",
+      "createdAt": "2026-11-03T19:35:58Z",
+      "updatedAt": "2026-11-03T19:36:02.286000Z",
+      "subject": {
+        "kind": "experiment",
+        "id": "a16e98c5-6535-4825-83f1-bbbe0c291f3f"
+      }
+    },
+    {
+      "dataType": "NUMERIC",
+      "value": 0.88,
+      "id": "a3f608e127141d21",
+      "projectId": "cmvsfr4tr0g08ad0kw0zuzmvi",
+      "name": "accuracy",
+      "source": "API",
+      "timestamp": "2026-11-03T19:35:55.633000Z",
+      "environment": "default",
+      "createdAt": "2026-11-03T19:35:58Z",
+      "updatedAt": "2026-11-03T19:36:02.283000Z",
+      "subject": {
+        "kind": "experiment",
+        "id": "a16e98c5-6535-4825-83f1-bbbe0c291f3f"
+      }
+    },
+    {
+      "dataType": "NUMERIC",
+      "value": 150.0,
+      "id": "121fd4744df26a14",
+      "projectId": "cmvsfr4tr0g08ad0kw0zuzmvi",
+      "name": "cost_of_mistakes",
+      "source": "API",
+      "timestamp": "2026-11-03T19:35:55.633000Z",
+      "environment": "default",
+      "createdAt": "2026-11-03T19:35:58Z",
+      "updatedAt": "2026-11-03T19:36:02.282000Z",
+      "subject": {
+        "kind": "experiment",
+        "id": "a16e98c5-6535-4825-83f1-bbbe0c291f3f"
+      }
+    },
+    {
+      "dataType": "NUMERIC",
+      "value": 1.0,
+      "id": "9207becaaee505a6",
+      "projectId": "cmvsfr4tr0g08ad0kw0zuzmvi",
+      "name": "found_fact",
+      "source": "API",
+      "timestamp": "2026-11-03T19:35:55.633000Z",
+      "environment": "default",
+      "createdAt": "2026-11-03T19:35:58Z",
+      "updatedAt": "2026-11-03T19:36:02.280000Z",
+      "subject": {
+        "kind": "experiment",
+        "id": "a16e98c5-6535-4825-83f1-bbbe0c291f3f"
+      }
+    }
+  ],
+  "summary": {
+    "decision_accuracy": 0.88,
+    "accuracy": 0.88,
+    "precision": 1.0,
+    "recall": 0.8235294117647058,
+    "kappa": 0.780058651026393,
+    "cost_of_mistakes": 150.0,
+    "straight_through": 0.8,
+    "found_fact": 1.0,
+    "llm_cost": 0.0150321
+  },
+  "mistakes": [
+    {
+      "claim_id": "CLM-1309",
+      "handler": "approve",
+      "agent": "refer",
+      "handler_payout": 671.99,
+      "agent_payout": 0.0,
+      "right": false,
+      "mistake_cost": 50.0,
+      "found_fact": true,
+      "llm_cost": 0.00037563,
+      "rationale": "The theft is within the covered trip and a police report was filed the same day, but the wording excludes belongings left unattended, defined as out of sight and out of reach. The account says the backpack was between the claimant's feet on a crowded metro, leaving it unclear whether it was out of sight/reach when taken; the wording does not settle the factual question, so refer for review."
+    },
+    {
+      "claim_id": "CLM-1319",
+      "handler": "approve",
+      "agent": "refer",
+      "handler_payout": 432.4,
+      "agent_payout": 0.0,
+      "right": false,
+      "mistake_cost": 50.0,
+      "found_fact": true,
+      "llm_cost": 0.000549635,
+      "rationale": "The medical records and itemized bill are attached, and the trip dates and incident date are consistent. However, the injury occurred on a river outing and the information available identifies Talon Excursions as operating jet-boat rides; the claim documents do not establish whether this activity falls within the policy's exclusion for adventure-sport injuries (section 7) or is simply a covered sudden accidental injury. Refer for a colleague to clarify the activity before deciding coverage."
+    },
+    {
+      "claim_id": "CLM-1323",
+      "handler": "approve",
+      "agent": "refer",
+      "handler_payout": 205.4,
+      "agent_payout": 0.0,
+      "right": false,
+      "mistake_cost": 50.0,
+      "found_fact": null,
+      "llm_cost": 0.00033781,
+      "rationale": "The theft and replacement expenses fall under section 6, and the police report and receipts are attached. However, the claimed taxi expense combines travel to the police station and embassy, and the documents do not establish that the full amount was reasonable local travel to the embassy/consulate as required by section 6; refer for review of eligible transport amount."
+    }
+  ],
+  "items": [
+    {
+      "claim_id": "CLM-1301",
+      "trace_id": "ece4d3e7400ed7c2e26a727076342d39",
+      "output": {
+        "decision": "decline",
+        "payout": 0.0,
+        "rationale": "Although Skylark’s notice establishes that severe weather canceled service for more than 24 hours, the National Hurricane Center bulletin shows Tropical Storm Marisol and its forecast Bahamas impact were publicly known on July 9, before the policy was purchased on July 10. Section 9 excludes events publicly known before purchase, so these cancellation losses are not covered.",
+        "cost": 0.000416665,
+        "retrieved": "[\n  \"Results for the query 'Hurricane Marisol Nassau July 2026 publicly known storm announcement event date'\",\n  \"<entry><content>National Hurricane Center, July 9, 2026: Tropical Storm Marisol has formed east of the Leeward Islands. It is forecast to become a hurricane on July 11 and to pass over the Bahamas on July 12 and 13.</content><metadata></metadata></entry>\",\n  \"<entry><content>North Atlantic weather bulletin, September 2, 2026: Storm Ysolde has been named. Gales are expected across Ireland, Wales and western Scotland from the morning of September 4, and ferry crossings on the Irish Sea are likely to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Japan Meteorological Agency, August 24, 2026: Typhoon Kaori is expected to pass close to Okinawa on August 27 and 28. Flights and ferries in the Ryukyu Islands are likely to be suspended.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "decline",
+            "payout": 0.0,
+            "rationale": "Although Skylark’s notice establishes that severe weather canceled service for more than 24 hours, the National Hurricane Center bulletin shows Tropical Storm Marisol and its forecast Bahamas impact were publicly known on July 9, before the policy was purchased on July 10. Section 9 excludes events publicly known before purchase, so these cancellation losses are not covered."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1302",
+      "trace_id": "00b869bcfce99efe85fcdbe1463d8a28",
+      "output": {
+        "decision": "approve",
+        "payout": 2473.0,
+        "rationale": "Approve under section 2: the carrier cancellation resulted from severe weather closing the destination airport, and the documented suspension exceeds 24 hours. The policy was purchased before Hurricane Tobias formed (memory search places formation on August 18, after the June 11 purchase), so the known-event exclusion in section 9 does not apply; documented nonrefundable trip costs total $2,473 after supplier refunds/credits, within the premium trip-cancellation limits.",
+        "cost": 0.000552745,
+        "retrieved": "[\n  \"Results for the query 'Hurricane Tobias Cancun airport closure August 2026; public knowledge before June 11, 2026?'\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, July 9, 2026: Tropical Storm Marisol has formed east of the Leeward Islands. It is forecast to become a hurricane on July 11 and to pass over the Bahamas on July 12 and 13.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>North Atlantic weather bulletin, September 2, 2026: Storm Ysolde has been named. Gales are expected across Ireland, Wales and western Scotland from the morning of September 4, and ferry crossings on the Irish Sea are likely to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Japan Meteorological Agency, August 24, 2026: Typhoon Kaori is expected to pass close to Okinawa on August 27 and 28. Flights and ferries in the Ryukyu Islands are likely to be suspended.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "approve",
+            "payout": 2473.0,
+            "rationale": "Approve under section 2: the carrier cancellation resulted from severe weather closing the destination airport, and the documented suspension exceeds 24 hours. The policy was purchased before Hurricane Tobias formed (memory search places formation on August 18, after the June 11 purchase), so the known-event exclusion in section 9 does not apply; documented nonrefundable trip costs total $2,473 after supplier refunds/credits, within the premium trip-cancellation limits."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1303",
+      "trace_id": "36d2c7933c62629d2d1f25529c6b4cf8",
+      "output": {
+        "decision": "decline",
+        "payout": 0.0,
+        "rationale": "Although the carrier report confirms a qualifying delay exceeding the Economy plan’s 12-hour waiting period and the receipts substantiate the expenses, the strike was publicly announced on June 20, 2026, before the policy was purchased on June 24. Section 9 excludes events publicly known before purchase, so these delay expenses are not covered.",
+        "cost": 0.00049613,
+        "retrieved": "[\n  \"Results for the query 'air traffic controllers strike national July 2026 Portugal Lisbon; determine whether strike publicly known before policy purchase June 24 2026'\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Rome, July 3, 2026: Italy's rail unions have called a 24 hour national rail strike from 9 pm on July 21 to 9 pm on July 22. Most high-speed and regional trains will not run.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>North Atlantic weather bulletin, September 2, 2026: Storm Ysolde has been named. Gales are expected across Ireland, Wales and western Scotland from the morning of September 4, and ferry crossings on the Irish Sea are likely to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>Japan Meteorological Agency, August 24, 2026: Typhoon Kaori is expected to pass close to Okinawa on August 27 and 28. Flights and ferries in the Ryukyu Islands are likely to be suspended.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'Meridian Air MA 211 Lisbon Boston strike July 14 2026'\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Rome, July 3, 2026: Italy's rail unions have called a 24 hour national rail strike from 9 pm on July 21 to 9 pm on July 22. Most high-speed and regional trains will not run.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>North Atlantic weather bulletin, September 2, 2026: Storm Ysolde has been named. Gales are expected across Ireland, Wales and western Scotland from the morning of September 4, and ferry crossings on the Irish Sea are likely to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, July 9, 2026: Tropical Storm Marisol has formed east of the Leeward Islands. It is forecast to become a hurricane on July 11 and to pass over the Bahamas on July 12 and 13.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "decline",
+            "payout": 0.0,
+            "rationale": "Although the carrier report confirms a qualifying delay exceeding the Economy plan’s 12-hour waiting period and the receipts substantiate the expenses, the strike was publicly announced on June 20, 2026, before the policy was purchased on June 24. Section 9 excludes events publicly known before purchase, so these delay expenses are not covered."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1304",
+      "trace_id": "fc8bf09395bb6f3e872a78e5373cf164",
+      "output": {
+        "decision": "approve",
+        "payout": 300.0,
+        "rationale": "Approve under section 3 (Trip Delay). The Economy plan’s 12-hour waiting period was exceeded: departure was scheduled for August 12 at 08:15 and actual departure was August 13 at 14:30, and the carrier letter confirms cancellation due to a crew strike; receipts support the hotel, meals and taxis. The $395 conference registration is not an eligible delay expense and is an indirect consequential loss under section 9; the other eligible expenses total $339.40, capped at the Economy Trip Delay maximum of $300 under section 10.",
+        "cost": 0.000713605,
+        "retrieved": "[\n  \"Results for the query 'Meridian Air cabin crew strike Houston Denver August 2026 announced strike, policy or event knowledge'\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>Rome, July 3, 2026: Italy's rail unions have called a 24 hour national rail strike from 9 pm on July 21 to 9 pm on July 22. Most high-speed and regional trains will not run.</content><metadata></metadata></entry>\",\n  \"<entry><content>North Atlantic weather bulletin, September 2, 2026: Storm Ysolde has been named. Gales are expected across Ireland, Wales and western Scotland from the morning of September 4, and ferry crossings on the Irish Sea are likely to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, July 9, 2026: Tropical Storm Marisol has formed east of the Leeward Islands. It is forecast to become a hurricane on July 11 and to pass over the Bahamas on July 12 and 13.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>Japan Meteorological Agency, August 24, 2026: Typhoon Kaori is expected to pass close to Okinawa on August 27 and 28. Flights and ferries in the Ryukyu Islands are likely to be suspended.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "decline",
+            "payout": 0.0,
+            "rationale": "The flight was canceled due to a strike, but the strike was publicly announced by Meridian on August 5, before the policy was purchased on July 28? The timeline indicates purchase July 28, so it was announced after purchase. However, the claim is for trip delay: the Economy plan requires at least 12 hours' delay, which was met, and cancellation is covered as a cause. Conference registration is an indirect consequential loss and excluded. Required carrier confirmation and receipts are attached; eligible delay expenses appear covered, so this needs recalculation rather than decline."
+          },
+          {
+            "decision": "approve",
+            "payout": 300.0,
+            "rationale": "Approve under section 3 (Trip Delay). The Economy plan’s 12-hour waiting period was exceeded: departure was scheduled for August 12 at 08:15 and actual departure was August 13 at 14:30, and the carrier letter confirms cancellation due to a crew strike; receipts support the hotel, meals and taxis. The $395 conference registration is not an eligible delay expense and is an indirect consequential loss under section 9; the other eligible expenses total $339.40, capped at the Economy Trip Delay maximum of $300 under section 10."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1305",
+      "trace_id": "cffd0a23b077bf0fb8ad375bb7668baa",
+      "output": {
+        "decision": "decline",
+        "payout": 0.0,
+        "rationale": "The claim otherwise appears to concern eligible reasonable extra expenses from a carrier cancellation lasting beyond the Premium plan’s 6-hour delay period, with the carrier notice and receipts attached. However, section 9 excludes events publicly known before purchase; the memory record shows Storm Ysolde was named and ferry cancellations were forecast on September 2, while this policy was purchased September 3. Therefore the storm-related delay is excluded.",
+        "cost": 0.00038539499999999997,
+        "retrieved": "[\n  \"Results for the query 'Storm Ysolde September 2026 Wales Ireland named storm public knowledge storm timeline'\",\n  \"<entry><content>North Atlantic weather bulletin, September 2, 2026: Storm Ysolde has been named. Gales are expected across Ireland, Wales and western Scotland from the morning of September 4, and ferry crossings on the Irish Sea are likely to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, July 9, 2026: Tropical Storm Marisol has formed east of the Leeward Islands. It is forecast to become a hurricane on July 11 and to pass over the Bahamas on July 12 and 13.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Japan Meteorological Agency, August 24, 2026: Typhoon Kaori is expected to pass close to Okinawa on August 27 and 28. Flights and ferries in the Ryukyu Islands are likely to be suspended.</content><metadata></metadata></entry>\",\n  \"<entry><content>Talon Excursions, Queenstown, New Zealand: jet-boat rides through the canyons of the Arrowmere River.</content><metadata></metadata></entry>\",\n  \"<entry><content>Rome, July 3, 2026: Italy's rail unions have called a 24 hour national rail strike from 9 pm on July 21 to 9 pm on July 22. Most high-speed and regional trains will not run.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "decline",
+            "payout": 0.0,
+            "rationale": "The claim otherwise appears to concern eligible reasonable extra expenses from a carrier cancellation lasting beyond the Premium plan’s 6-hour delay period, with the carrier notice and receipts attached. However, section 9 excludes events publicly known before purchase; the memory record shows Storm Ysolde was named and ferry cancellations were forecast on September 2, while this policy was purchased September 3. Therefore the storm-related delay is excluded."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1306",
+      "trace_id": "8e108ce779f005f6efe9c630aca9824f",
+      "output": {
+        "decision": "approve",
+        "payout": 427.6,
+        "rationale": "The carrier report confirms the July 22 train cancellation due to a strike, with travel resuming the next morning—more than the Premium plan’s 6-hour waiting period—and the receipts support the eligible hotel, meals, local transport and rebooking fee. The strike was announced July 3, after purchase on June 18, so Section 9’s prior-publicity exclusion does not apply; the missed tour is an indirect loss and is excluded. Under Sections 3 and 10, the eligible documented costs total $427.60, within the $800 Trip Delay maximum.",
+        "cost": 0.00075178,
+        "retrieved": "[\n  \"Results for the query 'national rail strike Italy Trenitalia Florence Rome July 22 2026 event publicly known before June 18 policy purchase, strike announcement'\",\n  \"<entry><content>Rome, July 3, 2026: Italy's rail unions have called a 24 hour national rail strike from 9 pm on July 21 to 9 pm on July 22. Most high-speed and regional trains will not run.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>North Atlantic weather bulletin, September 2, 2026: Storm Ysolde has been named. Gales are expected across Ireland, Wales and western Scotland from the morning of September 4, and ferry crossings on the Irish Sea are likely to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\",\n  \"<entry><content>Japan Meteorological Agency, August 24, 2026: Typhoon Kaori is expected to pass close to Okinawa on August 27 and 28. Flights and ferries in the Ryukyu Islands are likely to be suspended.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "refer",
+            "payout": 0.0,
+            "rationale": "The carrier report and receipts support a delay exceeding the Premium plan’s 6-hour wait, but the record does not establish whether this strike was publicly known before the policy was purchased on June 18. Section 9 excludes events publicly known before purchase, including an announced strike; that timing needs verification before payment can be decided."
+          },
+          {
+            "decision": "approve",
+            "payout": 427.6,
+            "rationale": "The carrier report confirms the July 22 train cancellation due to a strike, with travel resuming the next morning—more than the Premium plan’s 6-hour waiting period—and the receipts support the eligible hotel, meals, local transport and rebooking fee. The strike was announced July 3, after purchase on June 18, so Section 9’s prior-publicity exclusion does not apply; the missed tour is an indirect loss and is excluded. Under Sections 3 and 10, the eligible documented costs total $427.60, within the $800 Trip Delay maximum."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1307",
+      "trace_id": "463dc8dfaae1e383543f7253bd4cd9d9",
+      "output": {
+        "decision": "approve",
+        "payout": 562.95,
+        "rationale": "The carrier report documents the checked bag’s loss during the covered trip, the settlement letter confirms a $400 payment, and receipts substantiate the listed belongings. Under section 5, the per-item limit applies; the projector is not one of the specified Electronics Plus devices, so it is limited to the Premium $300 item cap. Section 10 then deducts the carrier payment and the $50 baggage deductible, resulting in $562.95.",
+        "cost": 0.000846495,
+        "retrieved": "[\n  \"Results for the query 'Halden Arc electronic device model identify what product is'\",\n  \"<entry><content>Halden Arc: a pocket projector that throws a picture of up to 100 inches from a phone or laptop. List price $899.</content><metadata></metadata></entry>\",\n  \"<entry><content>Vantor Halo: a titanium smart ring that tracks sleep, heart rate and activity. List price $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Beam: a portable Bluetooth speaker with a built-in lamp. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 3: an e-reader with a 7 inch color E Ink screen and a battery that lasts six weeks. List price $329.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sorrel Tab S: an 11 inch Android tablet that comes with a keyboard cover. List price $749.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 2: the earlier Lumora e-reader, with a 6 inch black and white screen. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X2: a smartwatch with GPS, heart-rate tracking and contactless payments. Released in March 2026 at a list price of $649.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X1: the earlier Corvane smartwatch, released in 2024 at a list price of $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Fennec Volt 20: a 20,000 mAh power bank that can charge a laptop. List price $129.</content><metadata></metadata></entry>\",\n  \"<entry><content>Brisa Pocket 2: a compact digital camera with a 1 inch sensor and a fixed 24-120mm zoom lens. List price $1,099.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'Tokyo Narita lost checked luggage Skylark July 2026 event'\",\n  \"<entry><content>Japan Meteorological Agency, August 24, 2026: Typhoon Kaori is expected to pass close to Okinawa on August 27 and 28. Flights and ferries in the Ryukyu Islands are likely to be suspended.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Glacier Air, Interlaken, Switzerland: helicopter sightseeing flights over the Jungfrau region.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, July 9, 2026: Tropical Storm Marisol has formed east of the Leeward Islands. It is forecast to become a hurricane on July 11 and to pass over the Bahamas on July 12 and 13.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'UnderCover baggage claim charging cables adapters packing cubes coverage'\",\n  \"<entry><content>Ostra Buds 3: wireless noise-canceling earbuds with a charging case. List price $249.</content><metadata></metadata></entry>\",\n  \"<entry><content>Fennec Volt 20: a 20,000 mAh power bank that can charge a laptop. List price $129.</content><metadata></metadata></entry>\",\n  \"<entry><content>Vantor Halo: a titanium smart ring that tracks sleep, heart rate and activity. List price $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Arc: a pocket projector that throws a picture of up to 100 inches from a phone or laptop. List price $899.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Highline Canyoning, Interlaken, Switzerland: guided canyoning trips with abseils and jumps into pools.</content><metadata></metadata></entry>\",\n  \"<entry><content>Glacier Air, Interlaken, Switzerland: helicopter sightseeing flights over the Jungfrau region.</content><metadata></metadata></entry>\",\n  \"<entry><content>Blue Chimney, Cayo Brava, Honduras: a cavern dive that runs from 6 meters down to 16 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "approve",
+            "payout": 562.95,
+            "rationale": "The carrier report documents the checked bag’s loss during the covered trip, the settlement letter confirms a $400 payment, and receipts substantiate the listed belongings. Under section 5, the per-item limit applies; the projector is not one of the specified Electronics Plus devices, so it is limited to the Premium $300 item cap. Section 10 then deducts the carrier payment and the $50 baggage deductible, resulting in $562.95."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1308",
+      "trace_id": "5c9fea7d7133dda8b85eb54f3ed6a61a",
+      "output": {
+        "decision": "approve",
+        "payout": 1239.0,
+        "rationale": "Approve under section 5: the reported theft occurred during the covered trip and the police report documents the theft within 24 hours. The Lumen X2 is a smartwatch, so Electronics Plus applies; cash is limited to $100, and section 10 applies the $50 Premium deductible, producing a payout of $1,239 within the baggage maximum.",
+        "cost": 0.0006296499999999999,
+        "retrieved": "[\n  \"Results for the query 'Corvane Lumen X2 watch brand product electronics smartwatch price product type'\",\n  \"<entry><content>Corvane Lumen X2: a smartwatch with GPS, heart-rate tracking and contactless payments. Released in March 2026 at a list price of $649.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X1: the earlier Corvane smartwatch, released in 2024 at a list price of $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 3: an e-reader with a 7 inch color E Ink screen and a battery that lasts six weeks. List price $329.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 2: the earlier Lumora e-reader, with a 6 inch black and white screen. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Vantor Halo: a titanium smart ring that tracks sleep, heart rate and activity. List price $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Brisa Pocket 2: a compact digital camera with a 1 inch sensor and a fixed 24-120mm zoom lens. List price $1,099.</content><metadata></metadata></entry>\",\n  \"<entry><content>Ostra Buds 3: wireless noise-canceling earbuds with a charging case. List price $249.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Beam: a portable Bluetooth speaker with a built-in lamp. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sorrel Tab S: an 11 inch Android tablet that comes with a keyboard cover. List price $749.</content><metadata></metadata></entry>\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'Barcelona Gothic Quarter Jaume I metro station location travel claim robbery context'\",\n  \"<entry><content>Rome, July 3, 2026: Italy's rail unions have called a 24 hour national rail strike from 9 pm on July 21 to 9 pm on July 22. Most high-speed and regional trains will not run.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sentinel Wall, Cayo Brava, Honduras: a wall dive. The top of the wall is at 14 meters and it drops past 40 meters, so every dive on it goes deeper than 10 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Blue Chimney, Cayo Brava, Honduras: a cavern dive that runs from 6 meters down to 16 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lantern Run, Rio Cuyo, Costa Rica: a family rafting trip on the lower river, with grade 2 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>Fennec Volt 20: a 20,000 mAh power bank that can charge a laptop. List price $129.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "approve",
+            "payout": 1239.0,
+            "rationale": "Approve under section 5: the reported theft occurred during the covered trip and the police report documents the theft within 24 hours. The Lumen X2 is a smartwatch, so Electronics Plus applies; cash is limited to $100, and section 10 applies the $50 Premium deductible, producing a payout of $1,239 within the baggage maximum."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1309",
+      "trace_id": "86e3c2155d3ddc6357ab9e7a5d126cba",
+      "output": {
+        "decision": "refer",
+        "payout": 0.0,
+        "rationale": "The theft is within the covered trip and a police report was filed the same day, but the wording excludes belongings left unattended, defined as out of sight and out of reach. The account says the backpack was between the claimant's feet on a crowded metro, leaving it unclear whether it was out of sight/reach when taken; the wording does not settle the factual question, so refer for review.",
+        "cost": 0.00037563,
+        "retrieved": "[\n  \"Results for the query 'Lumora Drift 3 product; what type of device is it, relevance to baggage electronics classification'\",\n  \"<entry><content>Lumora Drift 3: an e-reader with a 7 inch color E Ink screen and a battery that lasts six weeks. List price $329.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 2: the earlier Lumora e-reader, with a 6 inch black and white screen. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X2: a smartwatch with GPS, heart-rate tracking and contactless payments. Released in March 2026 at a list price of $649.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X1: the earlier Corvane smartwatch, released in 2024 at a list price of $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Vantor Halo: a titanium smart ring that tracks sleep, heart rate and activity. List price $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Ostra Buds 3: wireless noise-canceling earbuds with a charging case. List price $249.</content><metadata></metadata></entry>\",\n  \"<entry><content>Brisa Pocket 2: a compact digital camera with a 1 inch sensor and a fixed 24-120mm zoom lens. List price $1,099.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Beam: a portable Bluetooth speaker with a built-in lamp. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Arc: a pocket projector that throws a picture of up to 100 inches from a phone or laptop. List price $899.</content><metadata></metadata></entry>\",\n  \"<entry><content>Japan Meteorological Agency, August 24, 2026: Typhoon Kaori is expected to pass close to Okinawa on August 27 and 28. Flights and ferries in the Ryukyu Islands are likely to be suspended.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "refer",
+            "payout": 0.0,
+            "rationale": "The theft is within the covered trip and a police report was filed the same day, but the wording excludes belongings left unattended, defined as out of sight and out of reach. The account says the backpack was between the claimant's feet on a crowded metro, leaving it unclear whether it was out of sight/reach when taken; the wording does not settle the factual question, so refer for review."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1310",
+      "trace_id": "1bde4bfeb37494d49c505a14521cf17c",
+      "output": {
+        "decision": "approve",
+        "payout": 434.0,
+        "rationale": "Approve under section 5: the police report supports theft during the covered trip and records each claimed item, satisfying the required police-report evidence. The Halo is a smart ring, not one of the electronics defined in section 8, so Electronics Plus does not raise its $150 per-item limit; the other items fall within the individual limits, and section 10 applies the $100 baggage deductible, producing $434.",
+        "cost": 0.0006988750000000001,
+        "retrieved": "[\n  \"Results for the query 'Vantor Halo electronics device product what is it'\",\n  \"<entry><content>Vantor Halo: a titanium smart ring that tracks sleep, heart rate and activity. List price $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Arc: a pocket projector that throws a picture of up to 100 inches from a phone or laptop. List price $899.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Beam: a portable Bluetooth speaker with a built-in lamp. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X2: a smartwatch with GPS, heart-rate tracking and contactless payments. Released in March 2026 at a list price of $649.</content><metadata></metadata></entry>\",\n  \"<entry><content>Fennec Volt 20: a 20,000 mAh power bank that can charge a laptop. List price $129.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 3: an e-reader with a 7 inch color E Ink screen and a battery that lasts six weeks. List price $329.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X1: the earlier Corvane smartwatch, released in 2024 at a list price of $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 2: the earlier Lumora e-reader, with a 6 inch black and white screen. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Brisa Pocket 2: a compact digital camera with a 1 inch sensor and a fixed 24-120mm zoom lens. List price $1,099.</content><metadata></metadata></entry>\",\n  \"<entry><content>Ostra Buds 3: wireless noise-canceling earbuds with a charging case. List price $249.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'Split Croatia theft break-ins vacation apartments local event July 2026'\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>Rome, July 3, 2026: Italy's rail unions have called a 24 hour national rail strike from 9 pm on July 21 to 9 pm on July 22. Most high-speed and regional trains will not run.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sentinel Wall, Cayo Brava, Honduras: a wall dive. The top of the wall is at 14 meters and it drops past 40 meters, so every dive on it goes deeper than 10 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, July 9, 2026: Tropical Storm Marisol has formed east of the Leeward Islands. It is forecast to become a hurricane on July 11 and to pass over the Bahamas on July 12 and 13.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 3: an e-reader with a 7 inch color E Ink screen and a battery that lasts six weeks. List price $329.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'UnderCover travel claims product memory Vantor Halo'\",\n  \"<entry><content>Vantor Halo: a titanium smart ring that tracks sleep, heart rate and activity. List price $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Arc: a pocket projector that throws a picture of up to 100 inches from a phone or laptop. List price $899.</content><metadata></metadata></entry>\",\n  \"<entry><content>Fennec Volt 20: a 20,000 mAh power bank that can charge a laptop. List price $129.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 3: an e-reader with a 7 inch color E Ink screen and a battery that lasts six weeks. List price $329.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X2: a smartwatch with GPS, heart-rate tracking and contactless payments. Released in March 2026 at a list price of $649.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 2: the earlier Lumora e-reader, with a 6 inch black and white screen. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Beam: a portable Bluetooth speaker with a built-in lamp. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X1: the earlier Corvane smartwatch, released in 2024 at a list price of $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Brisa Pocket 2: a compact digital camera with a 1 inch sensor and a fixed 24-120mm zoom lens. List price $1,099.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sorrel Tab S: an 11 inch Android tablet that comes with a keyboard cover. List price $749.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "approve",
+            "payout": 434.0,
+            "rationale": "Approve under section 5: the police report supports theft during the covered trip and records each claimed item, satisfying the required police-report evidence. The Halo is a smart ring, not one of the electronics defined in section 8, so Electronics Plus does not raise its $150 per-item limit; the other items fall within the individual limits, and section 10 applies the $100 baggage deductible, producing $434."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1311",
+      "trace_id": "77577241bfb02eccf143f7653f14ffd5",
+      "output": {
+        "decision": "approve",
+        "payout": 1113.0,
+        "rationale": "Approve under section 5: carrier-caused damage to baggage and belongings during the covered trip is covered, and the carrier report plus repair statement document the damage and irreparability. The First-plan $500 per-item limit applies to the binoculars; Electronics Plus permits the camera amount claimed, and section 10 deducts Northwind’s $1,000 settlement, leaving $1,113 after applying the covered-item limits.",
+        "cost": 0.000827305,
+        "retrieved": "[\n  \"Results for the query 'Brisa Pocket 2 camera product what device is it'\",\n  \"<entry><content>Brisa Pocket 2: a compact digital camera with a 1 inch sensor and a fixed 24-120mm zoom lens. List price $1,099.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Arc: a pocket projector that throws a picture of up to 100 inches from a phone or laptop. List price $899.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X2: a smartwatch with GPS, heart-rate tracking and contactless payments. Released in March 2026 at a list price of $649.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 3: an e-reader with a 7 inch color E Ink screen and a battery that lasts six weeks. List price $329.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 2: the earlier Lumora e-reader, with a 6 inch black and white screen. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Beam: a portable Bluetooth speaker with a built-in lamp. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X1: the earlier Corvane smartwatch, released in 2024 at a list price of $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Vantor Halo: a titanium smart ring that tracks sleep, heart rate and activity. List price $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Ostra Buds 3: wireless noise-canceling earbuds with a charging case. List price $249.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'Cape Town International Airport place relevant claim'\",\n  \"<entry><content>Glacier Air, Interlaken, Switzerland: helicopter sightseeing flights over the Jungfrau region.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\",\n  \"<entry><content>Talon Excursions, Queenstown, New Zealand: jet-boat rides through the canyons of the Arrowmere River.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Blue Chimney, Cayo Brava, Honduras: a cavern dive that runs from 6 meters down to 16 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>North Atlantic weather bulletin, September 2, 2026: Storm Ysolde has been named. Gales are expected across Ireland, Wales and western Scotland from the morning of September 4, and ferry crossings on the Irish Sea are likely to be canceled.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'Northwind Airlines baggage damage claim event'\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>North Atlantic weather bulletin, September 2, 2026: Storm Ysolde has been named. Gales are expected across Ireland, Wales and western Scotland from the morning of September 4, and ferry crossings on the Irish Sea are likely to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, July 9, 2026: Tropical Storm Marisol has formed east of the Leeward Islands. It is forecast to become a hurricane on July 11 and to pass over the Bahamas on July 12 and 13.</content><metadata></metadata></entry>\",\n  \"<entry><content>Glacier Air, Interlaken, Switzerland: helicopter sightseeing flights over the Jungfrau region.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "approve",
+            "payout": 1113.0,
+            "rationale": "Approve under section 5: carrier-caused damage to baggage and belongings during the covered trip is covered, and the carrier report plus repair statement document the damage and irreparability. The First-plan $500 per-item limit applies to the binoculars; Electronics Plus permits the camera amount claimed, and section 10 deducts Northwind’s $1,000 settlement, leaving $1,113 after applying the covered-item limits."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1312",
+      "trace_id": "bc5b044677b40c131b1b05c06d47708d",
+      "output": {
+        "decision": "approve",
+        "payout": 685.9,
+        "rationale": "Approve under section 5: the carrier report confirms the checked duffel was not delivered and declared lost during the covered trip, and its report and settlement letter meet the carrier-loss documentation requirement. The Wayfinder is a handheld GPS, not an electronic device within the policy's defined Electronics Plus categories, so its per-item limit is $300; section 10 also deducts Skylark's $300 payment and the Premium $50 baggage deductible, resulting in $685.90.",
+        "cost": 0.000625345,
+        "retrieved": "[\n  \"Results for the query 'Quillon Wayfinder 5 device product what is it; product or place in baggage claim'\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X2: a smartwatch with GPS, heart-rate tracking and contactless payments. Released in March 2026 at a list price of $649.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X1: the earlier Corvane smartwatch, released in 2024 at a list price of $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sorrel Tab S: an 11 inch Android tablet that comes with a keyboard cover. List price $749.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 3: an e-reader with a 7 inch color E Ink screen and a battery that lasts six weeks. List price $329.</content><metadata></metadata></entry>\",\n  \"<entry><content>Vantor Halo: a titanium smart ring that tracks sleep, heart rate and activity. List price $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Ostra Buds 3: wireless noise-canceling earbuds with a charging case. List price $249.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Arc: a pocket projector that throws a picture of up to 100 inches from a phone or laptop. List price $899.</content><metadata></metadata></entry>\",\n  \"<entry><content>Talon Excursions, Queenstown, New Zealand: jet-boat rides through the canyons of the Arrowmere River.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "approve",
+            "payout": 685.9,
+            "rationale": "Approve under section 5: the carrier report confirms the checked duffel was not delivered and declared lost during the covered trip, and its report and settlement letter meet the carrier-loss documentation requirement. The Wayfinder is a handheld GPS, not an electronic device within the policy's defined Electronics Plus categories, so its per-item limit is $300; section 10 also deducts Skylark's $300 payment and the Premium $50 baggage deductible, resulting in $685.90."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1313",
+      "trace_id": "3516b17b185357fc1c522ca82630b710",
+      "output": {
+        "decision": "approve",
+        "payout": 750.0,
+        "rationale": "The theft occurred during the covered trip, was reported to police within 24 hours, and the police report supports the stolen items. The trunk was locked and the contents out of sight, so the unattended-belongings exclusion does not apply; Electronics Plus allows the tablet's claimed amount, while the ordinary $150 per-item limit caps the sunglasses. Section 10 applies the $100 baggage deductible and the Economy $750 benefit maximum, yielding $750.",
+        "cost": 0.00066983,
+        "retrieved": "[\n  \"Results for the query 'Sorrel Tab S electronics tablet device value model; Avignon France location background required for baggage theft claim'\",\n  \"<entry><content>Sorrel Tab S: an 11 inch Android tablet that comes with a keyboard cover. List price $749.</content><metadata></metadata></entry>\",\n  \"<entry><content>Fennec Volt 20: a 20,000 mAh power bank that can charge a laptop. List price $129.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 3: an e-reader with a 7 inch color E Ink screen and a battery that lasts six weeks. List price $329.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Arc: a pocket projector that throws a picture of up to 100 inches from a phone or laptop. List price $899.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 2: the earlier Lumora e-reader, with a 6 inch black and white screen. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X1: the earlier Corvane smartwatch, released in 2024 at a list price of $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Vantor Halo: a titanium smart ring that tracks sleep, heart rate and activity. List price $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X2: a smartwatch with GPS, heart-rate tracking and contactless payments. Released in March 2026 at a list price of $649.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "approve",
+            "payout": 750.0,
+            "rationale": "The theft occurred during the covered trip, was reported to police within 24 hours, and the police report supports the stolen items. The trunk was locked and the contents out of sight, so the unattended-belongings exclusion does not apply; Electronics Plus allows the tablet's claimed amount, while the ordinary $150 per-item limit caps the sunglasses. Section 10 applies the $100 baggage deductible and the Economy $750 benefit maximum, yielding $750."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1314",
+      "trace_id": "0ff581932436ac5fb3575856cf24dbed",
+      "output": {
+        "decision": "decline",
+        "payout": 0.0,
+        "rationale": "Decline under section 7, which excludes injuries from adventure sports unless the Adventure Sports add-on was purchased. The claim records an injury during a dive at Sentinel Wall; the available site information says every dive there is deeper than 10 meters, which section 8 defines as an adventure sport, and this policy has no add-ons.",
+        "cost": 0.000473485,
+        "retrieved": "[\n  \"Results for the query 'Sentinel Wall Cayo Brava Honduras diving dive site conditions depth recreational scuba'\",\n  \"<entry><content>Sentinel Wall, Cayo Brava, Honduras: a wall dive. The top of the wall is at 14 meters and it drops past 40 meters, so every dive on it goes deeper than 10 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Blue Chimney, Cayo Brava, Honduras: a cavern dive that runs from 6 meters down to 16 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Parrotfish Garden, Cayo Brava, Honduras: a shallow reef dive for beginners. The reef lies between 4 and 8 meters, and no part of the site is deeper than 9 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Upper Rio Cuyo, Costa Rica: grade 5 rapids, run only by expert kayakers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lantern Run, Rio Cuyo, Costa Rica: a family rafting trip on the lower river, with grade 2 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>Highline Canyoning, Interlaken, Switzerland: guided canyoning trips with abseils and jumps into pools.</content><metadata></metadata></entry>\",\n  \"<entry><content>Tallow Gorge, Rio Cuyo, Costa Rica: a white-water rafting run with grade 4 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>Talon Excursions, Queenstown, New Zealand: jet-boat rides through the canyons of the Arrowmere River.</content><metadata></metadata></entry>\",\n  \"<entry><content>Glacier Air, Interlaken, Switzerland: helicopter sightseeing flights over the Jungfrau region.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'Brava Divers Cayo Brava dive operation safety certification Sentinel Wall'\",\n  \"<entry><content>Sentinel Wall, Cayo Brava, Honduras: a wall dive. The top of the wall is at 14 meters and it drops past 40 meters, so every dive on it goes deeper than 10 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Blue Chimney, Cayo Brava, Honduras: a cavern dive that runs from 6 meters down to 16 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Parrotfish Garden, Cayo Brava, Honduras: a shallow reef dive for beginners. The reef lies between 4 and 8 meters, and no part of the site is deeper than 9 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Upper Rio Cuyo, Costa Rica: grade 5 rapids, run only by expert kayakers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Highline Canyoning, Interlaken, Switzerland: guided canyoning trips with abseils and jumps into pools.</content><metadata></metadata></entry>\",\n  \"<entry><content>Talon Excursions, Queenstown, New Zealand: jet-boat rides through the canyons of the Arrowmere River.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lantern Run, Rio Cuyo, Costa Rica: a family rafting trip on the lower river, with grade 2 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Glacier Air, Interlaken, Switzerland: helicopter sightseeing flights over the Jungfrau region.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "decline",
+            "payout": 0.0,
+            "rationale": "Decline under section 7, which excludes injuries from adventure sports unless the Adventure Sports add-on was purchased. The claim records an injury during a dive at Sentinel Wall; the available site information says every dive there is deeper than 10 meters, which section 8 defines as an adventure sport, and this policy has no add-ons."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1315",
+      "trace_id": "1988f646f37e6047f6f89b556c4f276f",
+      "output": {
+        "decision": "approve",
+        "payout": 443.75,
+        "rationale": "The records and itemized bill support necessary treatment for a sudden ear injury occurring during the covered trip, and the July 29 follow-up is within the trip dates. Section 8 defines covered adventure scuba diving as deeper than 10 meters; memory identifies Parrotfish Garden as only 4–8 meters (maximum 9), so the adventure-sports exclusion does not apply. Under sections 7 and 10, the $543.75 eligible expenses are subject to the Economy $100 medical deductible, for $443.75.",
+        "cost": 0.00053408,
+        "retrieved": "[\n  \"Results for the query 'Cayo Brava Honduras Parrotfish Garden dive site, local conditions or activity; scuba diving depth certification and UnderCover claims policy exclusions'\",\n  \"<entry><content>Parrotfish Garden, Cayo Brava, Honduras: a shallow reef dive for beginners. The reef lies between 4 and 8 meters, and no part of the site is deeper than 9 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Blue Chimney, Cayo Brava, Honduras: a cavern dive that runs from 6 meters down to 16 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sentinel Wall, Cayo Brava, Honduras: a wall dive. The top of the wall is at 14 meters and it drops past 40 meters, so every dive on it goes deeper than 10 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Upper Rio Cuyo, Costa Rica: grade 5 rapids, run only by expert kayakers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lantern Run, Rio Cuyo, Costa Rica: a family rafting trip on the lower river, with grade 2 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>Tallow Gorge, Rio Cuyo, Costa Rica: a white-water rafting run with grade 4 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>Highline Canyoning, Interlaken, Switzerland: guided canyoning trips with abseils and jumps into pools.</content><metadata></metadata></entry>\",\n  \"<entry><content>Talon Excursions, Queenstown, New Zealand: jet-boat rides through the canyons of the Arrowmere River.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "approve",
+            "payout": 443.75,
+            "rationale": "The records and itemized bill support necessary treatment for a sudden ear injury occurring during the covered trip, and the July 29 follow-up is within the trip dates. Section 8 defines covered adventure scuba diving as deeper than 10 meters; memory identifies Parrotfish Garden as only 4–8 meters (maximum 9), so the adventure-sports exclusion does not apply. Under sections 7 and 10, the $543.75 eligible expenses are subject to the Economy $100 medical deductible, for $443.75."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1316",
+      "trace_id": "776f4199e8a585c63dc99acb7af6017f",
+      "output": {
+        "decision": "decline",
+        "payout": 0.0,
+        "rationale": "The medical records and itemized bill support a $1,702.60 injury claim during the covered trip, but the injury occurred while white-water rafting on grade 4 rapids at Tallow Gorge. Under sections 7 and 8, injuries from white-water rafting above grade 3 are excluded unless the Adventure Sports add-on was purchased; the policy record lists no add-ons. Therefore this expense is not covered.",
+        "cost": 0.00037709,
+        "retrieved": "[\n  \"Results for the query 'Tallow Gorge Rio Cuyo Costa Rica rafting grade 4 white-water rafting location'\",\n  \"<entry><content>Tallow Gorge, Rio Cuyo, Costa Rica: a white-water rafting run with grade 4 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lantern Run, Rio Cuyo, Costa Rica: a family rafting trip on the lower river, with grade 2 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>Upper Rio Cuyo, Costa Rica: grade 5 rapids, run only by expert kayakers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Highline Canyoning, Interlaken, Switzerland: guided canyoning trips with abseils and jumps into pools.</content><metadata></metadata></entry>\",\n  \"<entry><content>Parrotfish Garden, Cayo Brava, Honduras: a shallow reef dive for beginners. The reef lies between 4 and 8 meters, and no part of the site is deeper than 9 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Blue Chimney, Cayo Brava, Honduras: a cavern dive that runs from 6 meters down to 16 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sentinel Wall, Cayo Brava, Honduras: a wall dive. The top of the wall is at 14 meters and it drops past 40 meters, so every dive on it goes deeper than 10 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>Talon Excursions, Queenstown, New Zealand: jet-boat rides through the canyons of the Arrowmere River.</content><metadata></metadata></entry>\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "decline",
+            "payout": 0.0,
+            "rationale": "The medical records and itemized bill support a $1,702.60 injury claim during the covered trip, but the injury occurred while white-water rafting on grade 4 rapids at Tallow Gorge. Under sections 7 and 8, injuries from white-water rafting above grade 3 are excluded unless the Adventure Sports add-on was purchased; the policy record lists no add-ons. Therefore this expense is not covered."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1317",
+      "trace_id": "208a5dfd7e1b5df7062c977e26a07255",
+      "output": {
+        "decision": "approve",
+        "payout": 1173.9,
+        "rationale": "Approve the emergency medical expenses of $1,173.90 under section 7: the injury occurred during the covered trip and the submitted medical record and itemized bill substantiate necessary treatment. The Lantern Run is grade 2 according to the memory lookup, so this rafting trip is not the section 8 adventure-sport exclusion (which applies to rafting above grade 3); lost wages are consequential loss excluded by section 9 and are not part of the medical benefit.",
+        "cost": 0.000542755,
+        "retrieved": "[\n  \"Results for the query 'Lantern Run Rio Cuyo Costa Rica rafting grade, whether above grade 3 white-water rafting adventure sport'\",\n  \"<entry><content>Lantern Run, Rio Cuyo, Costa Rica: a family rafting trip on the lower river, with grade 2 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>Tallow Gorge, Rio Cuyo, Costa Rica: a white-water rafting run with grade 4 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>Upper Rio Cuyo, Costa Rica: grade 5 rapids, run only by expert kayakers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Highline Canyoning, Interlaken, Switzerland: guided canyoning trips with abseils and jumps into pools.</content><metadata></metadata></entry>\",\n  \"<entry><content>Parrotfish Garden, Cayo Brava, Honduras: a shallow reef dive for beginners. The reef lies between 4 and 8 meters, and no part of the site is deeper than 9 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Blue Chimney, Cayo Brava, Honduras: a cavern dive that runs from 6 meters down to 16 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sentinel Wall, Cayo Brava, Honduras: a wall dive. The top of the wall is at 14 meters and it drops past 40 meters, so every dive on it goes deeper than 10 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Talon Excursions, Queenstown, New Zealand: jet-boat rides through the canyons of the Arrowmere River.</content><metadata></metadata></entry>\",\n  \"<entry><content>Japan Meteorological Agency, August 24, 2026: Typhoon Kaori is expected to pass close to Okinawa on August 27 and 28. Flights and ferries in the Ryukyu Islands are likely to be suspended.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "approve",
+            "payout": 1173.9,
+            "rationale": "Approve the emergency medical expenses of $1,173.90 under section 7: the injury occurred during the covered trip and the submitted medical record and itemized bill substantiate necessary treatment. The Lantern Run is grade 2 according to the memory lookup, so this rafting trip is not the section 8 adventure-sport exclusion (which applies to rafting above grade 3); lost wages are consequential loss excluded by section 9 and are not part of the medical benefit."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1318",
+      "trace_id": "a74d37a155476435df5b45ecf30577d4",
+      "output": {
+        "decision": "decline",
+        "payout": 0.0,
+        "rationale": "The medical record and itemized bill support treatment of an ankle fracture during the covered trip, but the injury occurred on a tandem paragliding flight with Aerie Adventures. Paragliding is expressly an adventure sport under section 8, and section 7 excludes injuries from adventure sports unless the Adventure Sports add-on was purchased; the policy record shows no add-ons. Therefore the emergency medical expenses are not covered.",
+        "cost": 0.000575935,
+        "retrieved": "[\n  \"Results for the query 'Aerie Adventures morning flight over lakes Interlaken flight activity type, whether paragliding or sightseeing flight'\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Glacier Air, Interlaken, Switzerland: helicopter sightseeing flights over the Jungfrau region.</content><metadata></metadata></entry>\",\n  \"<entry><content>Highline Canyoning, Interlaken, Switzerland: guided canyoning trips with abseils and jumps into pools.</content><metadata></metadata></entry>\",\n  \"<entry><content>Talon Excursions, Queenstown, New Zealand: jet-boat rides through the canyons of the Arrowmere River.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lantern Run, Rio Cuyo, Costa Rica: a family rafting trip on the lower river, with grade 2 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>Japan Meteorological Agency, August 24, 2026: Typhoon Kaori is expected to pass close to Okinawa on August 27 and 28. Flights and ferries in the Ryukyu Islands are likely to be suspended.</content><metadata></metadata></entry>\",\n  \"<entry><content>Upper Rio Cuyo, Costa Rica: grade 5 rapids, run only by expert kayakers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'Interlaken Aerie Adventures flight landing July 31 2026 accident'\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>Glacier Air, Interlaken, Switzerland: helicopter sightseeing flights over the Jungfrau region.</content><metadata></metadata></entry>\",\n  \"<entry><content>Japan Meteorological Agency, August 24, 2026: Typhoon Kaori is expected to pass close to Okinawa on August 27 and 28. Flights and ferries in the Ryukyu Islands are likely to be suspended.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'UnderCover claims policy claim CLM-1318 Aerie Adventures'\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X2: a smartwatch with GPS, heart-rate tracking and contactless payments. Released in March 2026 at a list price of $649.</content><metadata></metadata></entry>\",\n  \"<entry><content>North Atlantic weather bulletin, September 2, 2026: Storm Ysolde has been named. Gales are expected across Ireland, Wales and western Scotland from the morning of September 4, and ferry crossings on the Irish Sea are likely to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\",\n  \"<entry><content>Highline Canyoning, Interlaken, Switzerland: guided canyoning trips with abseils and jumps into pools.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sentinel Wall, Cayo Brava, Honduras: a wall dive. The top of the wall is at 14 meters and it drops past 40 meters, so every dive on it goes deeper than 10 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X1: the earlier Corvane smartwatch, released in 2024 at a list price of $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Blue Chimney, Cayo Brava, Honduras: a cavern dive that runs from 6 meters down to 16 meters.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "decline",
+            "payout": 0.0,
+            "rationale": "The medical record and itemized bill support treatment of an ankle fracture during the covered trip, but the injury occurred on a tandem paragliding flight with Aerie Adventures. Paragliding is expressly an adventure sport under section 8, and section 7 excludes injuries from adventure sports unless the Adventure Sports add-on was purchased; the policy record shows no add-ons. Therefore the emergency medical expenses are not covered."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1319",
+      "trace_id": "6a245534105e4c899068bc425a4eb97b",
+      "output": {
+        "decision": "refer",
+        "payout": 0.0,
+        "rationale": "The medical records and itemized bill are attached, and the trip dates and incident date are consistent. However, the injury occurred on a river outing and the information available identifies Talon Excursions as operating jet-boat rides; the claim documents do not establish whether this activity falls within the policy's exclusion for adventure-sport injuries (section 7) or is simply a covered sudden accidental injury. Refer for a colleague to clarify the activity before deciding coverage.",
+        "cost": 0.000549635,
+        "retrieved": "[\n  \"Results for the query 'Talon Excursions Queenstown river boat trip rafting activity grade white-water'\",\n  \"<entry><content>Talon Excursions, Queenstown, New Zealand: jet-boat rides through the canyons of the Arrowmere River.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lantern Run, Rio Cuyo, Costa Rica: a family rafting trip on the lower river, with grade 2 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>Upper Rio Cuyo, Costa Rica: grade 5 rapids, run only by expert kayakers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Highline Canyoning, Interlaken, Switzerland: guided canyoning trips with abseils and jumps into pools.</content><metadata></metadata></entry>\",\n  \"<entry><content>Tallow Gorge, Rio Cuyo, Costa Rica: a white-water rafting run with grade 4 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\",\n  \"<entry><content>Parrotfish Garden, Cayo Brava, Honduras: a shallow reef dive for beginners. The reef lies between 4 and 8 meters, and no part of the site is deeper than 9 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Glacier Air, Interlaken, Switzerland: helicopter sightseeing flights over the Jungfrau region.</content><metadata></metadata></entry>\",\n  \"<entry><content>Blue Chimney, Cayo Brava, Honduras: a cavern dive that runs from 6 meters down to 16 meters.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'Queenstown New Zealand river trip Talon Excursions boat spin sharp turn'\",\n  \"<entry><content>Talon Excursions, Queenstown, New Zealand: jet-boat rides through the canyons of the Arrowmere River.</content><metadata></metadata></entry>\",\n  \"<entry><content>Upper Rio Cuyo, Costa Rica: grade 5 rapids, run only by expert kayakers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Highline Canyoning, Interlaken, Switzerland: guided canyoning trips with abseils and jumps into pools.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lantern Run, Rio Cuyo, Costa Rica: a family rafting trip on the lower river, with grade 2 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>Glacier Air, Interlaken, Switzerland: helicopter sightseeing flights over the Jungfrau region.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, July 9, 2026: Tropical Storm Marisol has formed east of the Leeward Islands. It is forecast to become a hurricane on July 11 and to pass over the Bahamas on July 12 and 13.</content><metadata></metadata></entry>\",\n  \"<entry><content>Parrotfish Garden, Cayo Brava, Honduras: a shallow reef dive for beginners. The reef lies between 4 and 8 meters, and no part of the site is deeper than 9 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'UnderCover POL-2319 Emily Larsen prior claims medical pre-existing condition'\",\n  \"<entry><content>Corvane Lumen X1: the earlier Corvane smartwatch, released in 2024 at a list price of $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Vantor Halo: a titanium smart ring that tracks sleep, heart rate and activity. List price $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X2: a smartwatch with GPS, heart-rate tracking and contactless payments. Released in March 2026 at a list price of $649.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 2: the earlier Lumora e-reader, with a 6 inch black and white screen. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Ostra Buds 3: wireless noise-canceling earbuds with a charging case. List price $249.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sorrel Tab S: an 11 inch Android tablet that comes with a keyboard cover. List price $749.</content><metadata></metadata></entry>\",\n  \"<entry><content>Brisa Pocket 2: a compact digital camera with a 1 inch sensor and a fixed 24-120mm zoom lens. List price $1,099.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "refer",
+            "payout": 0.0,
+            "rationale": "The medical records and itemized bill are attached, and the trip dates and incident date are consistent. However, the injury occurred on a river outing and the information available identifies Talon Excursions as operating jet-boat rides; the claim documents do not establish whether this activity falls within the policy's exclusion for adventure-sport injuries (section 7) or is simply a covered sudden accidental injury. Refer for a colleague to clarify the activity before deciding coverage."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1320",
+      "trace_id": "62d6f838a387f2298dedb5e144cd921d",
+      "output": {
+        "decision": "approve",
+        "payout": 663.67,
+        "rationale": "The suitcase was lost while traveling on the covered trip, and the carrier report documenting that loss is attached as required by section 5; the carrier settlement confirms the $400 already paid. The claim was filed within 90 days, and section 10’s baggage limits, $400 carrier payment and $100 Economy deductible produce a payout of $663.67.",
+        "cost": 0.00116249,
+        "retrieved": "[\n  \"Results for the query 'Mexico City lost baggage suitcase customs baggage loss travel claim'\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>Blue Chimney, Cayo Brava, Honduras: a cavern dive that runs from 6 meters down to 16 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sentinel Wall, Cayo Brava, Honduras: a wall dive. The top of the wall is at 14 meters and it drops past 40 meters, so every dive on it goes deeper than 10 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'Meridian Air baggage lost claim event policy information'\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>North Atlantic weather bulletin, September 2, 2026: Storm Ysolde has been named. Gales are expected across Ireland, Wales and western Scotland from the morning of September 4, and ferry crossings on the Irish Sea are likely to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\",\n  \"<entry><content>Glacier Air, Interlaken, Switzerland: helicopter sightseeing flights over the Jungfrau region.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, July 9, 2026: Tropical Storm Marisol has formed east of the Leeward Islands. It is forecast to become a hurricane on July 11 and to pass over the Bahamas on July 12 and 13.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'UnderCover baggage claim per item limit item quantity receipt'\",\n  \"<entry><content>Ostra Buds 3: wireless noise-canceling earbuds with a charging case. List price $249.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sorrel Tab S: an 11 inch Android tablet that comes with a keyboard cover. List price $749.</content><metadata></metadata></entry>\",\n  \"<entry><content>Fennec Volt 20: a 20,000 mAh power bank that can charge a laptop. List price $129.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Arc: a pocket projector that throws a picture of up to 100 inches from a phone or laptop. List price $899.</content><metadata></metadata></entry>\",\n  \"<entry><content>Brisa Pocket 2: a compact digital camera with a 1 inch sensor and a fixed 24-120mm zoom lens. List price $1,099.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 3: an e-reader with a 7 inch color E Ink screen and a battery that lasts six weeks. List price $329.</content><metadata></metadata></entry>\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\",\n  \"<entry><content>Corvane Lumen X1: the earlier Corvane smartwatch, released in 2024 at a list price of $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "refer",
+            "payout": 0.0,
+            "rationale": "The carrier report and settlement confirm baggage was lost during the covered trip, but the loss inventory contains items without supporting receipts (the customer says receipts are attached only for items over $100). The submitted receipts also predate the trip and do not resolve the value/documentation of all claimed belongings; section 5 requires a carrier report for carrier loss, and section 11 requires the documents named for the benefit. Refer for review/clarification of evidence and item values before determining eligible baggage amount."
+          },
+          {
+            "decision": "approve",
+            "payout": 663.67,
+            "rationale": "The suitcase was lost while traveling on the covered trip, and the carrier report documenting that loss is attached as required by section 5; the carrier settlement confirms the $400 already paid. The claim was filed within 90 days, and section 10’s baggage limits, $400 carrier payment and $100 Economy deductible produce a payout of $663.67."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1321",
+      "trace_id": "2521d0959312e7f2866293190d181ea9",
+      "output": {
+        "decision": "approve",
+        "payout": 2875.8,
+        "rationale": "Section 2 covers trip interruption when a family member’s sickness is confirmed in writing by a physician; Hector’s father is a qualifying family member and the physician’s statement confirms his stroke during the covered trip. The supplier letters document the unused prepaid trip costs and $242 refunded plus $129 in travel credit; after subtracting these amounts and applying the section 2 trip cost/plan maximum cap of $4,600, eligible interruption costs are $2,875.80, including the documented one-way economy fare home.",
+        "cost": 0.000872305,
+        "retrieved": "[\n  \"Results for the query 'Argentina Buenos Aires Mendoza Iguazu El Paso place claim trip interruption father stroke'\",\n  \"<entry><content>Lantern Run, Rio Cuyo, Costa Rica: a family rafting trip on the lower river, with grade 2 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\",\n  \"<entry><content>Upper Rio Cuyo, Costa Rica: grade 5 rapids, run only by expert kayakers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Tallow Gorge, Rio Cuyo, Costa Rica: a white-water rafting run with grade 4 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>Highline Canyoning, Interlaken, Switzerland: guided canyoning trips with abseils and jumps into pools.</content><metadata></metadata></entry>\",\n  \"<entry><content>Japan Meteorological Agency, August 24, 2026: Typhoon Kaori is expected to pass close to Okinawa on August 27 and 28. Flights and ferries in the Ryukyu Islands are likely to be suspended.</content><metadata></metadata></entry>\",\n  \"<entry><content>Blue Chimney, Cayo Brava, Honduras: a cavern dive that runs from 6 meters down to 16 meters.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'Skylark Airways sold through checkout policy claim'\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sorrel Tab S: an 11 inch Android tablet that comes with a keyboard cover. List price $749.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Glacier Air, Interlaken, Switzerland: helicopter sightseeing flights over the Jungfrau region.</content><metadata></metadata></entry>\",\n  \"<entry><content>Ostra Buds 3: wireless noise-canceling earbuds with a charging case. List price $249.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>Fennec Volt 20: a 20,000 mAh power bank that can charge a laptop. List price $129.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "approve",
+            "payout": 2875.8,
+            "rationale": "Section 2 covers trip interruption when a family member’s sickness is confirmed in writing by a physician; Hector’s father is a qualifying family member and the physician’s statement confirms his stroke during the covered trip. The supplier letters document the unused prepaid trip costs and $242 refunded plus $129 in travel credit; after subtracting these amounts and applying the section 2 trip cost/plan maximum cap of $4,600, eligible interruption costs are $2,875.80, including the documented one-way economy fare home."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1322",
+      "trace_id": "39b08a4bd6fb57bdc73f1c2ed03b2305",
+      "output": {
+        "decision": "approve",
+        "payout": 300.0,
+        "rationale": "Section 4 covers essential clothing and toiletries bought while waiting for checked baggage, when delivery is at least the Premium plan's 12-hour threshold, and requires receipts plus the carrier's delayed-baggage report. The report shows a 41-hour delay and both required documents are attached; the phone charger is not an eligible clothing or toiletry expense, so eligible receipts total $303.30 and the Premium benefit maximum is $300.",
+        "cost": 0.00052485,
+        "retrieved": "[\n  \"Results for the query 'Edinburgh Scotland August 2026 event baggage delayed Northwind Airlines; baggage delay claim essentials charger coverage'\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\",\n  \"<entry><content>North Atlantic weather bulletin, September 2, 2026: Storm Ysolde has been named. Gales are expected across Ireland, Wales and western Scotland from the morning of September 4, and ferry crossings on the Irish Sea are likely to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>Japan Meteorological Agency, August 24, 2026: Typhoon Kaori is expected to pass close to Okinawa on August 27 and 28. Flights and ferries in the Ryukyu Islands are likely to be suspended.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\",\n  \"<entry><content>Ostra Buds 3: wireless noise-canceling earbuds with a charging case. List price $249.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, August 18, 2026: Tropical Storm Tobias has formed in the western Caribbean. It is expected to become a hurricane and to reach the coast of the Yucatan Peninsula near Cancun on August 21.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "approve",
+            "payout": 300.0,
+            "rationale": "Section 4 covers essential clothing and toiletries bought while waiting for checked baggage, when delivery is at least the Premium plan's 12-hour threshold, and requires receipts plus the carrier's delayed-baggage report. The report shows a 41-hour delay and both required documents are attached; the phone charger is not an eligible clothing or toiletry expense, so eligible receipts total $303.30 and the Premium benefit maximum is $300."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1323",
+      "trace_id": "9f37ce8b84fc1bd2184659c9e30f8a9d",
+      "output": {
+        "decision": "refer",
+        "payout": 0.0,
+        "rationale": "The theft and replacement expenses fall under section 6, and the police report and receipts are attached. However, the claimed taxi expense combines travel to the police station and embassy, and the documents do not establish that the full amount was reasonable local travel to the embassy/consulate as required by section 6; refer for review of eligible transport amount.",
+        "cost": 0.00033781,
+        "retrieved": "[\n  \"Results for the query 'Hanoi night market Hang Dao Street embassy police station passport theft local travel distance or transport'\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lisbon, June 20, 2026: Portugal's air traffic controllers have announced a 48 hour strike starting at midnight on July 14. Most flights to and from Lisbon and Porto are expected to be canceled on July 14 and 15.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 3: an e-reader with a 7 inch color E Ink screen and a battery that lasts six weeks. List price $329.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lumora Drift 2: the earlier Lumora e-reader, with a 6 inch black and white screen. List price $199.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sentinel Wall, Cayo Brava, Honduras: a wall dive. The top of the wall is at 14 meters and it drops past 40 meters, so every dive on it goes deeper than 10 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Paris, May 29, 2026: French air traffic controllers have called a strike for June 10 and 11, and flights across France are expected to be canceled.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\",\n  \"<entry><content>Fennec Volt 20: a 20,000 mAh power bank that can charge a laptop. List price $129.</content><metadata></metadata></entry>\",\n  \"<entry><content>Blue Chimney, Cayo Brava, Honduras: a cavern dive that runs from 6 meters down to 16 meters.</content><metadata></metadata></entry>\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "refer",
+            "payout": 0.0,
+            "rationale": "The theft and replacement expenses fall under section 6, and the police report and receipts are attached. However, the claimed taxi expense combines travel to the police station and embassy, and the documents do not establish that the full amount was reasonable local travel to the embassy/consulate as required by section 6; refer for review of eligible transport amount."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1324",
+      "trace_id": "78b12239436745b4db378b47d23928f1",
+      "output": {
+        "decision": "refer",
+        "payout": 0.0,
+        "rationale": "Refer pending the police report required by section 5 for a theft claim; the claimant says it has been requested but it is not attached. The reported snatching from a bicycle basket while stopped also leaves a material question under section 5's unattended-property exclusion (property out of sight and reach in a publicly accessible place), so eligibility cannot be settled on the current evidence.",
+        "cost": 0.00043514,
+        "retrieved": "[\n  \"Results for the query 'Amsterdam bicycle basket bag theft snatching pickpocket police report local theft context'\",\n  \"<entry><content>Vantor Halo: a titanium smart ring that tracks sleep, heart rate and activity. List price $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Brisa Pocket 2: a compact digital camera with a 1 inch sensor and a fixed 24-120mm zoom lens. List price $1,099.</content><metadata></metadata></entry>\",\n  \"<entry><content>Fennec Volt 20: a 20,000 mAh power bank that can charge a laptop. List price $129.</content><metadata></metadata></entry>\",\n  \"<entry><content>Highline Canyoning, Interlaken, Switzerland: guided canyoning trips with abseils and jumps into pools.</content><metadata></metadata></entry>\",\n  \"<entry><content>Talon Excursions, Queenstown, New Zealand: jet-boat rides through the canyons of the Arrowmere River.</content><metadata></metadata></entry>\",\n  \"<entry><content>Halden Arc: a pocket projector that throws a picture of up to 100 inches from a phone or laptop. List price $899.</content><metadata></metadata></entry>\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Northwind Airlines press release, July 15, 2026: The pilots' strike planned for July 24 has been called off after an agreement with the union. All flights will operate as scheduled.</content><metadata></metadata></entry>\"\n]\n[\n  \"Results for the query 'UnderCover baggage theft unattended belongings bicycle basket in public access, police report required'\",\n  \"<entry><content>Halden Arc: a pocket projector that throws a picture of up to 100 inches from a phone or laptop. List price $899.</content><metadata></metadata></entry>\",\n  \"<entry><content>Brisa Pocket 2: a compact digital camera with a 1 inch sensor and a fixed 24-120mm zoom lens. List price $1,099.</content><metadata></metadata></entry>\",\n  \"<entry><content>Vantor Halo: a titanium smart ring that tracks sleep, heart rate and activity. List price $449.</content><metadata></metadata></entry>\",\n  \"<entry><content>Glacier Air, Interlaken, Switzerland: helicopter sightseeing flights over the Jungfrau region.</content><metadata></metadata></entry>\",\n  \"<entry><content>Fennec Volt 20: a 20,000 mAh power bank that can charge a laptop. List price $129.</content><metadata></metadata></entry>\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\",\n  \"<entry><content>Highline Canyoning, Interlaken, Switzerland: guided canyoning trips with abseils and jumps into pools.</content><metadata></metadata></entry>\",\n  \"<entry><content>Ostra Buds 3: wireless noise-canceling earbuds with a charging case. List price $249.</content><metadata></metadata></entry>\",\n  \"<entry><content>Aerie Adventures, Interlaken, Switzerland: tandem paragliding flights from Beatenberg, landing in Interlaken.</content><metadata></metadata></entry>\",\n  \"<entry><content>Sorrel Tab S: an 11 inch Android tablet that comes with a keyboard cover. List price $749.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "refer",
+            "payout": 0.0,
+            "rationale": "Refer pending the police report required by section 5 for a theft claim; the claimant says it has been requested but it is not attached. The reported snatching from a bicycle basket while stopped also leaves a material question under section 5's unattended-property exclusion (property out of sight and reach in a publicly accessible place), so eligibility cannot be settled on the current evidence."
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "CLM-1325",
+      "trace_id": "afbbe0d7bfe39425c74de1938028d6ae",
+      "output": {
+        "decision": "refer",
+        "payout": 0.0,
+        "rationale": "The incident is a sudden accidental injury during the covered trip, and emergency medical treatment is potentially covered under section 7; no exclusion is apparent. However, section 7 requires an itemized bill as well as medical records, and the claimant says that itemized bill is still pending, so the required documentation is missing and the claim must wait for it under section 11.",
+        "cost": 0.000657075,
+        "retrieved": "[\n  \"Results for the query 'Oia Santorini Greece clinic treatment emergency medical claim travel location/place'\",\n  \"<entry><content>Athens, August 19, 2026: Greek ferry workers have called a 24 hour strike for August 27. Ferries between Piraeus and the islands will stay in port.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, June 30, 2026: Tropical Storm Nadia has formed in the southern Gulf of Mexico and is expected to come ashore in Tamaulipas, Mexico, on July 2.</content><metadata></metadata></entry>\",\n  \"<entry><content>Glacier Air, Interlaken, Switzerland: helicopter sightseeing flights over the Jungfrau region.</content><metadata></metadata></entry>\",\n  \"<entry><content>Lantern Run, Rio Cuyo, Costa Rica: a family rafting trip on the lower river, with grade 2 rapids from start to finish.</content><metadata></metadata></entry>\",\n  \"<entry><content>Quillon Wayfinder 5: a handheld GPS unit for hikers, with topographic maps and two-way satellite messaging. List price $599.</content><metadata></metadata></entry>\",\n  \"<entry><content>Rome, July 3, 2026: Italy's rail unions have called a 24 hour national rail strike from 9 pm on July 21 to 9 pm on July 22. Most high-speed and regional trains will not run.</content><metadata></metadata></entry>\",\n  \"<entry><content>Talon Excursions, Queenstown, New Zealand: jet-boat rides through the canyons of the Arrowmere River.</content><metadata></metadata></entry>\",\n  \"<entry><content>Japan Meteorological Agency, August 24, 2026: Typhoon Kaori is expected to pass close to Okinawa on August 27 and 28. Flights and ferries in the Ryukyu Islands are likely to be suspended.</content><metadata></metadata></entry>\",\n  \"<entry><content>National Hurricane Center, July 9, 2026: Tropical Storm Marisol has formed east of the Leeward Islands. It is forecast to become a hurricane on July 11 and to pass over the Bahamas on July 12 and 13.</content><metadata></metadata></entry>\",\n  \"<entry><content>Meridian Air press release, August 5, 2026: The union representing our cabin crew has called a strike for August 12 and 13. We expect to cancel about half of our flights on those two days and will rebook affected passengers.</content><metadata></metadata></entry>\"\n]",
+        "decision_history": [
+          {
+            "decision": "refer",
+            "payout": 0.0,
+            "rationale": "The incident is a sudden accidental injury during the covered trip, and emergency medical treatment is potentially covered under section 7; no exclusion is apparent. However, section 7 requires an itemized bill as well as medical records, and the claimant says that itemized bill is still pending, so the required documentation is missing and the claim must wait for it under section 11."
+          }
+        ]
+      }
+    }
+  ]
+}
